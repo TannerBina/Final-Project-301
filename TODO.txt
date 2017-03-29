@@ -19,3 +19,4 @@ ALU control until
 Sign extend unit
 
 Some other stuff
+Just playing around with this to see how it works
