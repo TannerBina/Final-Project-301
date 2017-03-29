@@ -1,0 +1,19 @@
+Things TODO
+Process Input File
+Handle these commands for mips- • ADD • SUB • ADDI • SLT • LW • SW • BEQ • J commands
+Simulate registers
+
+
+Things we need
+• PC • Instruction Memory • Register File • Data Memory • 3 ALUs • 5 Multiplexors • 2 “shift left 2” units • a main control unit • an ALU control unit • a sign extend unit
+
+Classes
+PC
+Instruction Memory
+Register File
+Data Memory
+ALU
+Multiplexor
+SLU
+ALU control until
+Sign extend unit
