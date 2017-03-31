@@ -1,22 +1,45 @@
 Things TODO
-Process Input File
-Handle these commands for mips- • ADD • SUB • ADDI • SLT • LW • SW • BEQ • J commands
-Simulate registers
+
+Handle these commands for mips- • ADD • SUB • ADDI • SLT • LW • SW • BEQ • J
 
 
 Things we need
 • PC • Instruction Memory • Register File • Data Memory • 3 ALUs • 5 Multiplexors • 2 “shift left 2” units • a main control unit • an ALU control unit • a sign extend unit
 
-Classes
-PC
-Instruction Memory
-Register File
-Data Memory
-ALU
-Multiplexor
-SLU
-ALU control until
-Sign extend unit
 
-Some other stuff
-Just playing around with this to see how it works
+
+Classes
+
+Parser - does specification (ignore blank lines, or lines that start with #, or anything that follows #, process hex values in both forms 0x and not)
+He tells us which ones will be in decimal. Handles the mips.
+
+Processor - calls the parser, takes in the config file info, starts processing the mips through the other things.
+
+ALU - takes two inputs and a control input and output the result.
+
+ALU Control - takes in instruction and ALUOp and outputs the ALU control code
+
+Control Unit - takes in opcode and based on it outputs all the control signals.
+RegDst 
+Jump - 1 if jump else 0
+Branch - 1 if branch, 0 else
+MemRead - 1 if reads from memory and gets value, 0 else
+MemtoReg - 1 if data memory goes to a register, 0 else
+ALUOp - goes to ALU control
+MemWrite - 1 if it writes value to memory else 0
+ALUSrc - 0 if it uses read data, 1 if it uses immediate as second ALU
+RegWrite - 1 if it writes to a register, 0 else
+
+Sign Extend Unit - just extends sign to a specific length
+
+Pc - probably a simple class or an int
+
+Instruction Memory - parsers instructions into control code, read reg 1, read reg 2, write reg, and the immediate
+
+Register Table - takes in read register 1 - output read data 1, takes in read register 2 - output read data 2, takes in write register and write data seperately, stores all register info
+
+Data Memory - takes in address, takes in write data, control, output read data.
+
+Multiplexor - takes in two inputs with control 0 or 1, outputs one of the inputs.
+
+SLU - literally just shifts things to the left in the one input, sepcified by the other input, outputs shifted.
