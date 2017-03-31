@@ -1,0 +1,36 @@
+TODO Parser
+
+process 3 input files
+-register
+-program
+-memory
+
+ignore blank lines
+ignore lines starting with #
+process hex values with or without 0x
+
+Program Input
+-contains assembly code
+-labels are hex string preceded by 0x
+-hex can be positive/negative with 2s complement notation
+-offset values in decimal either pos/neg
+-registers encoded as # preceded by $
+-file no more than 100 lines of code but may have more than 100 cycles if loop/etc
+
+Memory Input
+-each line is single 4 byte word of memory
+-stored in big endian
+-each line is address:datavalue
+-both in hex separated by semicolon
+-hex symbols either upper or lower case
+-all addresses consecutive
+-hex can either have preceding 0x or not
+
+Register Input
+-each line is 4byte word
+-has register:value
+-register is decimal 0-31
+-value is hex, upper or lower case
+-every register 0-31 has a value
+-always 32 lines
+
