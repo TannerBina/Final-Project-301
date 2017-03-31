@@ -13,7 +13,7 @@ Classes
 Parser - does specification (ignore blank lines, or lines that start with #, or anything that follows #, process hex values in both forms 0x and not)
 He tells us which ones will be in decimal. Handles the mips.
 
-Processor - calls the parser, takes in the config file info, starts processing the mips through the other things.
+Processor - calls the parser, takes in the config file info, starts processing the mips through the other things. Step through each of the five stages as long as theres mips instructions left. 5 stages per mips instruction.
 
 ALU - takes two inputs and a control input and output the result.
 
