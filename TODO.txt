@@ -4,7 +4,7 @@ Handle these commands for mips- • ADD • SUB • ADDI • SLT • LW • SW �
 
 
 Things we need
-• PC • Instruction Memory • Register File • Data Memory • 3 ALUs • 5 Multiplexors • 2 “shift left 2” units • a main control unit • an ALU control unit • a sign extend unit
+• PC • Instruction Memory • Register File • Data Memory • 3 ALUs • 5 Multiplexors • 2 “shift left 2” units • a main control unit • an ALU control unit • a sign extend unit.
 
 
 
