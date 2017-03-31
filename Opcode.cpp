@@ -16,7 +16,7 @@ Opcode OpcodeTable::getOpcode(string str)
 // template for that instruction.
 {
   for(int i = 0; i < (int)UNDEFINED; i++){
-    if(myArray[i].name == str){
+    if(myTable[i].name == str){
       return (Opcode)i;
     }
   }
@@ -29,7 +29,7 @@ int OpcodeTable::numOperands(Opcode o)
   if(o < 0 || o >= UNDEFINED)
     return -1;
 
-  return myArray[o].numOps;
+  return myTable[o].numOps;
 }
 
 
@@ -40,7 +40,7 @@ int OpcodeTable::RSposition(Opcode o)
   if(o < 0 || o >= UNDEFINED)
     return -1;
 
-  return myArray[o].rsPos;
+  return myTable[o].rsPos;
 }
 
 int OpcodeTable::RTposition(Opcode o)
@@ -50,7 +50,7 @@ int OpcodeTable::RTposition(Opcode o)
   if(o < 0 || o >= UNDEFINED)
     return -1;
 
-  return myArray[o].rtPos;
+  return myTable[o].rtPos;
 }
 
 int OpcodeTable::RDposition(Opcode o)
@@ -60,7 +60,7 @@ int OpcodeTable::RDposition(Opcode o)
   if(o < 0 || o >= UNDEFINED)
     return -1;
 
-  return myArray[o].rdPos;
+  return myTable[o].rdPos;
 }
 
 int OpcodeTable::IMMposition(Opcode o)
@@ -70,7 +70,7 @@ int OpcodeTable::IMMposition(Opcode o)
   if(o < 0 || o >= UNDEFINED)
     return -1;
 
-  return myArray[o].immPos;
+  return myTable[o].immPos;
 }
 
 InstType OpcodeTable::getInstType(Opcode o)
@@ -78,7 +78,7 @@ InstType OpcodeTable::getInstType(Opcode o)
 {
   if(o < 0 || o > UNDEFINED)
     return (InstType)-1;
-  return myArray[o].instType;
+  return myTable[o].instType;
 }
 
 string OpcodeTable::getOpcodeField(Opcode o)
@@ -87,7 +87,7 @@ string OpcodeTable::getOpcodeField(Opcode o)
 {
   if(o < 0 || o > UNDEFINED)
     return string("");
-  return myArray[o].op_field;
+  return myTable[o].op_field;
 }
 
 string OpcodeTable::getFunctField(Opcode o)
@@ -96,7 +96,7 @@ string OpcodeTable::getFunctField(Opcode o)
 {
   if(o < 0 || o > UNDEFINED)
     return string("");
-  return myArray[o].funct_field;
+  return myTable[o].funct_field;
 }
 
 bool OpcodeTable::isIMMLabel(Opcode o)
@@ -105,5 +105,5 @@ bool OpcodeTable::isIMMLabel(Opcode o)
 {
   if(o < 0 || o > UNDEFINED)
     return false;
-  return myArray[o].immLabel;
+  return myTable[o].immLabel;
 }
