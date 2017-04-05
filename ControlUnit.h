@@ -5,6 +5,7 @@ using namespace std;
 #include <string>
 #include <map>
 
+//holds the output of the control wires after decode
 struct ControlWires{
 	int regDst;
 	int jump;
@@ -20,10 +21,13 @@ struct ControlWires{
 
 class ControlUnit{
 public:
+	//initialize control unit
 	ControlUnit();
 
+	//handles decode stage
 	ControlWires process(string opcode);
 private:
+	//holds output values for particular inputs
 	map <string, ControlWires> outputMap;
 };
 
