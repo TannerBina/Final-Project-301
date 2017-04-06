@@ -12,7 +12,7 @@ class Parser {
 
 public:
 
-	Parser(string file);
+	Parser();
 	void parseConfig(string file);
 	void parseProgram();
 	map<string, string> parseMemory();
@@ -27,10 +27,11 @@ public:
 	void convertMemory();
 	void convertRegister();
 
+	map <string, string> config;
+	map <string, string> mem;
+	map <int, string> regMem;
+
 
 private:
-	map <string, string> config;
-	map <string, int> mem;
-	map <int, int> regMem;
 
 };

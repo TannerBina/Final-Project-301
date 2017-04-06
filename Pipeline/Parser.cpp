@@ -7,7 +7,7 @@ set forth by general syntax of input files
 */
 
 
-Parser::Parser(string file){
+Parser::Parser(){
 
 
 }
@@ -37,8 +37,6 @@ void Parser::parseConfig(string file) {
 
 void Parser::parseProgram(){
 	string program = config["program_input"];
-
-	Parser* programParser = new Parser(program);
 
 	Instruction i;
 
@@ -113,12 +111,14 @@ void Parser::convertMemory() {
 
 
 	for(itr = temp.begin(); itr != temp.end(); itr++) {
-		if(itr->first[1] == 'x') {
-			itr->first.erase(0,2);
+		if(itr->second[1] == 'x') {
+			string res = itr->second;
+			res.erase(0,2);
+			mem[itr->first] = res;
+		} else {
+			mem[itr->first] = itr->second;
 		}
 	}
-
-
 	//nothing preceded by 0x
 	//second value as an decimal
 
@@ -128,13 +128,20 @@ void Parser::convertRegister(){
 	map <int, string> temp = parseRegister();
 	map<int, string>::iterator itr;
 
-	for (itr = temp.begin(); itr != temp.end(); itr++) {
+	for (int i = 0; i < 32; i++) {
 
+		if(temp[i].at(1) == 'x') {
+			string res = temp[i].erase(0,2);
+			regMem[i] = res;
+		} else {
+			regMem[i] = temp[i];
+		}
 	}
-	//second value decimal
-}
 
-int main(){
-	return 0;
 }
+	
+	//second value decimal
+
+
+
 
