@@ -1,8 +1,10 @@
 #include "Parser.h"
 
-int main() {
+int main(int argc, char const* argv[]) {
+
 	Parser parser;
-	parser.parseConfig("input.config");
+	string in = argv[1];
+	parser.parseConfig(in);
 	parser.convertMemory();
 	parser.convertRegister();
 
@@ -10,6 +12,8 @@ int main() {
 	cout << parser.mem["10000030"] << endl;
 	cout << parser.regMem[20] << endl;
 
+	cout << "hi" << endl;
+	
 	return 0;
 
 }

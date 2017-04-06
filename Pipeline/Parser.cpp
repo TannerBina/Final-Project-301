@@ -9,7 +9,6 @@ set forth by general syntax of input files
 
 Parser::Parser(){
 
-
 }
 
 void Parser::parseConfig(string file) {
