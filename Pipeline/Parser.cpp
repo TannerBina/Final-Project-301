@@ -25,9 +25,9 @@ void Parser::parseConfig(string file) {
 			}
 
 			int equalsPos = line.find('=');
-			line.erase(remove(line.begin(), line.end(), ' '));
+			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 
-			config[line.substr(0, equalsPos)] = line.substr(equalsPos + 1);
+			config[line.substr(0, equalsPos)] = line.substr(equalsPos + 1, line.size() - equalsPos - 2);
 
 		}
 	}
@@ -49,14 +49,12 @@ void Parser::parseProgram(){
 
 map<string, string> Parser::parseMemory() {
 	
-	string memory = config["memory_content_input"];
+	string memory = config["memory_contents_input"];
 
 	map<string, string> temp;
-	ifstream ifs;
-	ifs.open(memory.c_str());
+	ifstream ifs (memory.c_str());
 	if(ifs.is_open()) {
 		string line;
-
 		while(getline(ifs, line)) {
 
 			if (line[0] == '#' || line.empty()) {
@@ -64,20 +62,22 @@ map<string, string> Parser::parseMemory() {
 			}
 
 			int colonPos = line.find(':');
-			line.erase(remove(line.begin(), line.end(), ' '));
+			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 
-			temp[line.substr(0, colonPos)] = line.substr(colonPos + 1);
+			temp[line.substr(0, colonPos)] = line.substr(colonPos + 1, line.size() - colonPos - 2);
 
 		}
+		
 	}
 	return temp;
+	
 
 }
 
-map<int, string> Parser::parseRegister(){
+map<string, string> Parser::parseRegister(){
 
 	string reg = config["register_file_input"];
-	map <int, string> temp;
+	map <string, string> temp;
 	ifstream ifs;
 	ifs.open(reg.c_str());
 	if(ifs.is_open()) {
@@ -90,11 +90,10 @@ map<int, string> Parser::parseRegister(){
 			}
 
 			int colonPos = line.find(':');
-			line.erase(remove(line.begin(), line.end(), ' '));
+			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 			string sub = line.substr(0, colonPos);
-			int regNum = atoi(sub.c_str());
 
-			temp[regNum] = line.substr(colonPos + 1);
+			temp[sub] = line.substr(colonPos + 1, line.size() - colonPos - 2);
 
 		}
 	}
@@ -105,18 +104,19 @@ map<int, string> Parser::parseRegister(){
 
 void Parser::convertMemory() {
 
-	map <string, string> temp = parseMemory();
+	map <string, string> temp(parseMemory());
 	map<string, string>::iterator itr;
 
-
-	for(itr = temp.begin(); itr != temp.end(); itr++) {
-		if(itr->second[1] == 'x') {
-			string res = itr->second;
-			res.erase(0,2);
-			mem[itr->first] = res;
+	for(itr = temp.begin(); itr != temp.end(); ++itr) {
+		string res = itr->first;
+		string sec = itr->second;
+		if(sec[1] == 'x') {
+			sec.erase(0,2);
+			mem[res] = sec;
 		} else {
-			mem[itr->first] = itr->second;
+			mem[res] = sec;
 		}
+
 	}
 	//nothing preceded by 0x
 	//second value as an decimal
@@ -124,19 +124,20 @@ void Parser::convertMemory() {
 }
 
 void Parser::convertRegister(){
-	map <int, string> temp = parseRegister();
-	map<int, string>::iterator itr;
+	map <string, string> temp = parseRegister();
+	map<string, string>::iterator itr;
 
-	for (int i = 0; i < 32; i++) {
-
-		if(temp[i].at(1) == 'x') {
-			string res = temp[i].erase(0,2);
-			regMem[i] = res;
+	for(itr = temp.begin(); itr != temp.end(); ++itr) {
+		string sec = itr->second;
+		string res = itr->first;
+		if(sec[1] == 'x') {
+			string res = itr->first;
+			sec.erase(0,2);
+			regMem[res] = sec;
 		} else {
-			regMem[i] = temp[i];
+			regMem[res] = sec;
 		}
 	}
-
 }
 	
 	//second value decimal

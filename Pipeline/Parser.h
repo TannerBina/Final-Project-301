@@ -15,8 +15,8 @@ public:
 	Parser();
 	void parseConfig(string file);
 	void parseProgram();
-	map<string, string> parseMemory();
-	map<int, string> parseRegister();
+	map<string, string>parseMemory();
+	map<string, string> parseRegister();
 
 	string getConfig(string key);
 	string getMem(string key);
@@ -29,7 +29,7 @@ public:
 
 	map <string, string> config;
 	map <string, string> mem;
-	map <int, string> regMem;
+	map <string, string> regMem;
 
 
 private:
