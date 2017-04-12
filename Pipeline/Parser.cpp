@@ -45,9 +45,43 @@ void Parser::parseConfig(string file) {
 }
 
 void Parser::parseProgram(){
+	int key = 4194304;
 	string program = config["program_input"];
 
-	Instruction i;
+	ifstream ifs(program.c_str());
+	if (ifs.is_open()){
+		string line;
+		while(getline(ifs, line)){
+			if (line[0] == '#' || line.empty()){
+				continue;
+			}
+
+			prog[key] = line;
+			key += 4;
+		}
+	}
+}	
+
+/*
+This method takes in an integer and a string, converting an integer
+to a binary string
+*/
+string Parser::toBinary(int num, string result){
+	stringstream ss;
+  	int rem;
+  	if (num<=1)
+  	{
+    	ss << num;
+    	result = ss.str();
+  	} else
+  	{
+    	rem = num%2;
+    	toBinary(num/2, result);
+    	ss << rem;
+    	result = result + ss.str();
+  	}
+  	return result;
+}
 
 	//rs, rd, rt #s
 	//opcode in binary
@@ -55,7 +89,7 @@ void Parser::parseProgram(){
 
 
 
-}
+
 
 /*
 This method parses the memory file storing the memory addresses and value stored at them
@@ -232,6 +266,10 @@ string Parser::getReg(string key){
 map<string, string> Parser::getRegMap(){
 	return regMem;
 
+}
+
+string Parser::getProg(int key){
+	return prog[key];
 }
 	
 	//second value decimal
