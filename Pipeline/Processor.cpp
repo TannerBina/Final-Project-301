@@ -1,4 +1,11 @@
 #include "Parser.h"
+#include "Processor.h"
+
+Processor::Processor()
+:single_step(false), debug_mode(false), print_memory_contents(false),
+write_to_file(false){
+
+}
 
 int main(int argc, char const* argv[]) {
 

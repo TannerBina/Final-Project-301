@@ -3,8 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include "Instruction.h"
-#include "Opcode.h"
 /*
 What this class does, The ALU Control - takes in instruction funct field 
 and ALUOp  and outputs the ALU control code
@@ -26,7 +24,7 @@ private:
 	int op1, op2;
 
 public:
-
+	ALUControl(){}
 	ALUControl(string functcode, int op1, int op2);
 	string getALUControl(string functcode, int op1, int op2);
 	
