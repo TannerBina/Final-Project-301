@@ -9,6 +9,7 @@
 #include "Multiplexor.h"
 #include "ControlUnit.h"
 #include "ALUControl.h"
+#include <iostream>
 
 class Processor{
 private:
@@ -34,6 +35,10 @@ public:
 	Processor(string initFile);
 
 	bool getBool(string input);
+
+	int binStoI(string in);
+
+	void step();
 };
 
 #endif

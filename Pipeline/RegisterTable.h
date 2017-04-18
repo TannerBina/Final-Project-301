@@ -2,6 +2,8 @@
 #define __REGISTERTABLE_H__
 
 #include <map>
+#include <iostream>
+#include <string>
 
 using namespace std;
 

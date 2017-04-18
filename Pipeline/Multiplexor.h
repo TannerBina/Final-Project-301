@@ -2,19 +2,20 @@
 #define __MULTIPLEXOR_H__
 
 struct MultiplexorInput{
+	int in0;
 	int in1;
-	int in2;
+	int control;
 };
 
 class Multiplexor{
 public:
 	Multiplexor();
 
-	int process(MultiplexorInput in, int control){
-		if (control == 0){
-			return in.in1;
+	int process(MultiplexorInput in){
+		if (in.control == 0){
+			return in.in0;
 		} else {
-			return in.in2;
+			return in.in1;
 		}
 	}
 };

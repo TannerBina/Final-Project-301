@@ -34,7 +34,8 @@ bool RegisterTable::write(int writeData){
 }
 
 void RegisterTable::print(){
+	cout << "Register File" << endl;
 	for (int i = 0; i < 32; i++){
-		cout << "Register " << i << " : " << registers[i] << endl;
+		cout << "Register " << i << " : 0x" << hex << registers[i] << endl;
 	}
 }

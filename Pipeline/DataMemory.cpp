@@ -21,7 +21,8 @@ int DataMemory::process(MemInput in){
 
 void DataMemory::print(){
 	map<int, int>::iterator it;
+	cout << "Data Memory" << endl;
 	for (it = memory.begin(); it != memory.end(); it++){
-		cout << it->first << " : " << it->second << endl;
+		cout << "0x" << hex << it->first << " : 0x" << hex << it->second << endl;
 	}
 }
