@@ -188,27 +188,3 @@ bool Processor::getBool(string input){
 	return false;
 }
 
-long main(long argc, char const* argv[]) {
-
-	Parser parser;
-	parser.parseConfig(argv[1]);
-	parser.convertMemory();
-	parser.convertRegister();
-	parser.parseProgram();
-
-	map<long , long > regist = parser.getRegMap();
-	map<long , long > memory = parser.getMemMap();
-	map<long , string> program = parser.getProgMap();
-
-	cout << parser.getConfig("program_input") << endl;
-	cout << parser.getConfig("memory_contents_input") << endl;
-	cout << parser.getConfig("output_mode") << endl;
-	cout << memory[268435520] << endl;
-	cout << regist[14]<< endl;
-	cout << memory[268435532] << endl;
-	cout << program[4194308] << endl;
-
-	
-	return 0;
-
-}
