@@ -32,3 +32,9 @@ bool RegisterTable::write(int writeData){
 	}
 	return false;
 }
+
+void RegisterTable::print(){
+	for (int i = 0; i < 32; i++){
+		cout << "Register " << i << " : " << registers[i] << endl;
+	}
+}

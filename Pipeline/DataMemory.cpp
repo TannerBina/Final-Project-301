@@ -2,8 +2,8 @@
 
 using namespace std;
 
-DataMemory::DataMemory(map<string, int> initMem){
-	map<string, int>::iterator it;
+DataMemory::DataMemory(map<int, int> initMem){
+	map<int, int>::iterator it;
 	for (it = initMem.begin(); it != initMem.end(); it++){
 		memory[it->first] = it->second;
 	}
@@ -17,4 +17,11 @@ int DataMemory::process(MemInput in){
 		return memory[in.address];
 	}
 	return 0;
+}
+
+void DataMemory::print(){
+	map<int, int>::iterator it;
+	for (it = memory.begin(); it != memory.end(); it++){
+		cout << it->first << " : " << it->second << endl;
+	}
 }
