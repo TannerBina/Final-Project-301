@@ -30,6 +30,8 @@ public:
 	RegOutput process(RegInput in);
 	//process the writeback cycle, true if written to register
 	bool write(int writeData);
+
+	void print();
 private:
 	//stores register dat
 	int registers[32];

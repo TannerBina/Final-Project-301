@@ -16,11 +16,12 @@ struct MemInput{
 class DataMemory{
 public:
 	DataMemory(){}
-	DataMemory(map<string, int> initMem);
+	DataMemory(map<int, int> initMem);
 	int process(MemInput in);
 
+	void print();
 private:
-	map<string, int> memory;
+	map<int, int> memory;
 
 };
 

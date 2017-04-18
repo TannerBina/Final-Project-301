@@ -24,14 +24,16 @@ private:
 	ALUControl aluControl;
 	//TODO add sign extend unit;
 	
-	bool single_step;
+	string output_mode;
 	bool debug_mode;
 	bool print_memory_contents;
 	bool write_to_file;
 	string output_file;
 public:
 	Processor();
-	Processor(Parser parser);
+	Processor(string initFile);
+
+	bool getBool(string input);
 };
 
 #endif
