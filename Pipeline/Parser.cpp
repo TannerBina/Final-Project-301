@@ -209,17 +209,16 @@ void Parser::convertMemory() {
 	}
 
 
+	//iterates through string map converting values to longs
 	for (itr = copy.begin(); itr!= copy.end(); itr++){
+
 		string res = itr->first;
-		long key = stoi(res, nullptr, 16);
+		long key = stol(res, nullptr, 16);
 		string val = itr->second;
-		cout << val << endl;
-		long value = stoi(val, nullptr, 16);
-		cout << value << endl;
+		long value = stol(val, nullptr, 16);
 		mem[key] = value;
 	}
-	//nothing preceded by 0x
-	//second value as an decimal
+
 }
 
 /*
@@ -268,11 +267,13 @@ void Parser::convertRegister(){
 		}
 	}
 
+	//iterates through string map converting to longs
 	for (itr = copy.begin(); itr!= copy.end(); itr++){
+		
 		string res = itr->first;
-		long key = stoi(res);
+		long key = stol(res);
 		string val = itr->second;
-		long value = stoi(val, nullptr, 16);
+		long value = stol(val, nullptr, 16);
 		regMem[key] = value;
 	}
 }

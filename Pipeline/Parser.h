@@ -7,7 +7,6 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include "Instruction.h"
 #include <algorithm>
 #include <cctype>
 #include "Opcode.h"
