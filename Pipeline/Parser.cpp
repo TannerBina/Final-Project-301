@@ -44,14 +44,23 @@ void Parser::parseConfig(string file) {
 
 }
 
+/*
+This method takes in an assembly code file and stores it line by line according to its memory
+*/
 void Parser::parseProgram(){
 	int key = 4194304;
 	string program = config["program_input"];
 
 	ifstream ifs(program.c_str());
+
+	//checks if the input file is open
 	if (ifs.is_open()){
 		string line;
+
+		//iterates through the file line by line
 		while(getline(ifs, line)){
+
+			//checks if the line is empty or a comment
 			if (line[0] == '#' || line.empty()){
 				continue;
 			}
@@ -60,7 +69,9 @@ void Parser::parseProgram(){
 			key += 4;
 		}
 	}
-}	
+}
+
+	
 
 /*
 This method takes in an integer and a string, converting an integer
@@ -82,13 +93,6 @@ string Parser::toBinary(int num, string result){
   	}
   	return result;
 }
-
-	//rs, rd, rt #s
-	//opcode in binary
-	//
-
-
-
 
 
 /*
@@ -167,6 +171,7 @@ the values uniformly formatted
 void Parser::convertMemory() {
 
 	map <string, string> temp(parseMemory());
+	map<string, string> copy;
 	map<string, string>::iterator itr;
 
 	//iterates through the map
@@ -186,7 +191,7 @@ void Parser::convertMemory() {
 					sec[i] = tolower(sec[i]);
 				}
 			}
-			mem[res] = sec;
+			copy[res] = sec;
 
 		} else {
 
@@ -198,9 +203,20 @@ void Parser::convertMemory() {
 					sec[i] = tolower(sec[i]);
 				}
 			}
-			mem[res] = sec;
+			copy[res] = sec;
 		}
 
+	}
+
+
+	for (itr = copy.begin(); itr!= copy.end(); itr++){
+		string res = itr->first;
+		int key = stoi(res, nullptr, 16);
+		string val = itr->second;
+		cout << val << endl;
+		int value = stoi(val, nullptr, 16);
+		cout << value << endl;
+		mem[key] = value;
 	}
 	//nothing preceded by 0x
 	//second value as an decimal
@@ -212,6 +228,7 @@ all the values uniformly formatted
 */
 void Parser::convertRegister(){
 	map <string, string> temp = parseRegister();
+	map<string, string> copy;
 	map<string, string>::iterator itr;
 
 	//iterates through the key value pairs of the map
@@ -232,7 +249,7 @@ void Parser::convertRegister(){
 				sec[i] = tolower(sec[i]);
 				}
 			}
-			regMem[res] = sec;
+			copy[res] = sec;
 
 		} else {
 
@@ -244,35 +261,69 @@ void Parser::convertRegister(){
 					sec[i] = tolower(sec[i]);
 				}
 
-			regMem[res] = sec;
+			copy[res] = sec;
+
 			}
 		
 		}
 	}
+
+	for (itr = copy.begin(); itr!= copy.end(); itr++){
+		string res = itr->first;
+		int key = stoi(res);
+		string val = itr->second;
+		int value = stoi(val, nullptr, 16);
+		regMem[key] = value;
+	}
+}
+
+/*
+This method converts the assembly code into binary strings
+*/
+void Parser::convertProgram(){
+
 }	
 
+/*
+This method gets the value of the configuration map at the 
+string specified
+*/
 string Parser::getConfig(string key){
 	return config[key];
 
 }
-string Parser::getMem(string key){
-	return mem[key];
 
-}
-string Parser::getReg(string key){
-	return regMem[key];
-}
-
-map<string, string> Parser::getRegMap(){
+/*
+This method returns the map containing the register information
+*/
+map<int, int> Parser::getRegMap(){
 	return regMem;
 
 }
 
-string Parser::getProg(int key){
-	return prog[key];
+/*
+This method returns the map containing the memory information
+*/
+map<int, int> Parser::getMemMap(){
+	return mem;
 }
+
+/*
+This method returns the map containing the program instruction information
+*/
+map<int, string> Parser::getProgMap(){
+	return prog;
+}
+
+map<int, string> Parser::getBinProg(){
+	return binProg;
+}
+
+
+
+
 	
-	//second value decimal
+
 
 
 
