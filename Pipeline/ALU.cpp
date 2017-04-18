@@ -11,7 +11,7 @@ ALU::ALU(string control, long  src1, long  src2){
 
 //store out long o output
 //store
-long  ALU:performALU(string control, long   src1, long  src2){
+LineInfo  ALU:performALU(string control, long   src1, long  src2){
 	long  out;
 	if(control == "010"){
 		out = src1 + src2; // return the sum
@@ -33,16 +33,15 @@ long  ALU:performALU(string control, long   src1, long  src2){
 			out = 0;
 		}
 	}
-	
 
-
-}
-long  ALU::line(LineInfo in, long  out) {
-	if (in.output == 0) {
-		in.zeroOrOne = 1;
-	}else{
-		in.zeroOrOne = 0;
+	LineInfo res;
+	res.output = out;
+	if (res.output == 0){
+		res.zeroOrOne = 1;
+	} else {
+		res.zeroOrOne = 0;
 	}
 
+	return res;
 }
 

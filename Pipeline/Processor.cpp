@@ -1,6 +1,6 @@
 #include "Processor.h"
 
-<<<<<<< HEAD
+
 using namespace std;
 
 
@@ -89,7 +89,7 @@ Processor::Processor(string initFile){
 		cout << endl <<"Entering Decode Stage" << endl << endl;
 		step();
 
-		cout << "Control Unit Input : 0x" << hex << binStoI(i31_26)<< endl;
+		cout << "Control Unit Input : 0x" << hex << binStoL(i31_26)<< endl;
 		ControlWires cOut = control.process(i31_26);
 		cout << "Control Unit Output" << endl;
 		cout << "RegDst : 0x" << hex << cOut.regDst << endl;
@@ -106,12 +106,12 @@ Processor::Processor(string initFile){
 
 
 		RegInput rIn;
-		rIn.readReg1 = binStoI(i25_21);
-		rIn.readReg2 = binStoI(i20_16);
+		rIn.readReg1 = binStoL(i25_21);
+		rIn.readReg2 = binStoL(i20_16);
 
 		MultiplexorInput mIn;
-		mIn.in0 = binStoI(i20_16);
-		mIn.in1 = binStoI(i15_11);
+		mIn.in0 = binStoL(i20_16);
+		mIn.in1 = binStoL(i15_11);
 		mIn.control = regDst;
 
 		cout << "Register File Multiplexor Input" << endl;
@@ -137,7 +137,7 @@ Processor::Processor(string initFile){
 		cout << "readData2 : 0x" << hex << rOUt.readData2 << endl;
 		cout << endl;
 
-		long jumpVal = binStoI(i25_0);
+		long jumpVal = binStoL(i25_0);
 		cout << "Shift Jump Value Left 2" << endl;
 		cout << "Shift Input : " << hex << jumpVal << endl;
 		jumpVal *= 4;
@@ -148,7 +148,7 @@ Processor::Processor(string initFile){
 		step();
 
 		mIn.in0 = rOut.readData2;
-		mIn.in1 = binStoI(i15_0);
+		mIn.in1 = binStoL(i15_0);
 		mIn.control = cOut.ALUSrc;
 		cout << "ALU Source Multiplexor Input" << endl;
 		cout << "In 0 : 0x" << hex << mIn.in0 << endl;
@@ -162,14 +162,14 @@ Processor::Processor(string initFile){
 		long ALUIn1 = mOut;
 
 		cout << "ALU Control Input" << endl;
-		cout << "Funct Code : 0x" << hex << binStoI(i5_0) << endl;
+		cout << "Funct Code : 0x" << hex << binStoL(i5_0) << endl;
 		cout << "ALUOp 0 : 0x" << hex << ALUOp0 << endl;
 		cout << "ALUOp 1 : 0x" << hex << ALUOp1 << endl;
 		string aluOpCode = aluControl.getALUControl(i5_0, ALUOp0, ALUOp1);
-		cout << "ALU Control Output : 0x" << hex << binStoI(aluOpCode) << endl;
+		cout << "ALU Control Output : 0x" << hex << binStoL(aluOpCode) << endl;
 		cout << end;
 
-		cout << "ALU "
+		
 	}
 }
 
@@ -179,8 +179,8 @@ void Processor::step(){
 	}
 }
 
-long Processor::binStoI(string in){
-	return stoi(in, nullptr, 2);
+long Processor::binStoL(string in){
+	return stol(in, nullptr, 2);
 }
 
 bool Processor::getBool(string input){
