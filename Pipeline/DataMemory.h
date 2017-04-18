@@ -8,21 +8,21 @@
 using namespace std;
 
 struct MemInput{
-	int memWrite;
-	int memRead;
-	int address;
-	int writeData;
+	long  memWrite;
+	long  memRead;
+	long  address;
+	long  writeData;
 };
 
 class DataMemory{
 public:
 	DataMemory(){}
-	DataMemory(map<int, int> initMem);
-	int process(MemInput in);
+	DataMemory(map<long , long > initMem);
+	long  process(MemInput in);
 
-	void print();
+	void prlong ();
 private:
-	map<int, int> memory;
+	map<long , long > memory;
 
 };
 

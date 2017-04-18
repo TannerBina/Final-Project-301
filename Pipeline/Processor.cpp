@@ -5,7 +5,7 @@ using namespace std;
 
 
 Processor::Processor()
-:single_step(false), debug_mode(false), print_memory_contents(false), write_to_file(false){
+:single_step(false), debug_mode(false), prlong _memory_contents(false), write_to_file(false){
 
 }
 
@@ -22,14 +22,14 @@ Processor::Processor(string initFile){
 	output_mode = parser.getConfig("output_mode");
 	debug_mode = getBool(parser.getConfig("debug_mode"));
 	write_to_file = getBool(parser.getConfig("write_to_file"));
-	print_memory_contents = getBool(parser.getConfig("print_memory_contents"));
+	prlong _memory_contents = getBool(parser.getConfig("prlong _memory_contents"));
 	output_file = parser.getConfig("output_file");
 
 	if (debug_mode){
 		cout << "Output Mode : " << output_mode << endl;
 		cout << "Debug Mode : " << debug_mode << endl;
 		cout << "Write to File : " << write_to_file << endl;
-		cout << "Print memory contents : " << print_memory_contents << endl;
+		cout << "Prlong memory contents : " << prlong _memory_contents << endl;
 		cout << "Output file : " << output_file << endl;
 	}
 
@@ -43,11 +43,11 @@ Processor::Processor(string initFile){
 
 	if (debug_mode){
 		cout << endl;
-		regFile.print();
+		regFile.prlong ();
 		cout << endl;
-		dataMem.print();
+		dataMem.prlong ();
 		cout << endl;
-		instMem.print();
+		instMem.prlong ();
 		cout << endl;
 	}
 
@@ -56,14 +56,14 @@ Processor::Processor(string initFile){
 			cout << "Instruction at address : 0x" << hex << pc.getValue << endl;
 		}
 
-		if (print_memory_contents){
+		if (prlong _memory_contents){
 			cout << "Memory Contents" << endl << endl;
 			cout << endl;
-			regFile.print();
+			regFile.prlong ();
 			cout << endl;
-			dataMem.print();
+			dataMem.prlong ();
 			cout << endl;
-			instMem.print();
+			instMem.prlong ();
 			cout << endl;
 		}
 
@@ -137,7 +137,7 @@ Processor::Processor(string initFile){
 		cout << "readData2 : 0x" << hex << rOUt.readData2 << endl;
 		cout << endl;
 
-		int jumpVal = binStoI(i25_0);
+		long jumpVal = binStoI(i25_0);
 		cout << "Shift Jump Value Left 2" << endl;
 		cout << "Shift Input : " << hex << jumpVal << endl;
 		jumpVal *= 4;
@@ -154,12 +154,12 @@ Processor::Processor(string initFile){
 		cout << "In 0 : 0x" << hex << mIn.in0 << endl;
 		cout << "In 1 : 0x" << hex << mIn.in1 << endl;
 		cout << "Control : 0x" << hex << mIn.control << endl;
-		int mOut = mult.process(mIn);
+		long mOut = mult.process(mIn);
 		cout << "ALU Source Multiplexor Output : 0x" << hex << mOut << endl;
 		cout << endl;
 
-		int ALUIn0 = rOut.readData1;
-		int ALUIn1 = mOut;
+		long ALUIn0 = rOut.readData1;
+		long ALUIn1 = mOut;
 
 		cout << "ALU Control Input" << endl;
 		cout << "Funct Code : 0x" << hex << binStoI(i5_0) << endl;
@@ -179,7 +179,7 @@ void Processor::step(){
 	}
 }
 
-int Processor::binStoI(string in){
+long Processor::binStoI(string in){
 	return stoi(in, nullptr, 2);
 }
 
@@ -188,7 +188,7 @@ bool Processor::getBool(string input){
 	return false;
 }
 
-int main(int argc, char const* argv[]) {
+long main(long argc, char const* argv[]) {
 
 	Parser parser;
 	parser.parseConfig(argv[1]);
@@ -196,9 +196,9 @@ int main(int argc, char const* argv[]) {
 	parser.convertRegister();
 	parser.parseProgram();
 
-	map<int, int> regist = parser.getRegMap();
-	map<int, int> memory = parser.getMemMap();
-	map<int, string> program = parser.getProgMap();
+	map<long , long > regist = parser.getRegMap();
+	map<long , long > memory = parser.getMemMap();
+	map<long , string> program = parser.getProgMap();
 
 	cout << parser.getConfig("program_input") << endl;
 	cout << parser.getConfig("memory_contents_input") << endl;

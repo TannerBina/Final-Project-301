@@ -7,16 +7,16 @@ using namespace std;
 
 //holds the output of the control wires after decode
 struct ControlWires{
-	int regDst;
-	int jump;
-	int branch;
-	int memRead;
-	int memToReg;
-	int ALUOp0;
-	int ALUOp1;
-	int memWrite;
-	int ALUSrc;
-	int regWrite;
+	long  regDst;
+	long  jump;
+	long  branch;
+	long  memRead;
+	long  memToReg;
+	long  ALUOp0;
+	long  ALUOp1;
+	long  memWrite;
+	long  ALUSrc;
+	long  regWrite;
 };
 
 class ControlUnit{

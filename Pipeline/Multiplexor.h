@@ -2,16 +2,16 @@
 #define __MULTIPLEXOR_H__
 
 struct MultiplexorInput{
-	int in0;
-	int in1;
-	int control;
+	long in0;
+	long in1;
+	long control;
 };
 
 class Multiplexor{
 public:
 	Multiplexor();
 
-	int process(MultiplexorInput in){
+	long process(MultiplexorInput in){
 		if (in.control == 0){
 			return in.in0;
 		} else {

@@ -1,12 +1,12 @@
 #include "ALUControl.h"
 using namespace std;
 
-ALUControl::ALUControl(string functcode, int op1, int op2){
+ALUControl::ALUControl(string functcode, long  op1, long  op2){
 
 	getALUControl(functcode, op1, op2);
 }
 
-string ALUControl::getALUControl(string functionCode, int ALUOp1, int ALUOp2){
+string ALUControl::getALUControl(string functionCode, long  ALUOp1, long  ALUOp2){
 
 	string output ="";
 	if( ALUOp1 == 0 && ALUOp2 == 0){
@@ -38,10 +38,10 @@ string ALUControl::getALUControl(string functionCode, int ALUOp1, int ALUOp2){
 
 }
 /*
-int main() {
+long  main() {
 	string input = "101010";
-	int op1 = 1;
-	int op2 = 0;
+	long  op1 = 1;
+	long  op2 = 0;
 	ALUControl(input, op1, op2);
 
 }

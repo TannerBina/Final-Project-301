@@ -2,7 +2,7 @@
 
 
 /*
-This class reads in a file and parses it following all constraints
+This class reads in a file and parses it following all constralong s
 set forth by general syntax of input files
 */
 
@@ -33,7 +33,7 @@ void Parser::parseConfig(string file) {
 				continue;
 			}
 
-			int equalsPos = line.find('=');
+			long equalsPos = line.find('=');
 
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 
@@ -48,7 +48,7 @@ void Parser::parseConfig(string file) {
 This method takes in an assembly code file and stores it line by line according to its memory
 */
 void Parser::parseProgram(){
-	int key = 4194304;
+	long key = 4194304;
 	string program = config["program_input"];
 
 	ifstream ifs(program.c_str());
@@ -74,12 +74,12 @@ void Parser::parseProgram(){
 	
 
 /*
-This method takes in an integer and a string, converting an integer
+This method takes in an long eger and a string, converting an long eger
 to a binary string
 */
-string Parser::toBinary(int num, string result){
+string Parser::toBinary(long num, string result){
 	stringstream ss;
-  	int rem;
+  	long rem;
   	if (num<=1)
   	{
     	ss << num;
@@ -118,7 +118,7 @@ map<string, string> Parser::parseMemory() {
 				continue;
 			}
 
-			int colonPos = line.find(':');
+			long colonPos = line.find(':');
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 
 			temp[line.substr(0, colonPos)] = line.substr(colonPos + 1, line.size() - colonPos - 2);
@@ -151,7 +151,7 @@ map<string, string> Parser::parseRegister(){
 				continue;
 			}
 
-			int colonPos = line.find(':');
+			long colonPos = line.find(':');
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 			string sub = line.substr(0, colonPos);
 
@@ -184,7 +184,7 @@ void Parser::convertMemory() {
 			sec.erase(0,2);
 
 			//iterates through the characters in the value
-			for (int i = 0; i < sec.size(); i++) {
+			for (long i = 0; i < sec.size(); i++) {
 
 				//checks if the character is a letter, and makes it lowercase
 				if(! (sec[i] >= '0' && sec[i] <= '9')){
@@ -196,7 +196,7 @@ void Parser::convertMemory() {
 		} else {
 
 			//iterates through the characters in the value
-			for (int i = 0; i < sec.size(); i++) {
+			for (long i = 0; i < sec.size(); i++) {
 
 				//checks if the character is a letter, and makes it lowercase
 				if(! (sec[i] >= '0' && sec[i] <= '9')){
@@ -211,10 +211,10 @@ void Parser::convertMemory() {
 
 	for (itr = copy.begin(); itr!= copy.end(); itr++){
 		string res = itr->first;
-		int key = stoi(res, nullptr, 16);
+		long key = stoi(res, nullptr, 16);
 		string val = itr->second;
 		cout << val << endl;
-		int value = stoi(val, nullptr, 16);
+		long value = stoi(val, nullptr, 16);
 		cout << value << endl;
 		mem[key] = value;
 	}
@@ -242,7 +242,7 @@ void Parser::convertRegister(){
 			sec.erase(0,2);
 
 			//iterates through the characters in the value
-			for (int i = 0; i < sec.size(); i++) {
+			for (long i = 0; i < sec.size(); i++) {
 
 				//checks if the character is a letter, and makes it lowercase
 				if(! (sec[i] >= '0' && sec[i] <= '9')){
@@ -254,7 +254,7 @@ void Parser::convertRegister(){
 		} else {
 
 			//iterates through the characters in the value
-			for (int i = 0; i < sec.size(); i++) {
+			for (long i = 0; i < sec.size(); i++) {
 
 				//checks if the character is a letter, and makes it lowercase
 				if(!(sec[i] >= '0' && sec[i] <= '9')){
@@ -270,15 +270,15 @@ void Parser::convertRegister(){
 
 	for (itr = copy.begin(); itr!= copy.end(); itr++){
 		string res = itr->first;
-		int key = stoi(res);
+		long key = stoi(res);
 		string val = itr->second;
-		int value = stoi(val, nullptr, 16);
+		long value = stoi(val, nullptr, 16);
 		regMem[key] = value;
 	}
 }
 
 /*
-This method converts the assembly code into binary strings
+This method converts the assembly code long o binary strings
 */
 void Parser::convertProgram(){
 
@@ -296,7 +296,7 @@ string Parser::getConfig(string key){
 /*
 This method returns the map containing the register information
 */
-map<int, int> Parser::getRegMap(){
+map<long , long > Parser::getRegMap(){
 	return regMem;
 
 }
@@ -304,18 +304,18 @@ map<int, int> Parser::getRegMap(){
 /*
 This method returns the map containing the memory information
 */
-map<int, int> Parser::getMemMap(){
+map<long , long > Parser::getMemMap(){
 	return mem;
 }
 
 /*
 This method returns the map containing the program instruction information
 */
-map<int, string> Parser::getProgMap(){
+map<long , string> Parser::getProgMap(){
 	return prog;
 }
 
-map<int, string> Parser::getBinProg(){
+map<long , string> Parser::getBinProg(){
 	return binProg;
 }
 

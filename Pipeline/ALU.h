@@ -7,8 +7,8 @@
 /*
 ALU - takes Three inputs outputs the result
 -a control input: from ALUControl
--data input 1 int from either signextend or register table
--data input 2 int frome either signextend or register table
+-data input 1 long  from either signextend or register table
+-data input 2 long  frome either signextend or register table
 output the result of the operation(AND, OR, ADD, Subtract, SLT) performed on the inputs
 and zero or one depending on 
 */
@@ -16,8 +16,8 @@ and zero or one depending on
 using namespace std;
 
 struct LineInfo{
-	int output;
-	int zeroOrOne;
+	long  output;
+	long  zeroOrOne;
 };
 
 class ALU{
@@ -25,13 +25,13 @@ class ALU{
 public:
 
 	ALU(){};
-	ALU(string control, int src1, int src2);
+	ALU(string control, long  src1, long  src2);
 
 	//given a control string taken from ALUcontrol, and registers,
 	//performs the correct operation based on the ALU control
-	//and returns int with the selected action on the input
-	int performALU(string control, int src1, int src2);
-	int ALU::line(LineInfo in);
+	//and returns long  with the selected action on the input
+	long  performALU(string control, long  src1, long  src2);
+	long  ALU::line(LineInfo in);
 	
 };
 

@@ -27,7 +27,7 @@ private:
 	
 	string output_mode;
 	bool debug_mode;
-	bool print_memory_contents;
+	bool prlong _memory_contents;
 	bool write_to_file;
 	string output_file;
 public:
@@ -36,7 +36,7 @@ public:
 
 	bool getBool(string input);
 
-	int binStoI(string in);
+	long binStoI(string in);
 
 	void step();
 };

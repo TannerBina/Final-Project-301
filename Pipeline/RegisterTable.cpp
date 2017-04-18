@@ -3,9 +3,9 @@
 using namespace std;
 
 //initialize based on a map
-RegisterTable::RegisterTable(map<int, int> initMap)
+RegisterTable::RegisterTable(map<long , long > initMap)
 :writeState(false), writeRegister(-1){
-	for (int i = 0; i < 32; i++){
+	for (long i = 0; i < 32; i++){
 		registers[i] = initMap[i];
 	}
 }
@@ -25,7 +25,7 @@ RegOutput RegisterTable::process(RegInput in){
 }
 
 //process the writeback cycle, true if written to register.
-bool RegisterTable::write(int writeData){
+bool RegisterTable::write(long writeData){
 	if (writeRegister != -1 && writeState){
 		registers[writeRegister] = writeData;
 		return true;
@@ -33,9 +33,9 @@ bool RegisterTable::write(int writeData){
 	return false;
 }
 
-void RegisterTable::print(){
+void RegisterTable::prlong (){
 	cout << "Register File" << endl;
-	for (int i = 0; i < 32; i++){
+	for (long i = 0; i < 32; i++){
 		cout << "Register " << i << " : 0x" << hex << registers[i] << endl;
 	}
 }

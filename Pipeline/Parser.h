@@ -27,27 +27,27 @@ public:
 	map<string, string> parseRegister();
 
 	string getConfig(string key);
-	string getMem(int key);
-	string getReg(int key);
-	string getProg(int key);
+	string getMem(long key);
+	string getReg(long key);
+	string getProg(long key);
 
-	map<int, int> getRegMap();
-	map<int, int> getMemMap();
-	map<int, string> getProgMap();
-	map<int, string> getBinProg();
+	map<long , long > getRegMap();
+	map<long , long > getMemMap();
+	map<long , string> getProgMap();
+	map<long , string> getBinProg();
 
 	void convertMemory();
 	void convertRegister();
 	void convertProgram();
 
-	string toBinary(int num, string result);
+	string toBinary(long num, string result);
 
 private:
 	map <string, string> config;
-	map <int, int> mem; //convert to string int
-	map <int, int> regMem; //int int
-	map <int, string> prog; 
-	map<int, string> binProg;
+	map <long , long > mem; //convert to string long 
+	map <long , long > regMem; //long long 
+	map <long , string> prog; 
+	map<long , string> binProg;
 
 };
 

@@ -21,12 +21,12 @@ class ALUControl{
 
 private:
 	string functcode;
-	int op1, op2;
+	long  op1, op2;
 
 public:
 	ALUControl(){}
-	ALUControl(string functcode, int op1, int op2);
-	string getALUControl(string functcode, int op1, int op2);
+	ALUControl(string functcode, long  op1, long  op2);
+	string getALUControl(string functcode, long  op1, long  op2);
 	
 };
 
