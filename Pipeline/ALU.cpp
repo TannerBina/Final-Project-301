@@ -2,17 +2,14 @@
 
 using namespace std;
 
-ALU::ALU(string control, long  src1, long  src2){
+ALU::ALU(string control, long src1, long src2){
 
- 	performALU(control, src1, src2)
-
+ 	performALU(control, src1, src2);
 
 }
 
-//store out long o output
-//store
-LineInfo  ALU:performALU(string control, long   src1, long  src2){
-	long  out;
+LineInfo  ALU::performALU(string control, long src1, long src2){
+	long out;
 	if(control == "010"){
 		out = src1 + src2; // return the sum
 
