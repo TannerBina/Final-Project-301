@@ -31,7 +31,9 @@ public:
 	string getReg(string key);
 	string getProg(int key);
 
-	map<string, string> getRegMap();
+	map<int, int> getRegMap();
+	map<int, int> getMemMap();
+	map<int, string> getProgMap();
 
 	void convertMemory();
 	void convertRegister();
@@ -41,9 +43,9 @@ public:
 
 private:
 	map <string, string> config;
-	map <string, string> mem;
-	map <string, string> regMem;
-	map <int, string> prog;
+	map <int, int> mem; //convert to string int
+	map <int, int> regMem; //int int
+	map <int, string> prog; 
 
 };
 
