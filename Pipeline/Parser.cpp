@@ -282,6 +282,16 @@ void Parser::convertRegister(){
 This method converts the assembly code long o binary strings
 */
 void Parser::convertProgram(){
+	OpcodeTable opcodetab;
+
+	map<long, string>::iterator itr;
+	itr = prog.begin();
+	string asem = itr->second;
+	char delim = ' ';
+	string name = asem.substr(0, asem.find(delim));
+	string op = opcodetab.getOpcode(name);
+	cout << op << endl;
+
 
 }	
 

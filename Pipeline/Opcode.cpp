@@ -1,6 +1,6 @@
 #include "Opcode.h"
 
-Opcode::OpcodeTable(){
+OpcodeTable::OpcodeTable(){
 	myTable[ADD].name = "add"; myTable[ADD].numOps = 3; myTable[ADD].rdPos = 0; myTable[ADD].rsPos = 1; myTable[ADD].rtPos = 2; myTable[ADD].immPos = -1; myTable[ADD].instType = RTYPE; myTable[ADD].op_field = "000000"; myTable[ADD].funct_field = "100000";
 	myTable[SUB].name = "sub"; myTable[SUB].numOps = 3; myTable[SUB].rdPos = 0; myTable[SUB].rsPos = 1; myTable[SUB].rtPos = 2; myTable[SUB].immPos = -1; myTable[SUB].instType = RTYPE; myTable[SUB].op_field = "000000"; myTable[SUB].funct_field = "100010";
 	myTable[ADDI].name = "addi"; myTable[ADDI].numOps = 3; myTable[ADDI].rdPos = 0; myTable[ADDI].rsPos = 1; myTable[ADDI].rtPos = -1; myTable[ADDI].immPos = 2; myTable[ADDI].instType = ITYPE; myTable[ADDI].op_field = "001000"; myTable[ADDI].funct_field = "000000"; 
@@ -11,16 +11,16 @@ Opcode::OpcodeTable(){
 	myTable[J].name = "j"; myTable[J].numOps = 0; myTable[J].rdPos = -1; myTable.rsPos = -1; myTable[J].rtPos = -1; myTable[J].immPos = -1; myTable[J].instType = JTYPE; myTable[J].op_field = "000010"; myTable[J].funct_field = "000000"; immLabel = true;
 }
 
-Opcode OpcodeTable::getOpcode(string str)
+string OpcodeTable::getOpcode(string str)
 // Given a valid MIPS assembly mnemonic, returns an Opcode which represents a 
 // template for that instruction.
 {
   for(long i = 0; i < (long )UNDEFINED; i++){
     if(myTable[i].name == str){
-      return (Opcode)i;
+      return i;
     }
   }
-  return UNDEFINED;
+  return '\0';
 }
 
 long OpcodeTable::numOperands(Opcode o)

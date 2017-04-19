@@ -38,7 +38,7 @@ class OpcodeTable {
 
   // Given a valid MIPS assembly mnemonic, returns an Opcode which represents a 
   // template for that instruction.
-  Opcode getOpcode(string str);
+  string getOpcode(string str);
 
   // Given an Opcode, returns number of expected operands.
   long numOperands(Opcode o);
