@@ -10,7 +10,7 @@ ALU - takes Three inputs outputs the result
 -data input 1 long  from either signextend or register table
 -data input 2 long  frome either signextend or register table
 output the result of the operation(AND, OR, ADD, Subtract, SLT) performed on the inputs
-and zero or one depending on 
+and zero or one depending on the output
 */
 
 using namespace std;
@@ -31,7 +31,6 @@ public:
 	//performs the correct operation based on the ALU control
 	//and returns long  with the selected action on the input
 	long  performALU(string control, long  src1, long  src2);
-	long  ALU::line(LineInfo in);
 	
 };
 
