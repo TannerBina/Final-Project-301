@@ -94,6 +94,7 @@ public:
 				if (binaryString.at(i) == '1'){
 					result += pow(2, binaryString.length() - 1 - i);
 				}
+
 			}
 		}
 		return result;
@@ -106,6 +107,8 @@ public:
 		}
 		return bStoi(binaryString);
 	}
+
+
 };
 
 #endif

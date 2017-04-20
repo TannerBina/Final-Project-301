@@ -2,7 +2,7 @@
 
 
 /*
-This class reads in a file and parses it following all constralong s
+This class reads in a file and parses it following all constraint s
 set forth by general syntax of input files
 */
 
@@ -33,7 +33,7 @@ void Parser::parseConfig(string file) {
 				continue;
 			}
 
-			long equalsPos = line.find('=');
+			int equalsPos = line.find('=');
 
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 
@@ -48,7 +48,7 @@ void Parser::parseConfig(string file) {
 This method takes in an assembly code file and stores it line by line according to its memory
 */
 void Parser::parseProgram(){
-	long key = 4194304;
+	int key = 4194304;
 	string program = config["program_input"];
 
 	ifstream ifs(program.c_str());
@@ -70,7 +70,7 @@ void Parser::parseProgram(){
 			key += 4;
 		}
 	}
-	map<long, string>::iterator itr;
+	map<int, string>::iterator itr;
 	string res;
 	for (itr = prog.begin(); itr != prog.end(); itr++) {
 		string asem = itr->second;
@@ -96,24 +96,47 @@ void Parser::parseProgram(){
 	
 
 /*
-This method takes in an long eger and a string, converting an long eger
+This method takes in an int eger and a string, converting an int eger
 to a binary string
 */
-string Parser::toBinary(long num, string result){
+string Parser::toBinary(int num, string result, unsigned int bits){
 	stringstream ss;
-  	long rem;
-  	if (num<=1)
-  	{
-    	ss << num;
-    	result = ss.str();
-  	} else
-  	{
-    	rem = num%2;
-    	toBinary(num/2, result);
-    	ss << rem;
-    	result = result + ss.str();
-  	}
-  	return result;
+  stringstream bit;
+  string temp;
+
+  //makes sure the nuber is not zero and iterates
+  while(num!=0) {
+
+    temp = ss.str();
+    ss.str("");
+
+    //checks if the number is multiple of 2
+    if (num%2 == 0) {
+
+      ss << 0 << temp;
+
+    //if not multiple of 2, adds 1 to the string
+    } else {
+      ss << 1 << temp;
+    }
+    num /= 2;
+  }
+
+  result = ss.str();
+
+  //determines whether zeros need to be added to string
+  if (result.length() < bits) {
+
+    //iterates through number of 0s that need to be added
+    for (unsigned int i = result.length(); i < bits; i++) {
+      bit << 0;
+    }
+  }
+
+  string bitnum = bit.str();
+  bitnum += result;
+  result = bitnum;
+  return result;
 }
 
 
@@ -140,7 +163,7 @@ map<string, string> Parser::parseMemory() {
 				continue;
 			}
 
-			long colonPos = line.find(':');
+			int colonPos = line.find(':');
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 
 			temp[line.substr(0, colonPos)] = line.substr(colonPos + 1, line.size() - colonPos - 2);
@@ -173,7 +196,7 @@ map<string, string> Parser::parseRegister(){
 				continue;
 			}
 
-			long colonPos = line.find(':');
+			int colonPos = line.find(':');
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 			string sub = line.substr(0, colonPos);
 
@@ -206,7 +229,7 @@ void Parser::convertMemory() {
 			sec.erase(0,2);
 
 			//iterates through the characters in the value
-			for (long i = 0; i < sec.size(); i++) {
+			for (int i = 0; i < sec.size(); i++) {
 
 				//checks if the character is a letter, and makes it lowercase
 				if(! (sec[i] >= '0' && sec[i] <= '9')){
@@ -218,7 +241,7 @@ void Parser::convertMemory() {
 		} else {
 
 			//iterates through the characters in the value
-			for (long i = 0; i < sec.size(); i++) {
+			for (int i = 0; i < sec.size(); i++) {
 
 				//checks if the character is a letter, and makes it lowercase
 				if(! (sec[i] >= '0' && sec[i] <= '9')){
@@ -231,13 +254,13 @@ void Parser::convertMemory() {
 	}
 
 
-	//iterates through string map converting values to longs
+	//iterates through string map converting values to ints
 	for (itr = copy.begin(); itr!= copy.end(); itr++){
 
 		string res = itr->first;
-		long key = stol(res, nullptr, 16);
+		int key = Utility::hStoi(res);
 		string val = itr->second;
-		long value = stol(val, nullptr, 16);
+		int value = Utility::hStoi(val);
 		mem[key] = value;
 	}
 
@@ -263,7 +286,7 @@ void Parser::convertRegister(){
 			sec.erase(0,2);
 
 			//iterates through the characters in the value
-			for (long i = 0; i < sec.size(); i++) {
+			for (int i = 0; i < sec.size(); i++) {
 
 				//checks if the character is a letter, and makes it lowercase
 				if(! (sec[i] >= '0' && sec[i] <= '9')){
@@ -275,7 +298,7 @@ void Parser::convertRegister(){
 		} else {
 
 			//iterates through the characters in the value
-			for (long i = 0; i < sec.size(); i++) {
+			for (int i = 0; i < sec.size(); i++) {
 
 				//checks if the character is a letter, and makes it lowercase
 				if(!(sec[i] >= '0' && sec[i] <= '9')){
@@ -289,53 +312,164 @@ void Parser::convertRegister(){
 		}
 	}
 
-	//iterates through string map converting to longs
+	//iterates through string map converting to ints
 	for (itr = copy.begin(); itr!= copy.end(); itr++){
 		
 		string res = itr->first;
-		long key = stol(res);
+		int key = stoi(res, nullptr, 10);
 		string val = itr->second;
-		long value = stol(val, nullptr, 16);
+		int value = Utility::hStoi(val);
 		regMem[key] = value;
 	}
 }
 
 /*
-This method converts the assembly code long o binary strings
+This method converts the assembly code into binary strings by
+the instruction type and then stores the string into
+its map
 */
 void Parser::convertProgram(){
+
+
 	OpcodeTable opcodetab;
 	string binStr;
-	map<long, string>::iterator itr;
-	map<long, string> copy = getProgMap();
+	map<int, string>::iterator itr;
+	map<int, string> copy = getProgMap();
+
+	//iterates through the instructions from the input file
 	for(itr = copy.begin(); itr!=copy.end(); itr++){
 		char delim = ' ';
 		string val = itr->second;
-		if(opcodetab.getInstType(val) == RTYPE){
+
+		string op = val.substr(0, val.find(delim));
+
+		//checks if the instruction is RTYPE
+		if(opcodetab.getInstType(op) == RTYPE){
 			binStr += rInst(val);
 		}
-		if(opcodetab.getInstType(val) == ITYPE){
+
+		//checks if the instruction is ITYPE
+		if(opcodetab.getInstType(op) == ITYPE){
 			binStr += iInst(val);
 		}
-		if(opcodetab.getInstType(val) == JTYPE){
+
+		//checks if the instruction is JTYPE
+		if(opcodetab.getInstType(op) == JTYPE){
 			binStr += jInst(val);
 		}
-		string op = val.substr(0, val.find(delim));
-		op = opcodetab.getOpcode(op);
+
+		binProg[itr->first] = binStr;
 		
 	}
 
 }	
 
+/*
+This method takes an RTYPE instruction and converts it into a binary string
+*/
 string Parser::rInst(string inst){
+	string res;
+	string str;
+	OpcodeTable opcodetab;
+	char delim = ' ';
+	string i = inst.substr(0, inst.find(delim));
+	string op = opcodetab.getOpcode(op);
+	str+=op;
+
+	//checks if the instruction has an rs register
+	if(opcodetab.RSposition(i) != -1){
+
+	//if none, 0s are appended to the binary string
+	} else {
+	    res = toBinary(0, res, 5);
+	    str+=res;
+	}
+
+	//checks if the instruction has an rd register
+	if(opcodetab.RDposition(i) != -1){
+
+	//if none, 0s are appended to the binary string
+	}  else {
+	    res = toBinary(0, res, 5);
+	    str+=res;
+	}
+
+	//checks if the instruction has an rt position
+	if(opcodetab.RTposition(i) != -1){
+
+	//if none, 0s are appended to the binary string
+	}  else {
+	    res = toBinary(0, res, 5);
+	    str+=res;
+	}
+
+	//checks if the instruction has an immediate
+	if (opcodetab.IMMposition(i) != -1){
+
+	//if none, appends 0s to the binary string
+	} else {
+		res = toBinary(0, res, 5);
+    	str+=res;
+	}
+
+	return str;
 
 }
 
+/*
+This method takes an ITYPE instruction and converts it into a binary string
+*/
 string Parser::iInst(string inst){
+	string res;
+	string str;
+	OpcodeTable opcodetab;
+	char delim = ' ';
+	string i = inst.substr(0, inst.find(delim));
+	string op = opcodetab.getOpcode(op);
+	str += op;
+
+	//checks if the instruction has an rs position
+	if(opcodetab.RSposition(i) != -1){
+
+	//if none, appends 0s to the binary string
+	}  else {
+	    res = toBinary(0, res, 5);
+	    str+=res;
+	}
+
+	//checks if the instruction has an rt position
+	if(opcodetab.RTposition(i) != -1){
+		
+	//if none, appends 0s to the binary string
+	}  else {
+	    res = toBinary(0, res, 5);
+	    str+=res;
+	}
+
+	if (opcodetab.IMMposition(i) != -1){
+
+	//if none, appends 0s to the binary string
+	} else {
+		res = toBinary(0, res, 5);
+    	str+=res;
+	}
+
+	return str;
 
 }
 
+/*
+This method takes a JTYPE instruction and converts it into a binary string
+*/
 string Parser::jInst(string inst){
+	string res;
+	OpcodeTable opcodetab;
+	char delim = ' ';
+	string op = inst.substr(0, inst.find(delim));
+	op = opcodetab.getOpcode(op);
+	res += op;
+
+	return res;
 
 }
 
@@ -351,7 +485,7 @@ string Parser::getConfig(string key){
 /*
 This method returns the map containing the register information
 */
-map<long , long > Parser::getRegMap(){
+map<int , int > Parser::getRegMap(){
 	return regMem;
 
 }
@@ -359,18 +493,22 @@ map<long , long > Parser::getRegMap(){
 /*
 This method returns the map containing the memory information
 */
-map<long , long > Parser::getMemMap(){
+map<int , int > Parser::getMemMap(){
 	return mem;
 }
 
 /*
 This method returns the map containing the program instruction information
 */
-map<long , string> Parser::getProgMap(){
+map<int , string> Parser::getProgMap(){
 	return prog;
 }
 
-map<long , string> Parser::getBinProg(){
+/*
+This method returns the map containing the binary string associated
+with an assembly instruction
+*/
+map<int , string> Parser::getBinProg(){
 	return binProg;
 }
 

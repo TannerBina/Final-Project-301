@@ -12,6 +12,7 @@
 #include "Opcode.h"
 #include <sstream>
 #include <vector>
+#include "Utility.h"
 
 
 using namespace std;
@@ -27,14 +28,14 @@ public:
 	map<string, string> parseRegister();
 
 	string getConfig(string key);
-	string getMem(long key);
-	string getReg(long key);
-	string getProg(long key);
+	string getMem(int key);
+	string getReg(int key);
+	string getProg(int key);
 
-	map<long , long > getRegMap();
-	map<long , long > getMemMap();
-	map<long , string> getProgMap();
-	map<long , string> getBinProg();
+	map<int , int > getRegMap();
+	map<int , int > getMemMap();
+	map<int , string> getProgMap();
+	map<int , string> getBinProg();
 
 	void convertMemory();
 	void convertRegister();
@@ -44,14 +45,15 @@ public:
 	string jInst(string inst);
 	string iInst(string inst);
 
-	string toBinary(long num, string result);
+	string toBinary(int num, string result, unsigned int bits
+		);
 
 private:
 	map <string, string> config;
-	map <long , long > mem; //convert to string long 
-	map <long , long > regMem; //long long 
-	map <long , string> prog; 
-	map<long , string> binProg;
+	map <int , int > mem; //convert to string int 
+	map <int , int > regMem; //int int 
+	map <int , string> prog; 
+	map<int , string> binProg;
 
 };
 
