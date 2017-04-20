@@ -59,6 +59,7 @@ void Parser::parseProgram(){
 
 		//iterates through the file line by line
 		while(getline(ifs, line)){
+			
 
 			//checks if the line is empty or a comment
 			if (line[0] == '#' || line.empty()){
@@ -69,6 +70,27 @@ void Parser::parseProgram(){
 			key += 4;
 		}
 	}
+	map<long, string>::iterator itr;
+	string res;
+	for (itr = prog.begin(); itr != prog.end(); itr++) {
+		string asem = itr->second;
+		stringstream s(asem);
+		vector<string> insts;
+		while(!s.eof()){
+			string tmp;
+			s >> tmp;
+			insts.push_back(tmp);
+		}
+		for (vector<string>::iterator iter = insts.begin(); iter != insts.end(); iter++) {
+			string tmp = *iter;
+			res.append(tmp);
+			res.append(" ");
+		}
+		prog[itr->first] = res;
+		res = '\0';
+
+	}
+	
 }
 
 	
@@ -283,17 +305,39 @@ This method converts the assembly code long o binary strings
 */
 void Parser::convertProgram(){
 	OpcodeTable opcodetab;
-
+	string binStr;
 	map<long, string>::iterator itr;
-	itr = prog.begin();
-	string asem = itr->second;
-	char delim = ' ';
-	string name = asem.substr(0, asem.find(delim));
-	string op = opcodetab.getOpcode(name);
-	cout << op << endl;
-
+	map<long, string> copy = getProgMap();
+	for(itr = copy.begin(); itr!=copy.end(); itr++){
+		char delim = ' ';
+		string val = itr->second;
+		if(opcodetab.getInstType(val) == RTYPE){
+			binStr += rInst(val);
+		}
+		if(opcodetab.getInstType(val) == ITYPE){
+			binStr += iInst(val);
+		}
+		if(opcodetab.getInstType(val) == JTYPE){
+			binStr += jInst(val);
+		}
+		string op = val.substr(0, val.find(delim));
+		op = opcodetab.getOpcode(op);
+		
+	}
 
 }	
+
+string Parser::rInst(string inst){
+
+}
+
+string Parser::iInst(string inst){
+
+}
+
+string Parser::jInst(string inst){
+
+}
 
 /*
 This method gets the value of the configuration map at the 

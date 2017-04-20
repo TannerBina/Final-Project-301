@@ -24,7 +24,8 @@ enum Opcode {
 enum InstType{
   RTYPE,
   ITYPE,
-  JTYPE
+  JTYPE,
+  UNDEF
 };
 
 
@@ -41,29 +42,25 @@ class OpcodeTable {
   string getOpcode(string str);
 
   // Given an Opcode, returns number of expected operands.
-  long numOperands(Opcode o);
+  long numOperands(string str);
 
   // Given an Opcode, returns the position of RS/RT/RD/IMM field.  If field is not
   // appropriate for this Opcode, returns -1.
-  long RSposition(Opcode o);
-  long RTposition(Opcode o);
-  long RDposition(Opcode o);
-  long IMMposition(Opcode o);
+  long RSposition(string str);
+  long RTposition(string str);
+  long RDposition(string str);
+  long IMMposition(string str);
 
   // Given an Opcode, returns true if instruction expects a label in the instruction.
   // See "J".
-  bool isIMMLabel(Opcode o);
+  bool isIMMLabel(string str);
 
   // Given an Opcode, returns instruction type.
-  InstType getInstType(Opcode o);
-
-  // Given an Opcode, returns a string representing the binary encoding of the opcode
-  // field.
-  string getOpcodeField(Opcode o);
+  InstType getInstType(string str);
 
   // Given an Opcode, returns a string representing the binary encoding of the function
   // field.
-  string getFunctField(Opcode o);
+  string getFunctField(string str);
 
 
  private:
