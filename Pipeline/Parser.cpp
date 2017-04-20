@@ -258,9 +258,9 @@ void Parser::convertMemory() {
 	for (itr = copy.begin(); itr!= copy.end(); itr++){
 
 		string res = itr->first;
-		int key = hStoi(res);
+		int key = Utility::hStoi(res);
 		string val = itr->second;
-		int value = hStoi(val);
+		int value = Utility::hStoi(val);
 		mem[key] = value;
 	}
 
@@ -316,9 +316,9 @@ void Parser::convertRegister(){
 	for (itr = copy.begin(); itr!= copy.end(); itr++){
 		
 		string res = itr->first;
-		int key = hStoi(res);
+		int key = stoi(res, nullptr, 10);
 		string val = itr->second;
-		int value = hStoi(val);
+		int value = Utility::hStoi(val);
 		regMem[key] = value;
 	}
 }
