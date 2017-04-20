@@ -6,6 +6,8 @@
 
 using namespace std;
 
+class Utility{
+
 string htob(char hexChar){
 	switch (hexChar){
 		case '0':
@@ -103,5 +105,6 @@ int hStoi(string hexString){
 	}
 	return bStoi(binaryString);
 }
+};
 
 #endif
