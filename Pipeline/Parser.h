@@ -11,6 +11,7 @@
 #include <cctype>
 #include "Opcode.h"
 #include <sstream>
+#include <vector>
 
 
 using namespace std;
@@ -38,6 +39,10 @@ public:
 	void convertMemory();
 	void convertRegister();
 	void convertProgram();
+
+	string rInst(string inst);
+	string jInst(string inst);
+	string iInst(string inst);
 
 	string toBinary(long num, string result);
 
