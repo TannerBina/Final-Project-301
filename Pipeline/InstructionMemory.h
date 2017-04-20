@@ -33,10 +33,6 @@ public:
 	int getBinInput(){return binInput;}
 	string getInstOutput(){return instOutput;}
 	string getBinOutput(){return binOutput;}
-
-	int binStoL(string in){
-		return stol(in, nullptr, 2);
-	}
 };
 
 #endif

@@ -43,10 +43,10 @@ string ALUControl::getALUControl(string functionCode, int  ALUOp1, int  ALUOp2){
 
 void ALUControl::print(){
 	cout << "Input" << endl;
-	cout << "FunctCode : 0x" << hex << binStoL(input.funct) << endl;
+	cout << "FunctCode : 0x" << hex << Utility::bStoi(input.funct) << endl;
 	cout << "In0 : 0x" << hex << input.op0 << endl;
 	cout << "In1 : 0x" << hex << input.op1 << endl;
-	cout << "Output : 0x" << hex << binStoL(output) << endl;
+	cout << "Output : 0x" << hex << Utility::bStoi(output) << endl;
 }
 /*
 int  main() {

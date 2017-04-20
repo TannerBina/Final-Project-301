@@ -32,10 +32,6 @@ public:
 	ControlWires getOutput(){return output;}
 
 	void print();
-
-	int binStoL(string in){
-		return stol(in, nullptr, 2);
-	}
 	
 private:
 

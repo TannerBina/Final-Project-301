@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "Utility.h"
 /*
 What this class does, The ALU Control - takes in instruction funct field 
 and ALUOp  and outputs the ALU control code
@@ -41,10 +42,6 @@ public:
 	ALUControlInput getInput(){return input;}
 
 	void print();	
-
-	int binStoL(string in){
-	return stol(in, nullptr, 2);
-}
 };
 
 #endif

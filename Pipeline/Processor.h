@@ -12,6 +12,7 @@
 #include "ALU.h"
 #include "ShiftLeftTwo.h"
 #include "SignExtend.h"
+#include "Utility.h"
 #include <iostream>
 #include <string>
 
@@ -52,8 +53,6 @@ public:
 	Processor(string initFile);
 
 	bool getBool(string input);
-
-	static int binStoL(string in);
 
 	void step();
 };

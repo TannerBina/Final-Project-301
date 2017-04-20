@@ -115,8 +115,8 @@ Processor::Processor(string initFile){
 		cout << endl;
 
 		MultiplexorInput mInReg;
-		mInReg.in0 = binStoL(i20_16);
-		mInReg.in1 = binStoL(i15_11);
+		mInReg.in0 = Utility::bStoi(i20_16);
+		mInReg.in1 = Utility::bStoi(i15_11);
 		mInReg.control = control.getOutput().regDst;
 		regMult.process(mInReg);
 
@@ -125,8 +125,8 @@ Processor::Processor(string initFile){
 		cout << endl;
 
 		RegInput rIn;
-		rIn.readReg1 = binStoL(i25_21);
-		rIn.readReg2 = binStoL(i20_16);
+		rIn.readReg1 = Utility::bStoi(i25_21);
+		rIn.readReg2 = Utility::bStoi(i20_16);
 		rIn.writeReg = regMult.getOutput();
 		rIn.regWrite = control.getOutput().regWrite;
 		regFile.process(rIn);
@@ -135,17 +135,20 @@ Processor::Processor(string initFile){
 		regFile.print();
 		cout << endl;
 
-		signExtend.extendToThirtyTwo(binStoL(i15_0));
+		signExtend.extendToThirtyTwo(Utility::bStoi(i15_0));
 
 		cout << "Sign Extend" << endl;
 		signExtend.print();
 		cout << endl;
 
-		jumpShift.performShiftLeft(binStoL(i25_0));
+		jumpShift.performShiftLeft(Utility::bStoi(i25_0));
 
 		cout << "Jump Shift Left" << endl;
 		jumpShift.print();
 		cout << endl;
+
+		int jumpVal = pcAddALU.getValue() & 0x10000000;
+		jumpVal += jumpShift.output;
 
 		cout << endl << "Entering Execute Stage" << endl << endl;
 		if (debug_mode) step();
@@ -160,6 +163,90 @@ Processor::Processor(string initFile){
 		mInALU.in1 = regFile.getOutput().readData2;
 		mInALU.control = control.getOutput().ALUSrc;
 		aluMult.process(mInALU);
+
+		cout << "ALU Multiplexor" << endl;
+		aluMult.print();
+		cout << endl;
+
+		mainALU.performALU(aluControl.output, mInALU.output, regFile.readData1);
+		
+		cout << "Main ALU" << endl;
+		mainALU.print();
+		cout << endl;
+
+		branchShift.performShiftLeft(signExtend.output);
+
+		cout << "Branch Shift" << endl;
+		branchShift.print();
+		cout << endl;
+
+		branchALU.performALU("010", pcAddALU.output, branchShift.output);
+
+		cout << "Branch ALU" << endl;
+		branchALU.print();
+		cout << endl;
+
+		cout << endl << "Entering Memory Stage" << endl << endl;
+		if (debug_mode) step();
+
+		MemInput memIn;
+		memIn.address = mainALU.output.output;
+		memIn.writeData = regFile.output.readData2;
+		memIn.memWrite = control.output.memWrite;
+		memIn.memRead = control.out.memRead;
+		dataMem.process(memIn);
+
+		cout << "Data Memory" << endl;
+		dataMem.print();
+		cout << endl;
+
+		int branchMultVal = control.output.branch & mainALU.output.zeroOrOne;
+		cout << "Branch And Gate" << endl;
+		cout << "Input" << endl;
+		cout << "In0 : 0x" << hex << control.output.branch << endl;
+		cout << "In1 : 0x" << hex << mainALU.output.zeroOrOne << endl;
+		cout << "Output : 0x" << hex << branchMultVal << endl;
+		cout << endl;
+
+		MultiplexorInput branchMultIn;
+		branchMultIn.in0 = pcAddALU.output;
+		branchMultIn.in1 = branchALU.output;
+		branchMultIn.control = branchMultVal;
+		branchMult.process(branchMultIn);
+
+		cout << "Branch Multiplexor" << endl;
+		branchMult.print();
+		cout << endl;
+
+		cout << "Entering Writeback Stage" << endl;
+		if (debug_mode) step();
+
+		MultiplexorInput writeBackMultIn;
+		writeBackMultIn.in0 = mainALU.output.output;
+		writeBackMultIn.in1 = dataMem.output;
+		writeBackMultIn.control = control.memToReg;
+		writeBackMult.process(writeBackMultIn);
+
+		cout << "Write Back Multiplexor" << endl;
+		writeBackMult.print();
+		cout << endl;
+
+		regFile.write(writeBackMult.output);
+		cout << "Reg File Writeback" << endl;
+		regFile.printWrite();
+		cout << endl;
+
+		MultiplexorInput jumpMultIn;
+		jumpMultIn.in0 = branchMult.output;
+		jumpMultIn.in1 = jumpVal;
+		jumpMultIn.control = control.output.jump;
+		jumpMult.process(jumpMultIn);
+
+		cout << "Jump Multiplexor" << endl;
+		jumpMultIn.print();
+		cout << endl;
+
+		pc.setValue(jumpMultIn.output);
 	}
 }
 
@@ -168,10 +255,6 @@ void Processor::step(){
 		cout << "Press Enter to Continue" << endl;
 		getchar();
 	}
-}
-
-long Processor::binStoL(string in){
-	return stol(in, nullptr, 2);
 }
 
 bool Processor::getBool(string input){

@@ -34,7 +34,7 @@ void InstructionMemory::printAll (){
 
 void InstructionMemory::printBin(){
 	cout << "Input : 0x" << hex << binInput << endl;
-	cout << "Output : 0x" << hex << binStoL(binOutput) << endl;
+	cout << "Output : 0x" << hex << Utility::bStoi(binOutput) << endl;
 }
 
 void InstructionMemory::printInst(){
