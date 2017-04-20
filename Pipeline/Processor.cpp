@@ -50,7 +50,7 @@ Processor::Processor(string initFile){
 		instMem.printAll();
 		cout << endl;
 	}
-
+	
 	while (!instMem.getInstruction(pc.getValue()).empty()){
 		if (debug_mode){
 			cout << "Instruction at address : 0x" << hex << pc.getValue() << endl;
@@ -147,8 +147,8 @@ Processor::Processor(string initFile){
 		jumpShift.print();
 		cout << endl;
 
-		int jumpVal = pcAddALU.getValue() & 0x10000000;
-		jumpVal += jumpShift.output;
+		int jumpVal = pcAddALU.getOutput().output & 0x10000000;
+		jumpVal += jumpShift.getOutput();
 
 		cout << endl << "Entering Execute Stage" << endl << endl;
 		if (debug_mode) step();
@@ -159,6 +159,7 @@ Processor::Processor(string initFile){
 		aluControl.print();
 		cout << endl;
 
+		MultiplexorInput mInALU;
 		mInALU.in0 = regFile.getOutput().readData1;
 		mInALU.in1 = regFile.getOutput().readData2;
 		mInALU.control = control.getOutput().ALUSrc;
@@ -168,19 +169,19 @@ Processor::Processor(string initFile){
 		aluMult.print();
 		cout << endl;
 
-		mainALU.performALU(aluControl.output, mInALU.output, regFile.readData1);
+		mainALU.performALU(aluControl.getOutput(), aluMult.getOutput(), regFile.getOutput().readData1);
 		
 		cout << "Main ALU" << endl;
 		mainALU.print();
 		cout << endl;
 
-		branchShift.performShiftLeft(signExtend.output);
+		branchShift.performShiftLeft(signExtend.getOutput());
 
 		cout << "Branch Shift" << endl;
 		branchShift.print();
 		cout << endl;
 
-		branchALU.performALU("010", pcAddALU.output, branchShift.output);
+		branchALU.performALU("010", pcAddALU.getOutput().output, branchShift.getOutput());
 
 		cout << "Branch ALU" << endl;
 		branchALU.print();
@@ -190,27 +191,27 @@ Processor::Processor(string initFile){
 		if (debug_mode) step();
 
 		MemInput memIn;
-		memIn.address = mainALU.output.output;
-		memIn.writeData = regFile.output.readData2;
-		memIn.memWrite = control.output.memWrite;
-		memIn.memRead = control.out.memRead;
+		memIn.address = mainALU.getOutput().output;
+		memIn.writeData = regFile.getOutput().readData2;
+		memIn.memWrite = control.getOutput().memWrite;
+		memIn.memRead = control.getOutput().memRead;
 		dataMem.process(memIn);
 
 		cout << "Data Memory" << endl;
 		dataMem.print();
 		cout << endl;
 
-		int branchMultVal = control.output.branch & mainALU.output.zeroOrOne;
+		int branchMultVal = control.getOutput().branch & mainALU.getOutput().zeroOrOne;
 		cout << "Branch And Gate" << endl;
 		cout << "Input" << endl;
-		cout << "In0 : 0x" << hex << control.output.branch << endl;
-		cout << "In1 : 0x" << hex << mainALU.output.zeroOrOne << endl;
+		cout << "In0 : 0x" << hex << control.getOutput().branch << endl;
+		cout << "In1 : 0x" << hex << mainALU.getOutput().zeroOrOne << endl;
 		cout << "Output : 0x" << hex << branchMultVal << endl;
 		cout << endl;
 
 		MultiplexorInput branchMultIn;
-		branchMultIn.in0 = pcAddALU.output;
-		branchMultIn.in1 = branchALU.output;
+		branchMultIn.in0 = pcAddALU.getOutput().output;
+		branchMultIn.in1 = branchALU.getOutput().output;
 		branchMultIn.control = branchMultVal;
 		branchMult.process(branchMultIn);
 
@@ -222,31 +223,31 @@ Processor::Processor(string initFile){
 		if (debug_mode) step();
 
 		MultiplexorInput writeBackMultIn;
-		writeBackMultIn.in0 = mainALU.output.output;
-		writeBackMultIn.in1 = dataMem.output;
-		writeBackMultIn.control = control.memToReg;
+		writeBackMultIn.in0 = mainALU.getOutput().output;
+		writeBackMultIn.in1 = dataMem.getOutput();
+		writeBackMultIn.control = control.getOutput().memToReg;
 		writeBackMult.process(writeBackMultIn);
 
 		cout << "Write Back Multiplexor" << endl;
 		writeBackMult.print();
 		cout << endl;
 
-		regFile.write(writeBackMult.output);
+		regFile.write(writeBackMult.getOutput());
 		cout << "Reg File Writeback" << endl;
 		regFile.printWrite();
 		cout << endl;
 
 		MultiplexorInput jumpMultIn;
-		jumpMultIn.in0 = branchMult.output;
+		jumpMultIn.in0 = branchMult.getOutput();
 		jumpMultIn.in1 = jumpVal;
-		jumpMultIn.control = control.output.jump;
+		jumpMultIn.control = control.getOutput().jump;
 		jumpMult.process(jumpMultIn);
 
 		cout << "Jump Multiplexor" << endl;
-		jumpMultIn.print();
+		jumpMult.print();
 		cout << endl;
 
-		pc.setValue(jumpMultIn.output);
+		pc.setValue(jumpMult.getOutput());
 	}
 }
 

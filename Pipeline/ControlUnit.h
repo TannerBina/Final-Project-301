@@ -5,6 +5,7 @@ using namespace std;
 #include <string>
 #include <map>
 #include <iostream>
+#include "Utility.h"
 
 //holds the output of the control wires after decode
 struct ControlWires{
