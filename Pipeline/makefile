@@ -9,8 +9,9 @@ CCFLAGS= -DDEBUG -g -Wall
 .cpp.o:
 	g++ $(CCFLAGS) -c $<
 
-Final: Final.o ALU.o ALUControl.o ControlUnit.o DataMemory.o InstructionMemory.o Multiplexor.o Opcode.o PC.o Parser.o Processor.o RegisterTable.o ShiftLeftTwo.o SignExtend.o Utility.o
-	g++ -std=c++11 -o Final Final.o ALU.o ALUControl.o ControlUnit.o DataMemory.o InstructionMemory.o Multiplexor.o Opcode.o PC.o Parser.o Processor.o RegisterTable.o ShiftLeftTwo.o SignExtend.o Utility.o
+
+Processor.o: Processor.h
+	g++ -std=c++11 -o Parser.o PC.o InstructionMemory.o RegisterTable.o DataMemory.o Multiplexor.o ControlUnit.o ALUControl.o ALU.o ShiftLeftTwo.o SignExtend.o
 
 ALU.o: ALU.h
 
@@ -30,9 +31,6 @@ PC.o: PC.h
 
 Parser.o: Parser.h
 	g++ -o Opcode.o
-
-Processor.o: Processor.h
-	g++ -o Parser.o PC.o InstructionMemory.o RegisterTable.o DataMemory.o Multiplexor.o ControlUnit.o ALUControl.o ALU.o ShiftLeftTwo.o SignExtend.o
 
 RegisterTable.o: RegisterTable.h
 
