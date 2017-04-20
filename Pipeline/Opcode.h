@@ -42,14 +42,15 @@ class OpcodeTable {
   string getOpcode(string str);
 
   // Given an Opcode, returns number of expected operands.
-  int numOperands(Opcode o);
+<<<<<<< HEAD
+  int numOperands(string str);
 
   // Given an Opcode, returns the position of RS/RT/RD/IMM field.  If field is not
   // appropriate for this Opcode, returns -1.
-  int RSposition(Opcode o);
-  int RTposition(Opcode o);
-  int RDposition(Opcode o);
-  int IMMposition(Opcode o);
+  int RSposition(string str);
+  int RTposition(string str);
+  int RDposition(string str);
+  int IMMposition(string str);
 
   // Given an Opcode, returns true if instruction expects a label in the instruction.
   // See "J".
