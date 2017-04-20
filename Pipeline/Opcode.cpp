@@ -34,7 +34,6 @@ int OpcodeTable::numOperands(string str)
   return -1;
 }
 
-
 int OpcodeTable::RSposition(string str)
 // Given an Opcode, returns the position of RS field.  If field is not
 // appropriate for this Opcode, returns -1.
@@ -71,7 +70,7 @@ int OpcodeTable::RDposition(string str)
   return -1;
 }
 
-int OpcodeTable::IMMposition(string str)
+int OpcodeTable::IMMposition(Opcode o)
 // Given an Opcode, returns the position of IMM field.  If field is not
 // appropriate for this Opcode, returns -1.
 {

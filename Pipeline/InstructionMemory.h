@@ -9,16 +9,34 @@ using namespace std;
 
 class InstructionMemory{
 private:
-	map <long , string> instMemory;
-	map <long , string> binInstMemory;
+	map < int , string> instMemory;
+	map < int , string> binInstMemory;
+
+	 int instInput;
+	 int binInput;
+
+	string instOutput;
+	string binOutput;
 public:
 	InstructionMemory(){}
-	InstructionMemory(map <long , string> instructions, map<long , string> binInstructions);
+	InstructionMemory(map < int , string> instructions, map< int , string> binInstructions);
 
-	string getInstruction(long  address);
-	string getBinaryInstruction(long  address);	
+	string getInstruction(int  address);
+	string getBinaryInstruction(int  address);	
 
-	void prlong ();
+	void printAll ();
+
+	void printInst();
+	void printBin();
+
+	int getInstInput(){return instInput;}
+	int getBinInput(){return binInput;}
+	string getInstOutput(){return instOutput;}
+	string getBinOutput(){return binOutput;}
+
+	int binStoL(string in){
+		return stol(in, nullptr, 2);
+	}
 };
 
 #endif

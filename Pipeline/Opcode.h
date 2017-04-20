@@ -42,6 +42,7 @@ class OpcodeTable {
   string getOpcode(string str);
 
   // Given an Opcode, returns number of expected operands.
+<<<<<<< HEAD
   int numOperands(string str);
 
   // Given an Opcode, returns the position of RS/RT/RD/IMM field.  If field is not

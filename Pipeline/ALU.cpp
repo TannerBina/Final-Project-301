@@ -2,14 +2,18 @@
 
 using namespace std;
 
-ALU::ALU(string control, long src1, long src2){
+ALU::ALU(string control, int src1, int src2){
 
  	performALU(control, src1, src2);
 
 }
 
-LineInfo  ALU::performALU(string control, long src1, long src2){
-	long out;
+LineInfo  ALU::performALU(string control, int src1, int src2){
+	input.control = control;
+	input.in0 = src1;
+	input.in1 = src2;
+
+	int out = 0;
 	if(control == "010"){
 		out = src1 + src2; // return the sum
 
@@ -39,6 +43,17 @@ LineInfo  ALU::performALU(string control, long src1, long src2){
 		res.zeroOrOne = 0;
 	}
 
+	this->output = res;
 	return res;
+}
+
+void ALU::print(){
+	cout << "Input" << endl;
+	cout << "Control : 0x" << hex << input.control << endl;
+	cout << "In0 : 0x" << hex << input.in0 << endl;
+	cout << "In1 : 0x" << hex << input.in1 << endl;
+	cout << "Output" << endl;
+	cout << "Output : 0x" << hex << output.output << endl;
+	cout << "Zero Line : 0x" << hex << output.zeroOrOne << endl;
 }
 
