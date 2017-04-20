@@ -42,14 +42,14 @@ class OpcodeTable {
   string getOpcode(string str);
 
   // Given an Opcode, returns number of expected operands.
-  long numOperands(string str);
+  int numOperands(string str);
 
   // Given an Opcode, returns the position of RS/RT/RD/IMM field.  If field is not
   // appropriate for this Opcode, returns -1.
-  long RSposition(string str);
-  long RTposition(string str);
-  long RDposition(string str);
-  long IMMposition(string str);
+  int RSposition(string str);
+  int RTposition(string str);
+  int RDposition(string str);
+  int IMMposition(string str);
 
   // Given an Opcode, returns true if instruction expects a label in the instruction.
   // See "J".
@@ -66,11 +66,11 @@ class OpcodeTable {
  private:
   struct OpcodeTableEntry{
     string name;
-    long numOps;
-    long rdPos;
-    long rsPos;
-    long rtPos;
-    long immPos;
+    int numOps;
+    int rdPos;
+    int rsPos;
+    int rtPos;
+    int immPos;
     bool immLabel;
 
     InstType instType;

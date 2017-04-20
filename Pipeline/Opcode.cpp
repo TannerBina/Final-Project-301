@@ -15,7 +15,7 @@ string OpcodeTable::getOpcode(string str)
 // Given a valid MIPS assembly mnemonic, returns an Opcode which represents a 
 // template for that instruction.
 {
-  for(long i = 0; i < (long )UNDEFINED; i++){
+  for(int i = 0; i < (int )UNDEFINED; i++){
     if(myTable[i].name == str){
       return myTable[i].op_field;
     }
@@ -23,10 +23,10 @@ string OpcodeTable::getOpcode(string str)
   return '\0';
 }
 
-long OpcodeTable::numOperands(string str)
+int OpcodeTable::numOperands(string str)
 // Given an Opcode, returns number of expected operands.
 {
- for(long i = 0; i < (long )UNDEFINED; i++){
+ for(int i = 0; i < (int )UNDEFINED; i++){
     if(myTable[i].name == str){
       return myTable[i].numOps;
     }
@@ -35,11 +35,11 @@ long OpcodeTable::numOperands(string str)
 }
 
 
-long OpcodeTable::RSposition(string str)
+int OpcodeTable::RSposition(string str)
 // Given an Opcode, returns the position of RS field.  If field is not
 // appropriate for this Opcode, returns -1.
 {
-  for(long i = 0; i < (long )UNDEFINED; i++){
+  for(int i = 0; i < (int )UNDEFINED; i++){
     if(myTable[i].name == str){
       return myTable[i].rsPos;
     }
@@ -47,11 +47,11 @@ long OpcodeTable::RSposition(string str)
   return -1;
 }
 
-long OpcodeTable::RTposition(string str)
+int OpcodeTable::RTposition(string str)
 // Given an Opcode, returns the position of RT field.  If field is not
 // appropriate for this Opcode, returns -1.
 {
-  for(long i = 0; i < (long )UNDEFINED; i++){
+  for(int i = 0; i < (int )UNDEFINED; i++){
     if(myTable[i].name == str){
       return myTable[i].rtPos;
     }
@@ -59,11 +59,11 @@ long OpcodeTable::RTposition(string str)
   return -1;
 }
 
-long OpcodeTable::RDposition(string str)
+int OpcodeTable::RDposition(string str)
 // Given an Opcode, returns the position of RD field.  If field is not
 // appropriate for this Opcode, returns -1.
 {
-  for(long i = 0; i < (long )UNDEFINED; i++){
+  for(int i = 0; i < (int )UNDEFINED; i++){
     if(myTable[i].name == str){
       return myTable[i].rdPos;
     }
@@ -71,11 +71,11 @@ long OpcodeTable::RDposition(string str)
   return -1;
 }
 
-long OpcodeTable::IMMposition(string str)
+int OpcodeTable::IMMposition(string str)
 // Given an Opcode, returns the position of IMM field.  If field is not
 // appropriate for this Opcode, returns -1.
 {
-  for(long i = 0; i < (long )UNDEFINED; i++){
+  for(int i = 0; i < (int )UNDEFINED; i++){
     if(myTable[i].name == str){
       return myTable[i].immPos;
     }
@@ -86,7 +86,7 @@ long OpcodeTable::IMMposition(string str)
 InstType OpcodeTable::getInstType(string str)
 // Given an Opcode, returns instruction type.
 {
-  for(long i = 0; i < (long )UNDEFINED; i++){
+  for(int i = 0; i < (int )UNDEFINED; i++){
     if(myTable[i].name == str){
       return myTable[i].instType;
     }
@@ -99,7 +99,7 @@ string OpcodeTable::getFunctField(string str)
 // Given an Opcode, returns a string representing the binary encoding of the function
 // field.
 {
-  for(long i = 0; i < (long )UNDEFINED; i++){
+  for(int i = 0; i < (int )UNDEFINED; i++){
     if(myTable[i].name == str){
       return myTable[i].funct_field;
     }
@@ -111,7 +111,7 @@ bool OpcodeTable::isIMMLabel(string str)
 // Given an Opcode, returns true if instruction expects a label in the instruction.
 // See "J".
 {
-  for(long i = 0; i < (long )UNDEFINED; i++){
+  for(int i = 0; i < (int )UNDEFINED; i++){
     if(myTable[i].name == str){
       return myTable[i].immLabel;
     }
