@@ -4,19 +4,20 @@
 using namespace std;
 #include <string>
 #include <map>
+#include <iostream>
 
 //holds the output of the control wires after decode
 struct ControlWires{
-	long  regDst;
-	long  jump;
-	long  branch;
-	long  memRead;
-	long  memToReg;
-	long  ALUOp0;
-	long  ALUOp1;
-	long  memWrite;
-	long  ALUSrc;
-	long  regWrite;
+	int  regDst;
+	int  jump;
+	int  branch;
+	int  memRead;
+	int  memToReg;
+	int  ALUOp0;
+	int  ALUOp1;
+	int  memWrite;
+	int  ALUSrc;
+	int  regWrite;
 };
 
 class ControlUnit{
@@ -26,7 +27,21 @@ public:
 
 	//handles decode stage
 	ControlWires process(string opcode);
+
+	string getInput(){return input;}
+	ControlWires getOutput(){return output;}
+
+	void print();
+
+	int binStoL(string in){
+		return stol(in, nullptr, 2);
+	}
+	
 private:
+
+	string input;
+	ControlWires output;
+
 	//holds output values for particular inputs
 	map <string, ControlWires> outputMap;
 };

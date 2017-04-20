@@ -9,7 +9,11 @@
 #include "Multiplexor.h"
 #include "ControlUnit.h"
 #include "ALUControl.h"
+#include "ALU.h"
+#include "ShiftLeftTwo.h"
+#include "SignExtend.h"
 #include <iostream>
+#include <string>
 
 class Processor{
 private:
@@ -18,16 +22,29 @@ private:
 	InstructionMemory instMem;
 	RegisterTable regFile;
 	DataMemory dataMem;
-	//TODO add necessary ALUs
-	Multiplexor mult;
-	//TODO add shift left 2 units
-	ControlUnit control;
-	ALUControl aluControl;
-	//TODO add sign extend unit;
+
+	ALU pcAddALU;
+	ALU mainALU;
+	ALU branchALU;
+
+	Multiplexor regMult;
+	Multiplexor aluMult;
+	Multiplexor writeBackMult;
+	Multiplexor branchMult;
+	Multiplexor jumpMult;
 	
+	ShiftLeftTwo jumpShift;
+	ShiftLeftTwo branchShift;
+
+	ControlUnit control;
+
+	ALUControl aluControl;
+
+	SignExtend signExtend;
+
 	string output_mode;
 	bool debug_mode;
-	bool prlong _memory_contents;
+	bool print_memory_contents;
 	bool write_to_file;
 	string output_file;
 public:
@@ -36,7 +53,7 @@ public:
 
 	bool getBool(string input);
 
-	long binStoI(string in);
+	static int binStoL(string in);
 
 	void step();
 };

@@ -17,17 +17,34 @@ and ALUOp  and outputs the ALU control code
 
 using namespace std;
 
+struct ALUControlInput{
+	int op0;
+	int op1;
+	string funct;
+};
+
 class ALUControl{
 
 private:
 	string functcode;
-	long  op1, op2;
+	int  op1, op2;
+
+	string output;
+	ALUControlInput input;
 
 public:
 	ALUControl(){}
-	ALUControl(string functcode, long  op1, long  op2);
-	string getALUControl(string functcode, long  op1, long  op2);
-	
+	ALUControl(string functcode, int  op1, int  op2);
+	string getALUControl(string functcode, int  op1, int  op2);
+
+	string getOutput(){return output;}
+	ALUControlInput getInput(){return input;}
+
+	void print();	
+
+	int binStoL(string in){
+	return stol(in, nullptr, 2);
+}
 };
 
 #endif

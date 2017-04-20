@@ -15,7 +15,7 @@ Opcode OpcodeTable::getOpcode(string str)
 // Given a valid MIPS assembly mnemonic, returns an Opcode which represents a 
 // template for that instruction.
 {
-  for(long i = 0; i < (long )UNDEFINED; i++){
+  for(int i = 0; i < (int )UNDEFINED; i++){
     if(myTable[i].name == str){
       return (Opcode)i;
     }
@@ -23,7 +23,7 @@ Opcode OpcodeTable::getOpcode(string str)
   return UNDEFINED;
 }
 
-long OpcodeTable::numOperands(Opcode o)
+int OpcodeTable::numOperands(Opcode o)
 // Given an Opcode, returns number of expected operands.
 {
   if(o < 0 || o >= UNDEFINED)
@@ -33,7 +33,7 @@ long OpcodeTable::numOperands(Opcode o)
 }
 
 
-long OpcodeTable::RSposition(Opcode o)
+int OpcodeTable::RSposition(Opcode o)
 // Given an Opcode, returns the position of RS field.  If field is not
 // appropriate for this Opcode, returns -1.
 {
@@ -43,7 +43,7 @@ long OpcodeTable::RSposition(Opcode o)
   return myTable[o].rsPos;
 }
 
-long OpcodeTable::RTposition(Opcode o)
+int OpcodeTable::RTposition(Opcode o)
 // Given an Opcode, returns the position of RT field.  If field is not
 // appropriate for this Opcode, returns -1.
 {
@@ -53,7 +53,7 @@ long OpcodeTable::RTposition(Opcode o)
   return myTable[o].rtPos;
 }
 
-long OpcodeTable::RDposition(Opcode o)
+int OpcodeTable::RDposition(Opcode o)
 // Given an Opcode, returns the position of RD field.  If field is not
 // appropriate for this Opcode, returns -1.
 {
@@ -63,7 +63,7 @@ long OpcodeTable::RDposition(Opcode o)
   return myTable[o].rdPos;
 }
 
-long OpcodeTable::IMMposition(Opcode o)
+int OpcodeTable::IMMposition(Opcode o)
 // Given an Opcode, returns the position of IMM field.  If field is not
 // appropriate for this Opcode, returns -1.
 {

@@ -9,16 +9,16 @@ using namespace std;
 
 //holds the input to the register table on each stage
 struct RegInput{
-	long readReg1;
-	long readReg2;
-	long writeReg;
-	long regWrite;
+	int readReg1;
+	int readReg2;
+	int writeReg;
+	int regWrite;
 };
 
 //the output of the register at a stage
 struct RegOutput{
-	long readData1;
-	long readData2;	
+	int readData1;
+	int readData2;	
 };
 
 class RegisterTable{
@@ -26,21 +26,32 @@ public:
 	//construct an empty initial register table
 	RegisterTable(){}
 	//construct a register table based on an initialization map
-	RegisterTable(map<long , long > initMap);
+	RegisterTable(map<int , int > initMap);
 
 	//process one input cycle to the register, outputting the read datas
 	RegOutput process(RegInput in);
 	//process the writeback cycle, true if written to register
-	bool write(long writeData);
+	bool write(int writeData);
 
-	void prlong ();
+	RegInput getInput(){return input;}
+	RegOutput getOutput(){return output;}
+	int getWriteInput(){return writeInput;}
+
+	void print();
+	void printWrite();
+
+	void printAll ();
 private:
 	//stores register dat
-	long registers[32];
+	int registers[32];
 	//holds whether registers are to be written to
 	bool writeState;
 	//register to write to in writeback stage
-	long writeRegister;
+	int writeRegister;
+
+	RegInput input;
+	RegOutput output;
+	int writeInput;
 };
 
 #endif

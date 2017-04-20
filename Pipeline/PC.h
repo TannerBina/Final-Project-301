@@ -3,17 +3,17 @@
 
 class PC {
 private:
-	long value;
+	 int value;
 public:
 	PC(){
 		value = 0x400000;
 	}
 
-	void setValue(long newValue){
+	void setValue(int newValue){
 		value = newValue;
 	}
 
-	long getValue(){
+	 int getValue(){
 		return value;
 	}
 };

@@ -5,7 +5,7 @@ using namespace std;
 
 
 Processor::Processor()
-:single_step(false), debug_mode(false), prlong _memory_contents(false), write_to_file(false){
+:output_mode("single_step"), debug_mode(false), print_memory_contents(false), write_to_file(false){
 
 }
 
@@ -22,20 +22,20 @@ Processor::Processor(string initFile){
 	output_mode = parser.getConfig("output_mode");
 	debug_mode = getBool(parser.getConfig("debug_mode"));
 	write_to_file = getBool(parser.getConfig("write_to_file"));
-	prlong _memory_contents = getBool(parser.getConfig("prlong _memory_contents"));
+	print_memory_contents = getBool(parser.getConfig("print_memory_contents"));
 	output_file = parser.getConfig("output_file");
 
 	if (debug_mode){
 		cout << "Output Mode : " << output_mode << endl;
 		cout << "Debug Mode : " << debug_mode << endl;
 		cout << "Write to File : " << write_to_file << endl;
-		cout << "Prlong memory contents : " << prlong _memory_contents << endl;
+		cout << "Print memory contents : " << print_memory_contents << endl;
 		cout << "Output file : " << output_file << endl;
 	}
 
 	RegisterTable parserTable(parser.getRegMap());
 	DataMemory parserMem(parser.getMemMap());
-	InstructionMemory parserInst(parser.getProgMap());
+	InstructionMemory parserInst(parser.getProgMap(), parser.getBinProg());
 
 	regFile = parserTable;
 	instMem = parserInst;
@@ -43,138 +43,129 @@ Processor::Processor(string initFile){
 
 	if (debug_mode){
 		cout << endl;
-		regFile.prlong ();
+		regFile.printAll();
 		cout << endl;
-		dataMem.prlong ();
+		dataMem.printAll();
 		cout << endl;
-		instMem.prlong ();
+		instMem.printAll();
 		cout << endl;
 	}
 
 	while (!instMem.getInstruction(pc.getValue()).empty()){
 		if (debug_mode){
-			cout << "Instruction at address : 0x" << hex << pc.getValue << endl;
+			cout << "Instruction at address : 0x" << hex << pc.getValue() << endl;
 		}
 
-		if (prlong _memory_contents){
-			cout << "Memory Contents" << endl << endl;
+		step();
+
+		if (print_memory_contents){
+			cout << "Printing Memory Contents" << endl;
+			regFile.printAll();
 			cout << endl;
-			regFile.prlong ();
+			dataMem.printAll();
 			cout << endl;
-			dataMem.prlong ();
-			cout << endl;
-			instMem.prlong ();
+			instMem.printAll();
 			cout << endl;
 		}
 
 		cout << endl << "Entering Fetch Stage" << endl << endl;
-		step();
+		if (debug_mode) step();
 
-		cout << "Instruction Executing : " << instMem.getInstruction(pc.getValue()) << endl;
+		instMem.getInstruction(pc.getValue());
+		instMem.getBinaryInstruction(pc.getValue());
 
-		string binaryInst = instMem.getBinaryInstruction(pc.getValue());
-
-		cout << "Incrementing PC : 0x" << hex << pc.getValue();
-		pc.setValue(pc.getValue+4);
-		cout << "->0x" << pc.getValue() << endl << endl;
-
-		string i31_26 = binaryInst.substr(0, 6);
-		string i25_21 = binaryInst.substr(6, 11);
-		string i20_16 = binaryInst.substr(11, 16);
-		string i15_11 = binaryInst.substr(16, 21);
-		string i15_0 = binaryInst.substr(16, 32);
-		string i5_0 = binaryInst.substr(26,32);
-		string i25_0 = binaryInst.substr(6, 32);
-
-		cout << endl <<"Entering Decode Stage" << endl << endl;
-		step();
-
-		cout << "Control Unit Input : 0x" << hex << binStoL(i31_26)<< endl;
-		ControlWires cOut = control.process(i31_26);
-		cout << "Control Unit Output" << endl;
-		cout << "RegDst : 0x" << hex << cOut.regDst << endl;
-		cout << "Jump : 0x" << hex << cOut.jump << endl;
-		cout << "Branch : 0x" << hex << cOut.branch << endl;
-		cout << "MemRead : 0x" << hex << cOut.memRead << endl;
-		cout << "MemToReg : 0x" << hex << cOut.memToReg << endl;
-		cout << "ALUOp0 : 0x" << hex << cOut.ALUOp0 << endl;
-		cout << "ALUOp1 : 0x" << hex << cOut.ALUOp1 << endl;
-		cout << "MemWrite : 0x" << hex <<cOut.memWrite << endl;
-		cout << "ALUSrc : 0x" <<hex <<cOut.ALUSrc << endl;
-		cout << "RegWrite : 0x" << hex << cOut.regWrite << endl;
+		cout << "InstructionMemory Instruction Fetched" << endl;
+		instMem.printInst();
+		cout << "InstructionMemory Instruction" << endl;
+		instMem.printBin();
 		cout << endl;
 
+		string i31_26 = instMem.getBinOutput().substr(0, 6);
+		string i25_21 = instMem.getBinOutput().substr(6, 11);
+		string i20_16 = instMem.getBinOutput().substr(11, 16);
+		string i15_11 = instMem.getBinOutput().substr(16, 21);
+		string i15_0 = instMem.getBinOutput().substr(16, 32);
+		string i5_0 = instMem.getBinOutput().substr(27, 32);
+		string i25_0 = instMem.getBinOutput().substr(6,32);
+
+		if (debug_mode){
+			cout << "Instruction : " << instMem.getBinOutput() << endl;
+			cout << "i31_26 : " << i31_26 << endl;
+			cout << "i25_21 : " << i25_21 << endl;
+			cout << "i20_16 : " << i20_16 << endl;
+			cout << "i15_11 : " << i15_11 << endl;
+			cout << "i15_0 : " << i15_0 << endl;
+			cout << "i25_0 : " << i25_0 << endl;
+			cout << "i5_0 : " << i5_0 << endl << endl;
+		}
+
+		pcAddALU.performALU("010", pc.getValue(), 4);
+
+		cout << "PC ALU" << endl;
+		pcAddALU.print();
+		cout << endl;
+
+		cout << endl << "Entering Decode Stage" << endl << endl;
+		if (debug_mode) step();
+
+		control.process(i31_26);
+
+		cout << "Control Unit" << endl;
+		control.print();
+		cout << endl;
+
+		MultiplexorInput mInReg;
+		mInReg.in0 = binStoL(i20_16);
+		mInReg.in1 = binStoL(i15_11);
+		mInReg.control = control.getOutput().regDst;
+		regMult.process(mInReg);
+
+		cout << "Destination Register Multiplexor" << endl;
+		regMult.print();
+		cout << endl;
 
 		RegInput rIn;
 		rIn.readReg1 = binStoL(i25_21);
 		rIn.readReg2 = binStoL(i20_16);
+		rIn.writeReg = regMult.getOutput();
+		rIn.regWrite = control.getOutput().regWrite;
+		regFile.process(rIn);
 
-		MultiplexorInput mIn;
-		mIn.in0 = binStoL(i20_16);
-		mIn.in1 = binStoL(i15_11);
-		mIn.control = regDst;
-
-		cout << "Register File Multiplexor Input" << endl;
-		cout << "In 0 : 0x" << hex << mIn.in0 << endl;
-		cout << "In 1 : 0x" << hex << mIn.in1 << endl;
-		cout << "Control : 0x" << hex << mIn.control << endl;
-
-		rIn.writeReg = mult.process(mIn);
-
-		cout << "Register File Miltiplexor Output : 0x" << hex << rIn.writeReg << endl;
+		cout << "Register File" << endl;
+		regFile.print();
 		cout << endl;
 
-		rIn.regWrite = cOut.regWrite;
+		signExtend.extendToThirtyTwo(binStoL(i15_0));
 
-		cout << "Register File Input" << endl;
-		cout << "readReg1 : 0x" << hex << rIn.readReg1 << endl;
-		cout << "readReg2 : 0x" << hex << rIn.readReg2 << endl;
-		cout << "writeReg : 0x" << hex << rIn.writeReg << endl;
-		cout << "regWrite : 0x" << hex << rIn.regWrite << endl;
-		RegOutput rOut = regFile.process(regIn);
-		cout << "Register File Output" << endl;
-		cout << "readData1 : 0x" << hex << rOut.readData1 << endl;
-		cout << "readData2 : 0x" << hex << rOUt.readData2 << endl;
+		cout << "Sign Extend" << endl;
+		signExtend.print();
 		cout << endl;
 
-		long jumpVal = binStoL(i25_0);
-		cout << "Shift Jump Value Left 2" << endl;
-		cout << "Shift Input : " << hex << jumpVal << endl;
-		jumpVal *= 4;
-		cout << "Shift Output : " << hex << jumpVal << endl;
+		jumpShift.performShiftLeft(binStoL(i25_0));
+
+		cout << "Jump Shift Left" << endl;
+		jumpShift.print();
 		cout << endl;
 
 		cout << endl << "Entering Execute Stage" << endl << endl;
-		step();
+		if (debug_mode) step();
 
-		mIn.in0 = rOut.readData2;
-		mIn.in1 = binStoL(i15_0);
-		mIn.control = cOut.ALUSrc;
-		cout << "ALU Source Multiplexor Input" << endl;
-		cout << "In 0 : 0x" << hex << mIn.in0 << endl;
-		cout << "In 1 : 0x" << hex << mIn.in1 << endl;
-		cout << "Control : 0x" << hex << mIn.control << endl;
-		long mOut = mult.process(mIn);
-		cout << "ALU Source Multiplexor Output : 0x" << hex << mOut << endl;
+		aluControl.getALUControl(i5_0, control.getOutput().ALUOp0, control.getOutput().ALUOp1);
+
+		cout << "ALU Control" << endl;
+		aluControl.print();
 		cout << endl;
 
-		long ALUIn0 = rOut.readData1;
-		long ALUIn1 = mOut;
-
-		cout << "ALU Control Input" << endl;
-		cout << "Funct Code : 0x" << hex << binStoL(i5_0) << endl;
-		cout << "ALUOp 0 : 0x" << hex << ALUOp0 << endl;
-		cout << "ALUOp 1 : 0x" << hex << ALUOp1 << endl;
-		string aluOpCode = aluControl.getALUControl(i5_0, ALUOp0, ALUOp1);
-		cout << "ALU Control Output : 0x" << hex << binStoL(aluOpCode) << endl;
-		cout << end;
-
-		
+		mInALU.in0 = regFile.getOutput().readData1;
+		mInALU.in1 = regFile.getOutput().readData2;
+		mInALU.control = control.getOutput().ALUSrc;
+		aluMult.process(mInALU);
 	}
 }
 
 void Processor::step(){
-	if (output_mode == single_step){
+	if (output_mode == "single_step" || debug_mode){
+		cout << "Press Enter to Continue" << endl;
 		getchar();
 	}
 }
@@ -187,4 +178,10 @@ bool Processor::getBool(string input){
 	if (input == "true") return true;
 	return false;
 }
+
+int main(){
+	Processor proc("input.config");
+	return 0;
+}
+
 

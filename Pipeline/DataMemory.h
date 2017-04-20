@@ -8,22 +8,28 @@
 using namespace std;
 
 struct MemInput{
-	long  memWrite;
-	long  memRead;
-	long  address;
-	long  writeData;
+	int  memWrite;
+	int  memRead;
+	int  address;
+	int  writeData;
 };
 
 class DataMemory{
 public:
 	DataMemory(){}
-	DataMemory(map<long , long > initMem);
-	long  process(MemInput in);
+	DataMemory(map<int , int > initMem);
+	int  process(MemInput in);
 
-	void prlong ();
+	void print();
+	void printAll ();
+
+	MemInput getInput(){return input;}
+	int getOutput(){return output;}
 private:
-	map<long , long > memory;
+	map<int , int > memory;
 
+	MemInput input;
+	int output;
 };
 
 #endif

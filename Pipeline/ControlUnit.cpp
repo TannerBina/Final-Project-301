@@ -18,5 +18,22 @@ ControlUnit::ControlUnit(){
 }
 
 ControlWires ControlUnit::process(string opcode){
+	input = opcode;
+	output= outputMap[opcode];
 	return outputMap[opcode];
+}
+
+void ControlUnit::print(){
+	cout << "Input : 0x" << hex << binStoL(input) << endl;
+	cout << "Output" << endl;
+	cout << "RegDst : 0x" << hex << output.regDst << endl;
+	cout << "Jump : 0x" << hex << output.jump << endl;
+	cout << "Branch : 0x" << hex << output.branch << endl;
+	cout << "MemRead : 0x" << hex << output.memRead << endl;
+	cout << "MemToReg : 0x" << hex << output.memToReg << endl;
+	cout << "ALUOp0 : 0x" << hex << output.ALUOp0 << endl;
+	cout << "ALUOP1 : 0x" << hex << output.ALUOp1 << endl;
+	cout << "MemWrite : 0x" << hex << output.memWrite << endl;
+	cout << "ALUSrc : 0x" << hex << output.ALUSrc << endl;
+	cout << "RegWrite : 0x" << hex << output.regWrite << endl;
 }
