@@ -10,7 +10,7 @@ CCFLAGS= -DDEBUG -g -Wall
 	g++ $(CCFLAGS) -c $<
 
 
-Processor.o: Processor.h
+Processor: Processor.h
 	g++ -std=c++11 -o Parser.o PC.o InstructionMemory.o RegisterTable.o DataMemory.o Multiplexor.o ControlUnit.o ALUControl.o ALU.o ShiftLeftTwo.o SignExtend.o
 
 ALU.o: ALU.h
