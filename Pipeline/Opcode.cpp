@@ -70,7 +70,7 @@ int OpcodeTable::RDposition(string str)
   return -1;
 }
 
-int OpcodeTable::IMMposition(Opcode o)
+int OpcodeTable::IMMposition(string str)
 // Given an Opcode, returns the position of IMM field.  If field is not
 // appropriate for this Opcode, returns -1.
 {
