@@ -20,6 +20,9 @@ int SignExtend::extendToThirtyTwo(int thisWillDoNothing)
 	return thisWillDoNothing;
 }
 
+/*
+Prints out the input and output data for the sign extend unit.
+ */
 void SignExtend::print(){
 	cout << "Input : 0x" << hex << input << endl;
 	cout << "Output : 0x" << hex << output << endl;

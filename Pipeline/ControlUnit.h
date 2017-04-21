@@ -26,16 +26,19 @@ public:
 	//initialize control unit
 	ControlUnit();
 
-	//handles decode stage
+	//handles decode stage saving input opcode and output wires
 	ControlWires process(string opcode);
 
+	//gets the input and output
 	string getInput(){return input;}
 	ControlWires getOutput(){return output;}
 
+	//print the input and output
 	void print();
 	
 private:
 
+	//store input and output
 	string input;
 	ControlWires output;
 

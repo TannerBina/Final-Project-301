@@ -14,22 +14,31 @@ RegisterTable::RegisterTable(map<int , int > initMap)
 RegOutput RegisterTable::process(RegInput in){
 	input = in;
 	RegOutput res;
+
+	//initialize read data to 0
 	res.readData1 = 0;
 	res.readData2 = 0;
+
+	//if given a readReg input data in reg to output
 	if (in.readReg1 > -1){
 		res.readData1 = registers[in.readReg1];
 	}
 	if (in.readReg2 > -1){
 		res.readData2 = registers[in.readReg2];
 	}
+
+	//set write state and write register for writing later on.
 	writeState = in.regWrite;
 	writeRegister = in.writeReg;
 	output = res;
+
+	//return output.
 	return res;
 }
 
 //process the writeback cycle, true if written to register.
 bool RegisterTable::write(int writeData){
+	//tries to write to a register, returns true if successfull, false otherwise.
 	writeInput = writeData;
 	if (writeRegister != -1 && writeState){
 		registers[writeRegister] = writeData;
@@ -38,6 +47,7 @@ bool RegisterTable::write(int writeData){
 	return false;
 }
 
+//prints all registers and contents.
 void RegisterTable::printAll (){
 	cout << "Register File" << endl;
 	for (int i = 0; i < 32; i++){
@@ -45,6 +55,7 @@ void RegisterTable::printAll (){
 	}
 }
 
+//print the input and outputs to the register file
 void RegisterTable::print(){
 	cout << "Input" << endl;
 	cout << "ReadReg1 : 0x" << hex << input.readReg1 << endl;
@@ -56,6 +67,7 @@ void RegisterTable::print(){
 	cout << "ReadData2 : 0x" << hex << output.readData2 << endl;
 }
 
+//print the inputs to a write command of the register file.
 void RegisterTable::printWrite(){
 	cout << "Input" << endl;
 	cout << "WriteInput : 0x" << hex << writeInput << endl;

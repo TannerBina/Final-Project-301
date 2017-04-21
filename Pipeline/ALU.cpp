@@ -2,17 +2,21 @@
 
 using namespace std;
 
+//constructor to initialize with control and srces 
 ALU::ALU(string control, int src1, int src2){
 
  	performALU(control, src1, src2);
 
 }
 
+//perform alu
 LineInfo  ALU::performALU(string control, int src1, int src2){
+	//save inputs
 	input.control = control;
 	input.in0 = src1;
 	input.in1 = src2;
 
+	//based on control do operation
 	int out = 0;
 	if(control == "010"){
 		out = src1 + src2; // return the sum
@@ -35,6 +39,7 @@ LineInfo  ALU::performALU(string control, int src1, int src2){
 		}
 	}
 
+	//get the result store and output it
 	LineInfo res;
 	res.output = out;
 	if (res.output == 0){
@@ -47,6 +52,7 @@ LineInfo  ALU::performALU(string control, int src1, int src2){
 	return res;
 }
 
+//print out all input and oututs
 void ALU::print(){
 	cout << "Input" << endl;
 	cout << "Control : 0x" << hex << input.control << endl;
