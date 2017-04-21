@@ -8,6 +8,9 @@ ShiftLeftTwo::ShiftLeftTwo(int immediate)
 }
 
 
+/*
+SHifts left by two by multiplying by 4.
+ */
 int ShiftLeftTwo::performShiftLeft(int imm)
 {
 	input = imm;
@@ -15,6 +18,9 @@ int ShiftLeftTwo::performShiftLeft(int imm)
 	return output;
 }
 
+/*
+Prints ou the input and output of the unit.
+ */
 void ShiftLeftTwo::print(){
 	cout << "Input : 0x" << hex << input << endl;
 	cout << "Output : 0x" << hex << output << endl;

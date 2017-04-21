@@ -1,7 +1,12 @@
+/*
+Implements the control unit
+ */
+
 #include "ControlUnit.h"
 
 using namespace std;
 
+//creates a control unit table to return the correct control wires upon input of opcode.
 ControlUnit::ControlUnit(){
 	ControlWires rFormat; rFormat.regDst = 1; rFormat.ALUSrc = 0; rFormat.memToReg = 0; rFormat.regWrite = 1; rFormat.memRead = 0; rFormat.memWrite = 0; rFormat.branch = 0; rFormat.ALUOp1 = 1; rFormat.ALUOp0 = 0; rFormat.jump = 0;
 	outputMap["000000"] = rFormat;
@@ -17,14 +22,20 @@ ControlUnit::ControlUnit(){
 	outputMap["000010"] = j;
 }
 
+/*
+Process an opcode input
+ */
 ControlWires ControlUnit::process(string opcode){
+	//save input and output
 	input = opcode;
 	output= outputMap[opcode];
+	//return control wires from table
 	return outputMap[opcode];
 }
 
+//print input and all outputs
 void ControlUnit::print(){
-	cout << "Input : 0x" << hex << binStoL(input) << endl;
+	cout << "Input : 0x" << hex << Utility::bStoi(input) << endl;
 	cout << "Output" << endl;
 	cout << "RegDst : 0x" << hex << output.regDst << endl;
 	cout << "Jump : 0x" << hex << output.jump << endl;

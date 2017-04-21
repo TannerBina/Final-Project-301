@@ -1,3 +1,8 @@
+/*
+Simulates a Register File.
+Holds data in 32 registers.
+ */
+
 #ifndef __REGISTERTABLE_H__
 #define __REGISTERTABLE_H__
 
@@ -33,13 +38,18 @@ public:
 	//process the writeback cycle, true if written to register
 	bool write(int writeData);
 
+	//retrieves the input and output
 	RegInput getInput(){return input;}
 	RegOutput getOutput(){return output;}
+	//retrives the input when writing is attempted
 	int getWriteInput(){return writeInput;}
 
+	//print input and output
 	void print();
+	//print input from a write
 	void printWrite();
 
+	//print all registers and all values.
 	void printAll ();
 private:
 	//stores register dat
@@ -49,6 +59,7 @@ private:
 	//register to write to in writeback stage
 	int writeRegister;
 
+	//stores the specified inputs and outputs.
 	RegInput input;
 	RegOutput output;
 	int writeInput;

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "Utility.h"
 /*
 What this class does, The ALU Control - takes in instruction funct field 
 and ALUOp  and outputs the ALU control code
@@ -17,6 +18,7 @@ and ALUOp  and outputs the ALU control code
 
 using namespace std;
 
+//the input to an alu cntrol
 struct ALUControlInput{
 	int op0;
 	int op1;
@@ -26,25 +28,26 @@ struct ALUControlInput{
 class ALUControl{
 
 private:
+	//the function code and operators stored
 	string functcode;
 	int  op1, op2;
 
+	//the output and input stored
 	string output;
 	ALUControlInput input;
 
 public:
 	ALUControl(){}
+	//process the funct code and two operating bits, saving the values
 	ALUControl(string functcode, int  op1, int  op2);
 	string getALUControl(string functcode, int  op1, int  op2);
 
+	//get the output and input
 	string getOutput(){return output;}
 	ALUControlInput getInput(){return input;}
 
+	//print the output and the input
 	void print();	
-
-	int binStoL(string in){
-	return stol(in, nullptr, 2);
-}
 };
 
 #endif

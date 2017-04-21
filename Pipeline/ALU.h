@@ -15,11 +15,13 @@ and zero or one depending on the output
 
 using namespace std;
 
+//the output for the alu
 struct LineInfo{
 	int  output;
 	int  zeroOrOne;
 };
 
+//the input for the alu
 struct ALUInput{
 	string control;
 	int in0;
@@ -31,6 +33,7 @@ class ALU{
 public:
 
 	ALU(){};
+	//takes in control src1 and src2 for initialize
 	ALU(string control, int  src1, int  src2);
 
 	//given a control string taken from ALUcontrol, and registers,
@@ -38,12 +41,15 @@ public:
 	//and returns int  with the selected action on the input
 	LineInfo  performALU(string control, int  src1, int  src2);
 
+	//get input ad output
 	LineInfo getOutput(){return output;}
 	ALUInput getInput(){return input;}
 
+	//print the input and outputs ut
 	void print();
 
 private:
+	//store the input and outputs
 	LineInfo output;
 	ALUInput input;
 };

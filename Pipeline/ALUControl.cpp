@@ -1,16 +1,26 @@
+/*
+The Alu Control which outputs the alu controller based on two bits and funct code
+ */
+
 #include "ALUControl.h"
 using namespace std;
 
+/*
+Constructor to initialize based on params
+ */
 ALUControl::ALUControl(string functcode, int  op1, int  op2){
 
 	getALUControl(functcode, op1, op2);
 }
 
+//returns the control signal as well as saves input and output
 string ALUControl::getALUControl(string functionCode, int  ALUOp1, int  ALUOp2){
+	//save inputs
 	input.op0 = ALUOp1;
 	input.op1 = ALUOp2;
 	input.funct = functionCode;
 
+	//get the output based on two bits and funct code
 	string output ="";
 	if( ALUOp1 == 0 && ALUOp2 == 0){
 		output = "010";
@@ -36,17 +46,19 @@ string ALUControl::getALUControl(string functionCode, int  ALUOp1, int  ALUOp2){
 		}
 	}
 
+	//set output
 	this->output = output;
 	//cout << output << endl;
 	return output;
 }
 
+//print out everything
 void ALUControl::print(){
 	cout << "Input" << endl;
-	cout << "FunctCode : 0x" << hex << binStoL(input.funct) << endl;
+	cout << "FunctCode : 0x" << hex << Utility::bStoi(input.funct) << endl;
 	cout << "In0 : 0x" << hex << input.op0 << endl;
 	cout << "In1 : 0x" << hex << input.op1 << endl;
-	cout << "Output : 0x" << hex << binStoL(output) << endl;
+	cout << "Output : 0x" << hex << Utility::bStoi(output) << endl;
 }
 /*
 int  main() {

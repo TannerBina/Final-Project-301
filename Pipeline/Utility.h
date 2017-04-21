@@ -3,12 +3,20 @@
 
 #include <string>
 #include <cmath>
+#include <iostream>
 
 using namespace std;
 
+
+/*
+Utility class which provides functions to conver hex and binary to integers.
+ */
 class Utility{
 
 public:
+	/*
+	Returns the 4 binary bits from the given hex char
+	 */
 	static string htob(char hexChar){
 		switch (hexChar){
 			case '0':
@@ -81,16 +89,26 @@ public:
 			return "1111";
 			break;
 		}
+
+		cout << "NOT A VALID HEX CHARACTER" << endl;
+		return "0000";
 	}	
 
+	/*
+	Converts a binary string to an integer
+	 */
 	static int bStoi(string binaryString){
 		int result = 0;
-		for (int i = 0; i < binaryString.length(); i++){
+		//loop through string
+		for (unsigned int i = 0; i < binaryString.length(); i++){
+			//check twos compliment first bit.
 			if (i == 0 && binaryString.length() == 32){
 				if (binaryString.at(i) == '1'){
 					result -= pow(2, binaryString.length() - 1 - i);
 				}
 			} else {
+
+				//otherwise add 2 to the power if value is 1.
 				if (binaryString.at(i) == '1'){
 					result += pow(2, binaryString.length() - 1 - i);
 				}
@@ -100,11 +118,17 @@ public:
 		return result;
 	}
 
+	/*
+	converts a hex to a signed integer
+	 */
 	static int hStoi(string hexString){
+		//convert hex to binary
 		string binaryString;
-		for (int i = 0; i < hexString.length(); i++){
+		for (unsigned int i = 0; i < hexString.length(); i++){
 			binaryString.append(htob(hexString[i]));
 		}
+
+		//convert binary to integer
 		return bStoi(binaryString);
 	}
 
