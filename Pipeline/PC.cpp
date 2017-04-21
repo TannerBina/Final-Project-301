@@ -1,7 +1,5 @@
 #include "PC.h"
 
-using namespace std;
-
 //setvalue of pc
 	void PC::setValue(int newValue){
 		value = newValue;
