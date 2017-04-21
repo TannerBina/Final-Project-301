@@ -56,7 +56,7 @@ class OpcodeTable {
   bool isIMMLabel(string str);
 
   // Given an Opcode, returns instruction type.
-  InstType getInstType(string str);
+  int getInstType(string str);
 
   // Given an Opcode, returns a string representing the binary encoding of the function
   // field.

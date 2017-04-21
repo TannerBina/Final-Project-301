@@ -13,6 +13,7 @@
 #include <sstream>
 #include <vector>
 #include "Utility.h"
+#include <string.h>
 
 
 using namespace std;
@@ -47,6 +48,8 @@ public:
 
 	string toBinary(int num, string result, unsigned int bits
 		);
+
+	vector<string> tokenize(string insts);
 
 private:
 	map <string, string> config;

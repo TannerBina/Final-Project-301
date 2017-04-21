@@ -71,8 +71,8 @@ void Parser::parseProgram(){
 		}
 	}
 	map<int, string>::iterator itr;
-	string res;
 	for (itr = prog.begin(); itr != prog.end(); itr++) {
+		string res;
 		string asem = itr->second;
 		stringstream s(asem);
 		vector<string> insts;
@@ -86,8 +86,9 @@ void Parser::parseProgram(){
 			res.append(tmp);
 			res.append(" ");
 		}
+
 		prog[itr->first] = res;
-		res = '\0';
+		
 
 	}
 	
@@ -96,11 +97,11 @@ void Parser::parseProgram(){
 	
 
 /*
-This method takes in an int eger and a string, converting an int eger
+This method takes in an integer and a string, converting an integer
 to a binary string
 */
 string Parser::toBinary(int num, string result, unsigned int bits){
-	stringstream ss;
+  stringstream ss;
   stringstream bit;
   string temp;
 
@@ -332,30 +333,30 @@ void Parser::convertProgram(){
 
 
 	OpcodeTable opcodetab;
-	string binStr;
 	map<int, string>::iterator itr;
 	map<int, string> copy = getProgMap();
 
 	//iterates through the instructions from the input file
 	for(itr = copy.begin(); itr!=copy.end(); itr++){
+		string binStr;
 		char delim = ' ';
 		string val = itr->second;
 
 		string op = val.substr(0, val.find(delim));
 
 		//checks if the instruction is RTYPE
-		if(opcodetab.getInstType(op) == RTYPE){
-			binStr += rInst(val);
+		if(opcodetab.getInstType(op) == 0){
+			binStr = rInst(val);
 		}
 
 		//checks if the instruction is ITYPE
-		if(opcodetab.getInstType(op) == ITYPE){
-			binStr += iInst(val);
+		if(opcodetab.getInstType(op) == 1){
+			binStr = iInst(val);
 		}
 
 		//checks if the instruction is JTYPE
-		if(opcodetab.getInstType(op) == JTYPE){
-			binStr += jInst(val);
+		if(opcodetab.getInstType(op) == 2){
+			binStr = jInst(val);
 		}
 
 		binProg[itr->first] = binStr;
@@ -364,20 +365,48 @@ void Parser::convertProgram(){
 
 }	
 
+vector<string> Parser::tokenize(string inst){
+	vector<string> instruct;
+	char *cstr = new char[inst.length() + 1];
+	strcpy(cstr, inst.c_str());
+	char *tok;
+	tok = strtok(cstr, " ,()");
+	int num = strlen(tok);
+	char* insts[num + 1];
+	for (int i = 0; i < num + 1; i++){
+		insts[i]= new char[10];
+	}
+	int count = 0;
+	while(tok != NULL){
+		string s(tok);
+		instruct.push_back(s);
+		tok = strtok(NULL, " ,()");
+	}
+	
+	return instruct;
+} 
+
 /*
 This method takes an RTYPE instruction and converts it into a binary string
 */
 string Parser::rInst(string inst){
+	vector<string> instruct = tokenize(inst);
+
 	string res;
 	string str;
 	OpcodeTable opcodetab;
-	char delim = ' ';
-	string i = inst.substr(0, inst.find(delim));
-	string op = opcodetab.getOpcode(op);
+	string name = instruct.at(0);
+	string op = opcodetab.getOpcode(name);
 	str+=op;
 
 	//checks if the instruction has an rs register
-	if(opcodetab.RSposition(i) != -1){
+	if(opcodetab.RSposition(name) != -1){
+		int rs = opcodetab.RSposition(name);
+		string regS = instruct.at(rs + 1);
+		regS = regS.erase(0,1);
+		int reg = stoi(regS, nullptr, 10);
+		regS = toBinary(reg, regS, 5);
+		str += regS;
 
 	//if none, 0s are appended to the binary string
 	} else {
@@ -385,32 +414,57 @@ string Parser::rInst(string inst){
 	    str+=res;
 	}
 
-	//checks if the instruction has an rd register
-	if(opcodetab.RDposition(i) != -1){
-
-	//if none, 0s are appended to the binary string
-	}  else {
-	    res = toBinary(0, res, 5);
-	    str+=res;
-	}
-
 	//checks if the instruction has an rt position
-	if(opcodetab.RTposition(i) != -1){
+	if(opcodetab.RTposition(name) != -1){
+		int rt = opcodetab.RTposition(name);
+		string regT = instruct.at(rt + 1);
+		regT = regT.erase(0,1);
+		int reg = stoi(regT, nullptr, 10);
+		regT = toBinary(reg, regT, 5);
+		str += regT;
 
 	//if none, 0s are appended to the binary string
 	}  else {
 	    res = toBinary(0, res, 5);
 	    str+=res;
 	}
+	//checks if the instruction has an rd register
+	if(opcodetab.RDposition(name) != -1){
+		int rd = opcodetab.RDposition(name);
+		string regD = instruct.at(rd + 1);
+		regD = regD.erase(0,1);
+		int reg = stoi(regD, nullptr, 10);
+		regD = toBinary(reg, regD, 5);
+		str += regD;
 
+	//if none, 0s are appended to the binary string
+	}  else {
+	    res = toBinary(0, res, 5);
+	    str+=res;
+	}
+	int immediate;
 	//checks if the instruction has an immediate
-	if (opcodetab.IMMposition(i) != -1){
+	if (opcodetab.IMMposition(name) != -1){
+		int imm = opcodetab.IMMposition(name);
+		string immed = instruct.at(imm + 1);
+		if (immed[1] == 'x'){
+			immed = immed.erase(0,2);
+			immediate = Utility::hStoi(immed);
+		} else {
+			immediate = stoi(immed, nullptr, 10);
+
+		}
+		immed = toBinary(immediate, immed, 5);
+		str += immed;
 
 	//if none, appends 0s to the binary string
 	} else {
 		res = toBinary(0, res, 5);
     	str+=res;
 	}
+
+	string funct = opcodetab.getFunctField(name);
+  	str += funct;
 
 	return str;
 
@@ -420,16 +474,25 @@ string Parser::rInst(string inst){
 This method takes an ITYPE instruction and converts it into a binary string
 */
 string Parser::iInst(string inst){
+	vector<string> instruct = tokenize(inst);
+
 	string res;
 	string str;
 	OpcodeTable opcodetab;
-	char delim = ' ';
-	string i = inst.substr(0, inst.find(delim));
-	string op = opcodetab.getOpcode(op);
+	string name = instruct.at(0);
+	string op = opcodetab.getOpcode(name);
 	str += op;
 
 	//checks if the instruction has an rs position
-	if(opcodetab.RSposition(i) != -1){
+	if(opcodetab.RSposition(name) != -1){
+		int rs = opcodetab.RSposition(name);
+		string regS = instruct.at(rs + 1);
+		regS = regS.erase(0,1);
+		int reg = stoi(regS, nullptr, 10);
+		cout << reg << endl;
+		regS = toBinary(reg, regS, 5);
+		cout << regS << endl;
+		str += regS;
 
 	//if none, appends 0s to the binary string
 	}  else {
@@ -438,7 +501,13 @@ string Parser::iInst(string inst){
 	}
 
 	//checks if the instruction has an rt position
-	if(opcodetab.RTposition(i) != -1){
+	if(opcodetab.RTposition(name) != -1){
+		int rt = opcodetab.RTposition(name);
+		string regT = instruct.at(rt + 1);
+		regT = regT.erase(0,1);
+		int reg = stoi(regT, nullptr, 10);
+		regT = toBinary(reg, regT, 5);
+		str += regT;
 		
 	//if none, appends 0s to the binary string
 	}  else {
@@ -446,13 +515,26 @@ string Parser::iInst(string inst){
 	    str+=res;
 	}
 
-	if (opcodetab.IMMposition(i) != -1){
+	int immediate;
+	if (opcodetab.IMMposition(name) != -1){
+		int imm = opcodetab.IMMposition(name);
+		string immed = instruct.at(imm + 1);
+		if (immed[1] == 'x'){
+			immed = immed.erase(0,2);
+			immediate = Utility::hStoi(immed);
+		} else {
+			immediate = stoi(immed, nullptr, 10);
+		}
+		immed = toBinary(immediate, immed, 16);
+		str += immed;
 
 	//if none, appends 0s to the binary string
 	} else {
-		res = toBinary(0, res, 5);
+		res = toBinary(0, res, 16);
     	str+=res;
 	}
+
+
 
 	return str;
 
@@ -462,12 +544,20 @@ string Parser::iInst(string inst){
 This method takes a JTYPE instruction and converts it into a binary string
 */
 string Parser::jInst(string inst){
+	vector<string> instruct = tokenize(inst);
+
 	string res;
 	OpcodeTable opcodetab;
-	char delim = ' ';
-	string op = inst.substr(0, inst.find(delim));
-	op = opcodetab.getOpcode(op);
+	string op = opcodetab.getOpcode(instruct.at(0));
 	res += op;
+
+	string immed = instruct.at(1);
+	if (immed[1] == 'x') {
+		immed = immed.erase(0,2);
+	}
+
+	int imm = stoi(immed, nullptr, 16);
+	res += toBinary(imm / 4, res, 26);
 
 	return res;
 
