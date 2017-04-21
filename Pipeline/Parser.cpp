@@ -37,8 +37,7 @@ void Parser::parseConfig(string file) {
 			if (line.find('#')){
 				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
-				line = line.substr(0, pos - 1);
-				cout << line << endl;
+				line = line.substr(0, pos);
 			}
 
 			int equalsPos = line.find('=');
@@ -78,8 +77,7 @@ void Parser::parseProgram(){
 			if (line.find('#')){
 				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
-				line = line.substr(0, pos - 1);
-				cout << line << endl;
+				line = line.substr(0, pos);
 			}
 
 			prog[key] = line;
@@ -192,8 +190,7 @@ map<string, string> Parser::parseMemory() {
 			if (line.find('#')){
 				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
-				line = line.substr(0, pos - 1);
-				cout << line << endl;
+				line = line.substr(0, pos);
 			}
 
 			int colonPos = line.find(':');
@@ -233,8 +230,7 @@ map<string, string> Parser::parseRegister(){
 			if (line.find('#')){
 				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
-				line = line.substr(0, pos - 1);
-				cout << line << endl;
+				line = line.substr(0, pos );
 			}
 
 			int colonPos = line.find(':');
@@ -270,7 +266,7 @@ void Parser::convertMemory() {
 			sec.erase(0,2);
 
 			//iterates through the characters in the value
-			for (int i = 0; i < sec.size(); i++) {
+			for (unsigned int i = 0; i < sec.size(); i++) {
 
 				//checks if the character is a letter, and makes it lowercase
 				if(! (sec[i] >= '0' && sec[i] <= '9')){
@@ -282,7 +278,7 @@ void Parser::convertMemory() {
 		} else {
 
 			//iterates through the characters in the value
-			for (int i = 0; i < sec.size(); i++) {
+			for (unsigned int i = 0; i < sec.size(); i++) {
 
 				//checks if the character is a letter, and makes it lowercase
 				if(! (sec[i] >= '0' && sec[i] <= '9')){
@@ -327,7 +323,7 @@ void Parser::convertRegister(){
 			sec.erase(0,2);
 
 			//iterates through the characters in the value
-			for (int i = 0; i < sec.size(); i++) {
+			for (unsigned int i = 0; i < sec.size(); i++) {
 
 				//checks if the character is a letter, and makes it lowercase
 				if(! (sec[i] >= '0' && sec[i] <= '9')){
@@ -339,7 +335,7 @@ void Parser::convertRegister(){
 		} else {
 
 			//iterates through the characters in the value
-			for (int i = 0; i < sec.size(); i++) {
+			for (unsigned int i = 0; i < sec.size(); i++) {
 
 				//checks if the character is a letter, and makes it lowercase
 				if(!(sec[i] >= '0' && sec[i] <= '9')){
@@ -419,15 +415,7 @@ vector<string> Parser::tokenize(string inst){
 	strcpy(cstr, inst.c_str());
 	char *tok;
 	tok = strtok(cstr, " ,()");
-	int num = strlen(tok);
-	char* insts[num + 1];
-
-	//adds strings of length 10 to the array
-	for (int i = 0; i < num + 1; i++){
-		insts[i]= new char[10];
-	}
-	int count = 0;
-
+	
 	//adds the tokens from the string to the vector
 	while(tok != NULL){
 		string s(tok);
