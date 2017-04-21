@@ -1,7 +1,6 @@
 #ifndef __CONTROLUNIT_H__
 #define __CONTROLUNIT_H__
 
-using namespace std;
 #include <string>
 #include <map>
 #include <iostream>
