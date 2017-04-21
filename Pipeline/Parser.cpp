@@ -49,7 +49,7 @@ void Parser::parseConfig(string file) {
 			line.erase(remove(line.begin(), line.end(), '\t'), line.end());
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 
-			config[line.substr(0, equalsPos)] = line.substr(equalsPos + 1, line.size() - equalsPos - 2);
+			config[line.substr(0, equalsPos)] = line.substr(equalsPos + 1, line.size() - equalsPos - 1);
 
 		}
 	}
@@ -223,7 +223,7 @@ map<string, string> Parser::parseMemory() {
 				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
 				line.erase(remove(line.begin(), line.end(), '\t'), line.end());
-				line = line.substr(0, pos - 1);
+				line = line.substr(0, pos);
 
 			}
 
@@ -232,7 +232,7 @@ map<string, string> Parser::parseMemory() {
 			line.erase(remove(line.begin(), line.end(), '\t'), line.end());
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 
-			temp[line.substr(0, colonPos)] = line.substr(colonPos + 1, line.size() - colonPos - 2);
+			temp[line.substr(0, colonPos)] = line.substr(colonPos + 1, line.size() - colonPos - 1);
 
 		}
 		
@@ -267,7 +267,7 @@ map<string, string> Parser::parseRegister(){
 				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
 				line.erase(remove(line.begin(), line.end(), '\t'), line.end());
-				line = line.substr(0, pos - 1);
+				line = line.substr(0, pos);
 			}
 
 			//separates line by colon and removes all whitespace
@@ -276,7 +276,7 @@ map<string, string> Parser::parseRegister(){
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 			string sub = line.substr(0, colonPos);
 
-			temp[sub] = line.substr(colonPos + 1, line.size() - colonPos - 2);
+			temp[sub] = line.substr(colonPos + 1, line.size() - colonPos - 1);
 
 		}
 	}
