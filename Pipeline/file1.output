@@ -1,0 +1,2001 @@
+Printing Memory Contents
+Register File
+Register 0 : 0x58eed051
+Register 1 : 0x305f7ea1
+Register 2 : 0x2ec4f219
+Register 3 : 0xc57b54ba
+Register 4 : 0xe65e1e87
+Register 5 : 0x1df23a4f
+Register 6 : 0xb90037d6
+Register 7 : 0x63322818
+Register 8 : 0x10916273
+Register 9 : 0x9de6153f
+Register a : 0x81fb7b82
+Register b : 0xce7d0a9b
+Register c : 0x9cb2a11c
+Register d : 0xddc6522
+Register e : 0x604ca9a9
+Register f : 0x488a6409
+Register 10 : 0xaaa29086
+Register 11 : 0x95ddcf94
+Register 12 : 0x61d998ef
+Register 13 : 0x8e9a6c56
+Register 14 : 0x5a3e780f
+Register 15 : 0xdaa25db0
+Register 16 : 0xa031e83
+Register 17 : 0x750773f2
+Register 18 : 0x67745ce5
+Register 19 : 0x9b0eae9d
+Register 1a : 0x1ea9d4cc
+Register 1b : 0x854a7c53
+Register 1c : 0x70e0b33a
+Register 1d : 0x1b128e28
+Register 1e : 0xea150cc4
+Register 1f : 0x81e72593
+
+Data Memory
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0x2ec4f219
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+Instruction Memory
+0x400000 : 0x10220200
+0x400004 : 0x10221e00
+0x400008 : 0x881820
+0x40000c : 0x20220064
+0x400010 : 0x691022
+0x400014 : 0x4a082a
+0x400018 : 0x43082a
+0x40001c : 0x8c4102bc
+0x400020 : 0xac9101f4
+
+
+Entering Fetch Stage
+
+Instruction Memory Instruction Fetched
+Input : 0x400000
+Output : beq $1, $2, 0x200  
+Instruction Memory Instruction
+Input : 0x400000
+Output : 0x10220200
+
+PC ALU
+Input
+Control : 0x2
+In0 : 0x400000
+In1 : 0x4
+Output
+Output : 0x400004
+Zero Line : 0x0
+
+
+Entering Decode Stage
+
+Control Unit
+Input : 0x4
+Output
+RegDst : 0x0
+Jump : 0x0
+Branch : 0x1
+MemRead : 0x0
+MemToReg : 0x0
+ALUOp0 : 0x1
+ALUOP1 : 0x0
+MemWrite : 0x0
+ALUSrc : 0x0
+RegWrite : 0x0
+
+Destination Register Multiplexor
+Input
+In0 : 0x2
+In1 : 0x0
+Control : 0x0
+Output : 0x2
+
+Register File
+Input
+ReadReg1 : 0x1
+ReadReg2 : 0x2
+WriteReg : 0x2
+RegWrite : 0x0
+Output
+ReadData1 : 0x305f7ea1
+ReadData2 : 0x2ec4f219
+
+Sign Extend
+Input : 0x200
+Output : 0x200
+
+Jump Shift Left
+Input : 0x220200
+Output : 0x880800
+
+
+Entering Execute Stage
+
+ALU Control
+Input
+FunctCode : 0x0
+In0 : 0x1
+In1 : 0x0
+Output : 0x6
+
+ALU Multiplexor
+Input
+In0 : 0x2ec4f219
+In1 : 0x200
+Control : 0x0
+Output : 0x2ec4f219
+
+Main ALU
+Input
+Control : 0x6
+In0 : 0x305f7ea1
+In1 : 0x2ec4f219
+Output
+Output : 0x19a8c88
+Zero Line : 0x0
+
+Branch Shift
+Input : 0x200
+Output : 0x800
+
+Branch ALU
+Input
+Control : 0x2
+In0 : 0x400004
+In1 : 0x800
+Output
+Output : 0x400804
+Zero Line : 0x0
+
+
+Entering Memory Stage
+
+Data Memory
+Input
+MemWrite : 0x0
+MemRead : 0x0
+Address : 0x19a8c88
+WriteData : 0x2ec4f219
+Output : 0x0
+
+Branch And Gate
+Input
+In0 : 0x1
+In1 : 0x0
+Output : 0x0
+
+Branch Multiplexor
+Input
+In0 : 0x400004
+In1 : 0x400804
+Control : 0x0
+Output : 0x400004
+
+Entering Writeback Stage
+Write Back Multiplexor
+Input
+In0 : 0x19a8c88
+In1 : 0x0
+Control : 0x0
+Output : 0x19a8c88
+
+Reg File Writeback
+Input
+WriteInput : 0x19a8c88
+WriteState : 0x0
+WriteRegister : 0x2
+
+Jump Multiplexor
+Input
+In0 : 0x400004
+In1 : 0x880800
+Control : 0x0
+Output : 0x400004
+
+Printing Memory Contents
+Register File
+Register 0 : 0x58eed051
+Register 1 : 0x305f7ea1
+Register 2 : 0x2ec4f219
+Register 3 : 0xc57b54ba
+Register 4 : 0xe65e1e87
+Register 5 : 0x1df23a4f
+Register 6 : 0xb90037d6
+Register 7 : 0x63322818
+Register 8 : 0x10916273
+Register 9 : 0x9de6153f
+Register a : 0x81fb7b82
+Register b : 0xce7d0a9b
+Register c : 0x9cb2a11c
+Register d : 0xddc6522
+Register e : 0x604ca9a9
+Register f : 0x488a6409
+Register 10 : 0xaaa29086
+Register 11 : 0x95ddcf94
+Register 12 : 0x61d998ef
+Register 13 : 0x8e9a6c56
+Register 14 : 0x5a3e780f
+Register 15 : 0xdaa25db0
+Register 16 : 0xa031e83
+Register 17 : 0x750773f2
+Register 18 : 0x67745ce5
+Register 19 : 0x9b0eae9d
+Register 1a : 0x1ea9d4cc
+Register 1b : 0x854a7c53
+Register 1c : 0x70e0b33a
+Register 1d : 0x1b128e28
+Register 1e : 0xea150cc4
+Register 1f : 0x81e72593
+
+Data Memory
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0x2ec4f219
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+Instruction Memory
+0x400000 : 0x10220200
+0x400004 : 0x10221e00
+0x400008 : 0x881820
+0x40000c : 0x20220064
+0x400010 : 0x691022
+0x400014 : 0x4a082a
+0x400018 : 0x43082a
+0x40001c : 0x8c4102bc
+0x400020 : 0xac9101f4
+
+
+Entering Fetch Stage
+
+Instruction Memory Instruction Fetched
+Input : 0x400004
+Output : beq $1, $2, 0x1e00  
+Instruction Memory Instruction
+Input : 0x400004
+Output : 0x10221e00
+
+PC ALU
+Input
+Control : 0x2
+In0 : 0x400004
+In1 : 0x4
+Output
+Output : 0x400008
+Zero Line : 0x0
+
+
+Entering Decode Stage
+
+Control Unit
+Input : 0x4
+Output
+RegDst : 0x0
+Jump : 0x0
+Branch : 0x1
+MemRead : 0x0
+MemToReg : 0x0
+ALUOp0 : 0x1
+ALUOP1 : 0x0
+MemWrite : 0x0
+ALUSrc : 0x0
+RegWrite : 0x0
+
+Destination Register Multiplexor
+Input
+In0 : 0x2
+In1 : 0x3
+Control : 0x0
+Output : 0x2
+
+Register File
+Input
+ReadReg1 : 0x1
+ReadReg2 : 0x2
+WriteReg : 0x2
+RegWrite : 0x0
+Output
+ReadData1 : 0x305f7ea1
+ReadData2 : 0x2ec4f219
+
+Sign Extend
+Input : 0x1e00
+Output : 0x1e00
+
+Jump Shift Left
+Input : 0x221e00
+Output : 0x887800
+
+
+Entering Execute Stage
+
+ALU Control
+Input
+FunctCode : 0x0
+In0 : 0x1
+In1 : 0x0
+Output : 0x6
+
+ALU Multiplexor
+Input
+In0 : 0x2ec4f219
+In1 : 0x1e00
+Control : 0x0
+Output : 0x2ec4f219
+
+Main ALU
+Input
+Control : 0x6
+In0 : 0x305f7ea1
+In1 : 0x2ec4f219
+Output
+Output : 0x19a8c88
+Zero Line : 0x0
+
+Branch Shift
+Input : 0x1e00
+Output : 0x7800
+
+Branch ALU
+Input
+Control : 0x2
+In0 : 0x400008
+In1 : 0x7800
+Output
+Output : 0x407808
+Zero Line : 0x0
+
+
+Entering Memory Stage
+
+Data Memory
+Input
+MemWrite : 0x0
+MemRead : 0x0
+Address : 0x19a8c88
+WriteData : 0x2ec4f219
+Output : 0x0
+
+Branch And Gate
+Input
+In0 : 0x1
+In1 : 0x0
+Output : 0x0
+
+Branch Multiplexor
+Input
+In0 : 0x400008
+In1 : 0x407808
+Control : 0x0
+Output : 0x400008
+
+Entering Writeback Stage
+Write Back Multiplexor
+Input
+In0 : 0x19a8c88
+In1 : 0x0
+Control : 0x0
+Output : 0x19a8c88
+
+Reg File Writeback
+Input
+WriteInput : 0x19a8c88
+WriteState : 0x0
+WriteRegister : 0x2
+
+Jump Multiplexor
+Input
+In0 : 0x400008
+In1 : 0x887800
+Control : 0x0
+Output : 0x400008
+
+Printing Memory Contents
+Register File
+Register 0 : 0x58eed051
+Register 1 : 0x305f7ea1
+Register 2 : 0x2ec4f219
+Register 3 : 0xc57b54ba
+Register 4 : 0xe65e1e87
+Register 5 : 0x1df23a4f
+Register 6 : 0xb90037d6
+Register 7 : 0x63322818
+Register 8 : 0x10916273
+Register 9 : 0x9de6153f
+Register a : 0x81fb7b82
+Register b : 0xce7d0a9b
+Register c : 0x9cb2a11c
+Register d : 0xddc6522
+Register e : 0x604ca9a9
+Register f : 0x488a6409
+Register 10 : 0xaaa29086
+Register 11 : 0x95ddcf94
+Register 12 : 0x61d998ef
+Register 13 : 0x8e9a6c56
+Register 14 : 0x5a3e780f
+Register 15 : 0xdaa25db0
+Register 16 : 0xa031e83
+Register 17 : 0x750773f2
+Register 18 : 0x67745ce5
+Register 19 : 0x9b0eae9d
+Register 1a : 0x1ea9d4cc
+Register 1b : 0x854a7c53
+Register 1c : 0x70e0b33a
+Register 1d : 0x1b128e28
+Register 1e : 0xea150cc4
+Register 1f : 0x81e72593
+
+Data Memory
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0x2ec4f219
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+Instruction Memory
+0x400000 : 0x10220200
+0x400004 : 0x10221e00
+0x400008 : 0x881820
+0x40000c : 0x20220064
+0x400010 : 0x691022
+0x400014 : 0x4a082a
+0x400018 : 0x43082a
+0x40001c : 0x8c4102bc
+0x400020 : 0xac9101f4
+
+
+Entering Fetch Stage
+
+Instruction Memory Instruction Fetched
+Input : 0x400008
+Output : add $3, $4, $8  
+Instruction Memory Instruction
+Input : 0x400008
+Output : 0x881820
+
+PC ALU
+Input
+Control : 0x2
+In0 : 0x400008
+In1 : 0x4
+Output
+Output : 0x40000c
+Zero Line : 0x0
+
+
+Entering Decode Stage
+
+Control Unit
+Input : 0x0
+Output
+RegDst : 0x1
+Jump : 0x0
+Branch : 0x0
+MemRead : 0x0
+MemToReg : 0x0
+ALUOp0 : 0x0
+ALUOP1 : 0x1
+MemWrite : 0x0
+ALUSrc : 0x0
+RegWrite : 0x1
+
+Destination Register Multiplexor
+Input
+In0 : 0x8
+In1 : 0x3
+Control : 0x1
+Output : 0x3
+
+Register File
+Input
+ReadReg1 : 0x4
+ReadReg2 : 0x8
+WriteReg : 0x3
+RegWrite : 0x1
+Output
+ReadData1 : 0xe65e1e87
+ReadData2 : 0x10916273
+
+Sign Extend
+Input : 0x1820
+Output : 0x1820
+
+Jump Shift Left
+Input : 0x881820
+Output : 0x2206080
+
+
+Entering Execute Stage
+
+ALU Control
+Input
+FunctCode : 0x20
+In0 : 0x0
+In1 : 0x1
+Output : 0x2
+
+ALU Multiplexor
+Input
+In0 : 0x10916273
+In1 : 0x1820
+Control : 0x0
+Output : 0x10916273
+
+Main ALU
+Input
+Control : 0x2
+In0 : 0xe65e1e87
+In1 : 0x10916273
+Output
+Output : 0xf6ef80fa
+Zero Line : 0x0
+
+Branch Shift
+Input : 0x1820
+Output : 0x6080
+
+Branch ALU
+Input
+Control : 0x2
+In0 : 0x40000c
+In1 : 0x6080
+Output
+Output : 0x40608c
+Zero Line : 0x0
+
+
+Entering Memory Stage
+
+Data Memory
+Input
+MemWrite : 0x0
+MemRead : 0x0
+Address : 0xf6ef80fa
+WriteData : 0x10916273
+Output : 0x0
+
+Branch And Gate
+Input
+In0 : 0x0
+In1 : 0x0
+Output : 0x0
+
+Branch Multiplexor
+Input
+In0 : 0x40000c
+In1 : 0x40608c
+Control : 0x0
+Output : 0x40000c
+
+Entering Writeback Stage
+Write Back Multiplexor
+Input
+In0 : 0xf6ef80fa
+In1 : 0x0
+Control : 0x0
+Output : 0xf6ef80fa
+
+Reg File Writeback
+Input
+WriteInput : 0xf6ef80fa
+WriteState : 0x1
+WriteRegister : 0x3
+
+Jump Multiplexor
+Input
+In0 : 0x40000c
+In1 : 0x2206080
+Control : 0x0
+Output : 0x40000c
+
+Printing Memory Contents
+Register File
+Register 0 : 0x58eed051
+Register 1 : 0x305f7ea1
+Register 2 : 0x2ec4f219
+Register 3 : 0xf6ef80fa
+Register 4 : 0xe65e1e87
+Register 5 : 0x1df23a4f
+Register 6 : 0xb90037d6
+Register 7 : 0x63322818
+Register 8 : 0x10916273
+Register 9 : 0x9de6153f
+Register a : 0x81fb7b82
+Register b : 0xce7d0a9b
+Register c : 0x9cb2a11c
+Register d : 0xddc6522
+Register e : 0x604ca9a9
+Register f : 0x488a6409
+Register 10 : 0xaaa29086
+Register 11 : 0x95ddcf94
+Register 12 : 0x61d998ef
+Register 13 : 0x8e9a6c56
+Register 14 : 0x5a3e780f
+Register 15 : 0xdaa25db0
+Register 16 : 0xa031e83
+Register 17 : 0x750773f2
+Register 18 : 0x67745ce5
+Register 19 : 0x9b0eae9d
+Register 1a : 0x1ea9d4cc
+Register 1b : 0x854a7c53
+Register 1c : 0x70e0b33a
+Register 1d : 0x1b128e28
+Register 1e : 0xea150cc4
+Register 1f : 0x81e72593
+
+Data Memory
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0x2ec4f219
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+Instruction Memory
+0x400000 : 0x10220200
+0x400004 : 0x10221e00
+0x400008 : 0x881820
+0x40000c : 0x20220064
+0x400010 : 0x691022
+0x400014 : 0x4a082a
+0x400018 : 0x43082a
+0x40001c : 0x8c4102bc
+0x400020 : 0xac9101f4
+
+
+Entering Fetch Stage
+
+Instruction Memory Instruction Fetched
+Input : 0x40000c
+Output : addi $2, $1, 100  
+Instruction Memory Instruction
+Input : 0x40000c
+Output : 0x20220064
+
+PC ALU
+Input
+Control : 0x2
+In0 : 0x40000c
+In1 : 0x4
+Output
+Output : 0x400010
+Zero Line : 0x0
+
+
+Entering Decode Stage
+
+Control Unit
+Input : 0x8
+Output
+RegDst : 0x0
+Jump : 0x0
+Branch : 0x0
+MemRead : 0x0
+MemToReg : 0x0
+ALUOp0 : 0x0
+ALUOP1 : 0x0
+MemWrite : 0x0
+ALUSrc : 0x1
+RegWrite : 0x1
+
+Destination Register Multiplexor
+Input
+In0 : 0x2
+In1 : 0x0
+Control : 0x0
+Output : 0x2
+
+Register File
+Input
+ReadReg1 : 0x1
+ReadReg2 : 0x2
+WriteReg : 0x2
+RegWrite : 0x1
+Output
+ReadData1 : 0x305f7ea1
+ReadData2 : 0x2ec4f219
+
+Sign Extend
+Input : 0x64
+Output : 0x64
+
+Jump Shift Left
+Input : 0x220064
+Output : 0x880190
+
+
+Entering Execute Stage
+
+ALU Control
+Input
+FunctCode : 0x24
+In0 : 0x0
+In1 : 0x0
+Output : 0x2
+
+ALU Multiplexor
+Input
+In0 : 0x2ec4f219
+In1 : 0x64
+Control : 0x1
+Output : 0x64
+
+Main ALU
+Input
+Control : 0x2
+In0 : 0x305f7ea1
+In1 : 0x64
+Output
+Output : 0x305f7f05
+Zero Line : 0x0
+
+Branch Shift
+Input : 0x64
+Output : 0x190
+
+Branch ALU
+Input
+Control : 0x2
+In0 : 0x400010
+In1 : 0x190
+Output
+Output : 0x4001a0
+Zero Line : 0x0
+
+
+Entering Memory Stage
+
+Data Memory
+Input
+MemWrite : 0x0
+MemRead : 0x0
+Address : 0x305f7f05
+WriteData : 0x2ec4f219
+Output : 0x0
+
+Branch And Gate
+Input
+In0 : 0x0
+In1 : 0x0
+Output : 0x0
+
+Branch Multiplexor
+Input
+In0 : 0x400010
+In1 : 0x4001a0
+Control : 0x0
+Output : 0x400010
+
+Entering Writeback Stage
+Write Back Multiplexor
+Input
+In0 : 0x305f7f05
+In1 : 0x0
+Control : 0x0
+Output : 0x305f7f05
+
+Reg File Writeback
+Input
+WriteInput : 0x305f7f05
+WriteState : 0x1
+WriteRegister : 0x2
+
+Jump Multiplexor
+Input
+In0 : 0x400010
+In1 : 0x880190
+Control : 0x0
+Output : 0x400010
+
+Printing Memory Contents
+Register File
+Register 0 : 0x58eed051
+Register 1 : 0x305f7ea1
+Register 2 : 0x305f7f05
+Register 3 : 0xf6ef80fa
+Register 4 : 0xe65e1e87
+Register 5 : 0x1df23a4f
+Register 6 : 0xb90037d6
+Register 7 : 0x63322818
+Register 8 : 0x10916273
+Register 9 : 0x9de6153f
+Register a : 0x81fb7b82
+Register b : 0xce7d0a9b
+Register c : 0x9cb2a11c
+Register d : 0xddc6522
+Register e : 0x604ca9a9
+Register f : 0x488a6409
+Register 10 : 0xaaa29086
+Register 11 : 0x95ddcf94
+Register 12 : 0x61d998ef
+Register 13 : 0x8e9a6c56
+Register 14 : 0x5a3e780f
+Register 15 : 0xdaa25db0
+Register 16 : 0xa031e83
+Register 17 : 0x750773f2
+Register 18 : 0x67745ce5
+Register 19 : 0x9b0eae9d
+Register 1a : 0x1ea9d4cc
+Register 1b : 0x854a7c53
+Register 1c : 0x70e0b33a
+Register 1d : 0x1b128e28
+Register 1e : 0xea150cc4
+Register 1f : 0x81e72593
+
+Data Memory
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0x2ec4f219
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+Instruction Memory
+0x400000 : 0x10220200
+0x400004 : 0x10221e00
+0x400008 : 0x881820
+0x40000c : 0x20220064
+0x400010 : 0x691022
+0x400014 : 0x4a082a
+0x400018 : 0x43082a
+0x40001c : 0x8c4102bc
+0x400020 : 0xac9101f4
+
+
+Entering Fetch Stage
+
+Instruction Memory Instruction Fetched
+Input : 0x400010
+Output : sub $2, $3, $9  
+Instruction Memory Instruction
+Input : 0x400010
+Output : 0x691022
+
+PC ALU
+Input
+Control : 0x2
+In0 : 0x400010
+In1 : 0x4
+Output
+Output : 0x400014
+Zero Line : 0x0
+
+
+Entering Decode Stage
+
+Control Unit
+Input : 0x0
+Output
+RegDst : 0x1
+Jump : 0x0
+Branch : 0x0
+MemRead : 0x0
+MemToReg : 0x0
+ALUOp0 : 0x0
+ALUOP1 : 0x1
+MemWrite : 0x0
+ALUSrc : 0x0
+RegWrite : 0x1
+
+Destination Register Multiplexor
+Input
+In0 : 0x9
+In1 : 0x2
+Control : 0x1
+Output : 0x2
+
+Register File
+Input
+ReadReg1 : 0x3
+ReadReg2 : 0x9
+WriteReg : 0x2
+RegWrite : 0x1
+Output
+ReadData1 : 0xf6ef80fa
+ReadData2 : 0x9de6153f
+
+Sign Extend
+Input : 0x1022
+Output : 0x1022
+
+Jump Shift Left
+Input : 0x691022
+Output : 0x1a44088
+
+
+Entering Execute Stage
+
+ALU Control
+Input
+FunctCode : 0x22
+In0 : 0x0
+In1 : 0x1
+Output : 0x6
+
+ALU Multiplexor
+Input
+In0 : 0x9de6153f
+In1 : 0x1022
+Control : 0x0
+Output : 0x9de6153f
+
+Main ALU
+Input
+Control : 0x6
+In0 : 0xf6ef80fa
+In1 : 0x9de6153f
+Output
+Output : 0x59096bbb
+Zero Line : 0x0
+
+Branch Shift
+Input : 0x1022
+Output : 0x4088
+
+Branch ALU
+Input
+Control : 0x2
+In0 : 0x400014
+In1 : 0x4088
+Output
+Output : 0x40409c
+Zero Line : 0x0
+
+
+Entering Memory Stage
+
+Data Memory
+Input
+MemWrite : 0x0
+MemRead : 0x0
+Address : 0x59096bbb
+WriteData : 0x9de6153f
+Output : 0x0
+
+Branch And Gate
+Input
+In0 : 0x0
+In1 : 0x0
+Output : 0x0
+
+Branch Multiplexor
+Input
+In0 : 0x400014
+In1 : 0x40409c
+Control : 0x0
+Output : 0x400014
+
+Entering Writeback Stage
+Write Back Multiplexor
+Input
+In0 : 0x59096bbb
+In1 : 0x0
+Control : 0x0
+Output : 0x59096bbb
+
+Reg File Writeback
+Input
+WriteInput : 0x59096bbb
+WriteState : 0x1
+WriteRegister : 0x2
+
+Jump Multiplexor
+Input
+In0 : 0x400014
+In1 : 0x1a44088
+Control : 0x0
+Output : 0x400014
+
+Printing Memory Contents
+Register File
+Register 0 : 0x58eed051
+Register 1 : 0x305f7ea1
+Register 2 : 0x59096bbb
+Register 3 : 0xf6ef80fa
+Register 4 : 0xe65e1e87
+Register 5 : 0x1df23a4f
+Register 6 : 0xb90037d6
+Register 7 : 0x63322818
+Register 8 : 0x10916273
+Register 9 : 0x9de6153f
+Register a : 0x81fb7b82
+Register b : 0xce7d0a9b
+Register c : 0x9cb2a11c
+Register d : 0xddc6522
+Register e : 0x604ca9a9
+Register f : 0x488a6409
+Register 10 : 0xaaa29086
+Register 11 : 0x95ddcf94
+Register 12 : 0x61d998ef
+Register 13 : 0x8e9a6c56
+Register 14 : 0x5a3e780f
+Register 15 : 0xdaa25db0
+Register 16 : 0xa031e83
+Register 17 : 0x750773f2
+Register 18 : 0x67745ce5
+Register 19 : 0x9b0eae9d
+Register 1a : 0x1ea9d4cc
+Register 1b : 0x854a7c53
+Register 1c : 0x70e0b33a
+Register 1d : 0x1b128e28
+Register 1e : 0xea150cc4
+Register 1f : 0x81e72593
+
+Data Memory
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0x2ec4f219
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+Instruction Memory
+0x400000 : 0x10220200
+0x400004 : 0x10221e00
+0x400008 : 0x881820
+0x40000c : 0x20220064
+0x400010 : 0x691022
+0x400014 : 0x4a082a
+0x400018 : 0x43082a
+0x40001c : 0x8c4102bc
+0x400020 : 0xac9101f4
+
+
+Entering Fetch Stage
+
+Instruction Memory Instruction Fetched
+Input : 0x400014
+Output : slt $1, $2, $10  
+Instruction Memory Instruction
+Input : 0x400014
+Output : 0x4a082a
+
+PC ALU
+Input
+Control : 0x2
+In0 : 0x400014
+In1 : 0x4
+Output
+Output : 0x400018
+Zero Line : 0x0
+
+
+Entering Decode Stage
+
+Control Unit
+Input : 0x0
+Output
+RegDst : 0x1
+Jump : 0x0
+Branch : 0x0
+MemRead : 0x0
+MemToReg : 0x0
+ALUOp0 : 0x0
+ALUOP1 : 0x1
+MemWrite : 0x0
+ALUSrc : 0x0
+RegWrite : 0x1
+
+Destination Register Multiplexor
+Input
+In0 : 0xa
+In1 : 0x1
+Control : 0x1
+Output : 0x1
+
+Register File
+Input
+ReadReg1 : 0x2
+ReadReg2 : 0xa
+WriteReg : 0x1
+RegWrite : 0x1
+Output
+ReadData1 : 0x59096bbb
+ReadData2 : 0x81fb7b82
+
+Sign Extend
+Input : 0x82a
+Output : 0x82a
+
+Jump Shift Left
+Input : 0x4a082a
+Output : 0x12820a8
+
+
+Entering Execute Stage
+
+ALU Control
+Input
+FunctCode : 0x2a
+In0 : 0x0
+In1 : 0x1
+Output : 0x7
+
+ALU Multiplexor
+Input
+In0 : 0x81fb7b82
+In1 : 0x82a
+Control : 0x0
+Output : 0x81fb7b82
+
+Main ALU
+Input
+Control : 0x7
+In0 : 0x59096bbb
+In1 : 0x81fb7b82
+Output
+Output : 0x0
+Zero Line : 0x1
+
+Branch Shift
+Input : 0x82a
+Output : 0x20a8
+
+Branch ALU
+Input
+Control : 0x2
+In0 : 0x400018
+In1 : 0x20a8
+Output
+Output : 0x4020c0
+Zero Line : 0x0
+
+
+Entering Memory Stage
+
+Data Memory
+Input
+MemWrite : 0x0
+MemRead : 0x0
+Address : 0x0
+WriteData : 0x81fb7b82
+Output : 0x0
+
+Branch And Gate
+Input
+In0 : 0x0
+In1 : 0x1
+Output : 0x0
+
+Branch Multiplexor
+Input
+In0 : 0x400018
+In1 : 0x4020c0
+Control : 0x0
+Output : 0x400018
+
+Entering Writeback Stage
+Write Back Multiplexor
+Input
+In0 : 0x0
+In1 : 0x0
+Control : 0x0
+Output : 0x0
+
+Reg File Writeback
+Input
+WriteInput : 0x0
+WriteState : 0x1
+WriteRegister : 0x1
+
+Jump Multiplexor
+Input
+In0 : 0x400018
+In1 : 0x12820a8
+Control : 0x0
+Output : 0x400018
+
+Printing Memory Contents
+Register File
+Register 0 : 0x58eed051
+Register 1 : 0x0
+Register 2 : 0x59096bbb
+Register 3 : 0xf6ef80fa
+Register 4 : 0xe65e1e87
+Register 5 : 0x1df23a4f
+Register 6 : 0xb90037d6
+Register 7 : 0x63322818
+Register 8 : 0x10916273
+Register 9 : 0x9de6153f
+Register a : 0x81fb7b82
+Register b : 0xce7d0a9b
+Register c : 0x9cb2a11c
+Register d : 0xddc6522
+Register e : 0x604ca9a9
+Register f : 0x488a6409
+Register 10 : 0xaaa29086
+Register 11 : 0x95ddcf94
+Register 12 : 0x61d998ef
+Register 13 : 0x8e9a6c56
+Register 14 : 0x5a3e780f
+Register 15 : 0xdaa25db0
+Register 16 : 0xa031e83
+Register 17 : 0x750773f2
+Register 18 : 0x67745ce5
+Register 19 : 0x9b0eae9d
+Register 1a : 0x1ea9d4cc
+Register 1b : 0x854a7c53
+Register 1c : 0x70e0b33a
+Register 1d : 0x1b128e28
+Register 1e : 0xea150cc4
+Register 1f : 0x81e72593
+
+Data Memory
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0x2ec4f219
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+Instruction Memory
+0x400000 : 0x10220200
+0x400004 : 0x10221e00
+0x400008 : 0x881820
+0x40000c : 0x20220064
+0x400010 : 0x691022
+0x400014 : 0x4a082a
+0x400018 : 0x43082a
+0x40001c : 0x8c4102bc
+0x400020 : 0xac9101f4
+
+
+Entering Fetch Stage
+
+Instruction Memory Instruction Fetched
+Input : 0x400018
+Output : slt $1, $2, $3  
+Instruction Memory Instruction
+Input : 0x400018
+Output : 0x43082a
+
+PC ALU
+Input
+Control : 0x2
+In0 : 0x400018
+In1 : 0x4
+Output
+Output : 0x40001c
+Zero Line : 0x0
+
+
+Entering Decode Stage
+
+Control Unit
+Input : 0x0
+Output
+RegDst : 0x1
+Jump : 0x0
+Branch : 0x0
+MemRead : 0x0
+MemToReg : 0x0
+ALUOp0 : 0x0
+ALUOP1 : 0x1
+MemWrite : 0x0
+ALUSrc : 0x0
+RegWrite : 0x1
+
+Destination Register Multiplexor
+Input
+In0 : 0x3
+In1 : 0x1
+Control : 0x1
+Output : 0x1
+
+Register File
+Input
+ReadReg1 : 0x2
+ReadReg2 : 0x3
+WriteReg : 0x1
+RegWrite : 0x1
+Output
+ReadData1 : 0x59096bbb
+ReadData2 : 0xf6ef80fa
+
+Sign Extend
+Input : 0x82a
+Output : 0x82a
+
+Jump Shift Left
+Input : 0x43082a
+Output : 0x10c20a8
+
+
+Entering Execute Stage
+
+ALU Control
+Input
+FunctCode : 0x2a
+In0 : 0x0
+In1 : 0x1
+Output : 0x7
+
+ALU Multiplexor
+Input
+In0 : 0xf6ef80fa
+In1 : 0x82a
+Control : 0x0
+Output : 0xf6ef80fa
+
+Main ALU
+Input
+Control : 0x7
+In0 : 0x59096bbb
+In1 : 0xf6ef80fa
+Output
+Output : 0x0
+Zero Line : 0x1
+
+Branch Shift
+Input : 0x82a
+Output : 0x20a8
+
+Branch ALU
+Input
+Control : 0x2
+In0 : 0x40001c
+In1 : 0x20a8
+Output
+Output : 0x4020c4
+Zero Line : 0x0
+
+
+Entering Memory Stage
+
+Data Memory
+Input
+MemWrite : 0x0
+MemRead : 0x0
+Address : 0x0
+WriteData : 0xf6ef80fa
+Output : 0x0
+
+Branch And Gate
+Input
+In0 : 0x0
+In1 : 0x1
+Output : 0x0
+
+Branch Multiplexor
+Input
+In0 : 0x40001c
+In1 : 0x4020c4
+Control : 0x0
+Output : 0x40001c
+
+Entering Writeback Stage
+Write Back Multiplexor
+Input
+In0 : 0x0
+In1 : 0x0
+Control : 0x0
+Output : 0x0
+
+Reg File Writeback
+Input
+WriteInput : 0x0
+WriteState : 0x1
+WriteRegister : 0x1
+
+Jump Multiplexor
+Input
+In0 : 0x40001c
+In1 : 0x10c20a8
+Control : 0x0
+Output : 0x40001c
+
+Printing Memory Contents
+Register File
+Register 0 : 0x58eed051
+Register 1 : 0x0
+Register 2 : 0x59096bbb
+Register 3 : 0xf6ef80fa
+Register 4 : 0xe65e1e87
+Register 5 : 0x1df23a4f
+Register 6 : 0xb90037d6
+Register 7 : 0x63322818
+Register 8 : 0x10916273
+Register 9 : 0x9de6153f
+Register a : 0x81fb7b82
+Register b : 0xce7d0a9b
+Register c : 0x9cb2a11c
+Register d : 0xddc6522
+Register e : 0x604ca9a9
+Register f : 0x488a6409
+Register 10 : 0xaaa29086
+Register 11 : 0x95ddcf94
+Register 12 : 0x61d998ef
+Register 13 : 0x8e9a6c56
+Register 14 : 0x5a3e780f
+Register 15 : 0xdaa25db0
+Register 16 : 0xa031e83
+Register 17 : 0x750773f2
+Register 18 : 0x67745ce5
+Register 19 : 0x9b0eae9d
+Register 1a : 0x1ea9d4cc
+Register 1b : 0x854a7c53
+Register 1c : 0x70e0b33a
+Register 1d : 0x1b128e28
+Register 1e : 0xea150cc4
+Register 1f : 0x81e72593
+
+Data Memory
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0x2ec4f219
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+
+Instruction Memory
+0x400000 : 0x10220200
+0x400004 : 0x10221e00
+0x400008 : 0x881820
+0x40000c : 0x20220064
+0x400010 : 0x691022
+0x400014 : 0x4a082a
+0x400018 : 0x43082a
+0x40001c : 0x8c4102bc
+0x400020 : 0xac9101f4
+
+
+Entering Fetch Stage
+
+Instruction Memory Instruction Fetched
+Input : 0x40001c
+Output : lw $1, 700($2)  
+Instruction Memory Instruction
+Input : 0x40001c
+Output : 0x8c4102bc
+
+PC ALU
+Input
+Control : 0x2
+In0 : 0x40001c
+In1 : 0x4
+Output
+Output : 0x400020
+Zero Line : 0x0
+
+
+Entering Decode Stage
+
+Control Unit
+Input : 0x23
+Output
+RegDst : 0x0
+Jump : 0x0
+Branch : 0x0
+MemRead : 0x1
+MemToReg : 0x1
+ALUOp0 : 0x0
+ALUOP1 : 0x0
+MemWrite : 0x0
+ALUSrc : 0x1
+RegWrite : 0x1
+
+Destination Register Multiplexor
+Input
+In0 : 0x1
+In1 : 0x0
+Control : 0x0
+Output : 0x1
+
+Register File
+Input
+ReadReg1 : 0x2
+ReadReg2 : 0x1
+WriteReg : 0x1
+RegWrite : 0x1
+Output
+ReadData1 : 0x59096bbb
+ReadData2 : 0x0
+
+Sign Extend
+Input : 0x2bc
+Output : 0x2bc
+
+Jump Shift Left
+Input : 0x4102bc
+Output : 0x1040af0
+
+
+Entering Execute Stage
+
+ALU Control
+Input
+FunctCode : 0x3c
+In0 : 0x0
+In1 : 0x0
+Output : 0x2
+
+ALU Multiplexor
+Input
+In0 : 0x0
+In1 : 0x2bc
+Control : 0x1
+Output : 0x2bc
+
+Main ALU
+Input
+Control : 0x2
+In0 : 0x59096bbb
+In1 : 0x2bc
+Output
+Output : 0x59096e77
+Zero Line : 0x0
+
+Branch Shift
+Input : 0x2bc
+Output : 0xaf0
+
+Branch ALU
+Input
+Control : 0x2
+In0 : 0x400020
+In1 : 0xaf0
+Output
+Output : 0x400b10
+Zero Line : 0x0
+
+
+Entering Memory Stage
+
+Data Memory
+Input
+MemWrite : 0x0
+MemRead : 0x1
+Address : 0x59096e77
+WriteData : 0x0
+Output : 0x0
+
+Branch And Gate
+Input
+In0 : 0x0
+In1 : 0x0
+Output : 0x0
+
+Branch Multiplexor
+Input
+In0 : 0x400020
+In1 : 0x400b10
+Control : 0x0
+Output : 0x400020
+
+Entering Writeback Stage
+Write Back Multiplexor
+Input
+In0 : 0x59096e77
+In1 : 0x0
+Control : 0x1
+Output : 0x0
+
+Reg File Writeback
+Input
+WriteInput : 0x0
+WriteState : 0x1
+WriteRegister : 0x1
+
+Jump Multiplexor
+Input
+In0 : 0x400020
+In1 : 0x1040af0
+Control : 0x0
+Output : 0x400020
+
+Printing Memory Contents
+Register File
+Register 0 : 0x58eed051
+Register 1 : 0x0
+Register 2 : 0x59096bbb
+Register 3 : 0xf6ef80fa
+Register 4 : 0xe65e1e87
+Register 5 : 0x1df23a4f
+Register 6 : 0xb90037d6
+Register 7 : 0x63322818
+Register 8 : 0x10916273
+Register 9 : 0x9de6153f
+Register a : 0x81fb7b82
+Register b : 0xce7d0a9b
+Register c : 0x9cb2a11c
+Register d : 0xddc6522
+Register e : 0x604ca9a9
+Register f : 0x488a6409
+Register 10 : 0xaaa29086
+Register 11 : 0x95ddcf94
+Register 12 : 0x61d998ef
+Register 13 : 0x8e9a6c56
+Register 14 : 0x5a3e780f
+Register 15 : 0xdaa25db0
+Register 16 : 0xa031e83
+Register 17 : 0x750773f2
+Register 18 : 0x67745ce5
+Register 19 : 0x9b0eae9d
+Register 1a : 0x1ea9d4cc
+Register 1b : 0x854a7c53
+Register 1c : 0x70e0b33a
+Register 1d : 0x1b128e28
+Register 1e : 0xea150cc4
+Register 1f : 0x81e72593
+
+Data Memory
+0x10000000 : 0x58eed051
+0x10000004 : 0x305f7ea1
+0x10000008 : 0x2ec4f219
+0x1000000c : 0xc57b54ba
+0x10000010 : 0xe65e1e87
+0x10000014 : 0x1df23a4f
+0x10000018 : 0xb90037d6
+0x1000001c : 0x63322818
+0x10000020 : 0x10916273
+0x10000024 : 0x9de6153f
+0x10000028 : 0x81fb7b82
+0x1000002c : 0xce7d0a9b
+0x10000030 : 0x9cb2a11c
+0x10000034 : 0xddc6522
+0x10000038 : 0x604ca9a9
+0x1000003c : 0x488a6409
+0x10000040 : 0xaaa29086
+0x10000044 : 0x95ddcf94
+0x10000048 : 0x61d998ef
+0x1000004c : 0x8e9a6c56
+0x10000050 : 0x5a3e780f
+0x10000054 : 0xdaa25db0
+0x10000058 : 0xa031e83
+0x1000005c : 0x750773f2
+0x10000060 : 0x67745ce5
+0x10000064 : 0x1bbb31d
+0x10000068 : 0xd318c95a
+0x1000006c : 0xc3d19c71
+0x10000070 : 0x8c95e985
+0x59096e77 : 0x0
+
+Instruction Memory
+0x400000 : 0x10220200
+0x400004 : 0x10221e00
+0x400008 : 0x881820
+0x40000c : 0x20220064
+0x400010 : 0x691022
+0x400014 : 0x4a082a
+0x400018 : 0x43082a
+0x40001c : 0x8c4102bc
+0x400020 : 0xac9101f4
+
+
+Entering Fetch Stage
+
+Instruction Memory Instruction Fetched
+Input : 0x400020
+Output : sw $17, 500($4)  
+Instruction Memory Instruction
+Input : 0x400020
+Output : 0xac9101f4
+
+PC ALU
+Input
+Control : 0x2
+In0 : 0x400020
+In1 : 0x4
+Output
+Output : 0x400024
+Zero Line : 0x0
+
+
+Entering Decode Stage
+
+Control Unit
+Input : 0x2b
+Output
+RegDst : 0x0
+Jump : 0x0
+Branch : 0x0
+MemRead : 0x0
+MemToReg : 0x0
+ALUOp0 : 0x0
+ALUOP1 : 0x0
+MemWrite : 0x1
+ALUSrc : 0x1
+RegWrite : 0x0
+
+Destination Register Multiplexor
+Input
+In0 : 0x11
+In1 : 0x0
+Control : 0x0
+Output : 0x11
+
+Register File
+Input
+ReadReg1 : 0x4
+ReadReg2 : 0x11
+WriteReg : 0x11
+RegWrite : 0x0
+Output
+ReadData1 : 0xe65e1e87
+ReadData2 : 0x95ddcf94
+
+Sign Extend
+Input : 0x1f4
+Output : 0x1f4
+
+Jump Shift Left
+Input : 0x9101f4
+Output : 0x24407d0
+
+
+Entering Execute Stage
+
+ALU Control
+Input
+FunctCode : 0x34
+In0 : 0x0
+In1 : 0x0
+Output : 0x2
+
+ALU Multiplexor
+Input
+In0 : 0x95ddcf94
+In1 : 0x1f4
+Control : 0x1
+Output : 0x1f4
+
+Main ALU
+Input
+Control : 0x2
+In0 : 0xe65e1e87
+In1 : 0x1f4
+Output
+Output : 0xe65e207b
+Zero Line : 0x0
+
+Branch Shift
+Input : 0x1f4
+Output : 0x7d0
+
+Branch ALU
+Input
+Control : 0x2
+In0 : 0x400024
+In1 : 0x7d0
+Output
+Output : 0x4007f4
+Zero Line : 0x0
+
+
+Entering Memory Stage
+
+Data Memory
+Input
+MemWrite : 0x1
+MemRead : 0x0
+Address : 0xe65e207b
+WriteData : 0x95ddcf94
+Output : 0x0
+
+Branch And Gate
+Input
+In0 : 0x0
+In1 : 0x0
+Output : 0x0
+
+Branch Multiplexor
+Input
+In0 : 0x400024
+In1 : 0x4007f4
+Control : 0x0
+Output : 0x400024
+
+Entering Writeback Stage
+Write Back Multiplexor
+Input
+In0 : 0xe65e207b
+In1 : 0x0
+Control : 0x0
+Output : 0xe65e207b
+
+Reg File Writeback
+Input
+WriteInput : 0xe65e207b
+WriteState : 0x0
+WriteRegister : 0x11
+
+Jump Multiplexor
+Input
+In0 : 0x400024
+In1 : 0x24407d0
+Control : 0x0
+Output : 0x400024
+
+
+Program Finished At Address : 0x400024
