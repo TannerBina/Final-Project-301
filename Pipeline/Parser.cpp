@@ -410,6 +410,8 @@ void Parser::convertProgram(){
 		string val = itr->second;
 
 		string op = val.substr(0, val.find(delim));
+		opcodetab.getOpcode(op);
+
 
 		//checks if the instruction is RTYPE
 		if(opcodetab.getInstType(op) == 0){
