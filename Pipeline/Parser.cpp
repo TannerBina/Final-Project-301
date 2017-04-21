@@ -36,10 +36,10 @@ void Parser::parseConfig(string file) {
 			//checks if line contains a # and cuts off the comment
 			if (line.find('#')){
 				
-				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
 				line.erase(remove(line.begin(), line.end(), '\t'), line.end());
-				line = line.substr(0, pos - 1);
+				int pos = line.find('#');
+				line = line.substr(0, pos);
 				
 			}
 
@@ -220,10 +220,11 @@ map<string, string> Parser::parseMemory() {
 
 			//checks if the line contains a # and cuts off the comment
 			if (line.find('#')){
-				int pos = line.find('#');
+				
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
 				line.erase(remove(line.begin(), line.end(), '\t'), line.end());
-				line = line.substr(0, pos - 1);
+				int pos = line.find('#');
+				line = line.substr(0, pos);
 
 			}
 
@@ -264,9 +265,9 @@ map<string, string> Parser::parseRegister(){
 
 			//checks if the lines contains a # and cuts off the comment
 			if (line.find('#')){
-				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
 				line.erase(remove(line.begin(), line.end(), '\t'), line.end());
+				int pos = line.find('#');
 				line = line.substr(0, pos);
 			}
 
