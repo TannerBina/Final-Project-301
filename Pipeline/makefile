@@ -2,7 +2,7 @@
 # use to compile and test 
 
 DEBUG_FLAG= -DDEBUG -g -Wall
-CCFLAGS= -DDEBUG -g -Wall
+CCFLAGS= -std=c++11 -DDEBUG -g -Wall
 
 .SUFFIXES: .cpp .o
 
@@ -10,8 +10,8 @@ CCFLAGS= -DDEBUG -g -Wall
 	g++ $(CCFLAGS) -c $<
 
 
-Processor: Processor.o Parser.o PC.o InstructionMemory.o RegisterTable.o DataMemory.o Multiplexor.o ControlUnit.o ALUControl.o ALU.o ShiftLeftTwo.o SignExtend.o Utility.o
-	g++ -std=c++11 -o Parser.o PC.o InstructionMemory.o RegisterTable.o DataMemory.o Multiplexor.o ControlUnit.o ALUControl.o ALU.o ShiftLeftTwo.o SignExtend.o Utility.o
+Processor: Processor.o Parser.o PC.h InstructionMemory.o RegisterTable.o DataMemory.o Multiplexor.h ControlUnit.o ALUControl.o ALU.o ShiftLeftTwo.o SignExtend.o Utility.h
+	g++ $(CCFLAGS) -o Parser.o PC.h InstructionMemory.o RegisterTable.o DataMemory.o Multiplexor.h ControlUnit.o ALUControl.o ALU.o ShiftLeftTwo.o SignExtend.o Utility.h
 
 ALU.o: ALU.h
 
@@ -23,11 +23,7 @@ DataMemory.o: DataMemory.h
 
 InstructionMemory.o: InstructionMemory.h Utility.h
 
-Multiplexor.o: Multiplexor.h
-
 Opcode.o: Opcode.h
-
-PC.o: PC.h
 
 Parser.o: Parser.h Opcode.h Utility.h
 
@@ -36,8 +32,6 @@ RegisterTable.o: RegisterTable.h
 ShiftLeftTwo.o: ShiftLeftTwo.h
 
 SignExtend.o: SignExtend.h
-
-Utility.o: Utility.h
 
 clean:
 	/bin/rm -f Processor *.o core
