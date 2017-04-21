@@ -39,7 +39,7 @@ void Parser::parseConfig(string file) {
 				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
 				line.erase(remove(line.begin(), line.end(), '\t'), line.end());
-				line = line.substr(0, pos);
+				line = line.substr(0, pos - 1);
 				
 			}
 
@@ -82,7 +82,7 @@ void Parser::parseProgram(){
 			if (line.find('#')){
 
 				int pos = line.find('#');
-				line = line.substr(0, pos);
+				line = line.substr(0, pos - 1);
 			}
 
 			prog[key] = line;
@@ -223,7 +223,7 @@ map<string, string> Parser::parseMemory() {
 				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
 				line.erase(remove(line.begin(), line.end(), '\t'), line.end());
-				line = line.substr(0, pos);
+				line = line.substr(0, pos - 1);
 
 			}
 
