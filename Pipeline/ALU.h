@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "Utility.h"
 
 /*
 ALU - takes Three inputs outputs the result
