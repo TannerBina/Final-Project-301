@@ -11,10 +11,12 @@ InstructionMemory::InstructionMemory(map <int , string> instructions, map <int ,
 	//copy maps with iterator for loops
 	map<int , string>::iterator it;
 	for (it = instructions.begin(); it != instructions.end(); it++){
-		instMemory[it->first] = it->second;
+		if (!(it->second).empty())
+			instMemory[it->first] = it->second;
 	}
 	for (it = binInstructions.begin(); it != binInstructions.end(); it++){
-		binInstMemory[it->first] = it->second;
+		if (!(it->second).empty())
+			binInstMemory[it->first] = it->second;
 	}
 }
 

@@ -37,6 +37,9 @@ Processor::Processor(string initFile){
 		cout << "Write to File : " << write_to_file << endl;
 		cout << "Print memory contents : " << print_memory_contents << endl;
 		cout << "Output file : " << output_file << endl;
+		cout << "Output Mode : " << output_mode << endl;
+		cout << "Program Input : " << parser.getConfig("program_input") << endl;
+		cout << "Program Length : " << parser.getConfig("program_input") << endl;
 	}
 
 	//set up the register file, inttruction memeor, and data memory
@@ -60,7 +63,7 @@ Processor::Processor(string initFile){
 	}
 
 	//while there is an instruction at the current pc value, run the instruction
-	while (!instMem.getInstruction(pc.getValue()).empty()){
+	while (!(instMem.getInstruction(pc.getValue()).length() <= 1)){
 		//if debug print instruction address.
 		if (debug_mode){
 			cout << "Instruction at address : 0x" << hex << pc.getValue() << endl;
@@ -324,7 +327,7 @@ Processor::Processor(string initFile){
 		pc.setValue(jumpMult.getOutput());
 	}
 
-	cout << endl << "Program Finished" << endl;
+	cout << endl << "Program Finished At Address : 0x" << hex << pc.getValue() << endl;
 
 	fclose(stdout);
 }
@@ -339,7 +342,7 @@ void Processor::step(){
 
 //get the boolean from the string
 bool Processor::getBool(string input){
-	if (input == "true") return true;
+	if (input[0] == 't') return true;
 	return false;
 }
 
