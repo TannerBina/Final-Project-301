@@ -46,6 +46,7 @@ void Parser::parseConfig(string file) {
 			//separates line by = and deletes whitespace
 			int equalsPos = line.find('=');
 
+			line.erase(remove(line.begin(), line.end(), '\t'), line.end());
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 
 			config[line.substr(0, equalsPos)] = line.substr(equalsPos + 1, line.size() - equalsPos - 2);
@@ -221,11 +222,14 @@ map<string, string> Parser::parseMemory() {
 			if (line.find('#')){
 				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
-				line = line.substr(0, pos);
+				line.erase(remove(line.begin(), line.end(), '\t'), line.end());
+				line = line.substr(0, pos - 1);
+
 			}
 
 			//separates line by colon and removes all whitespace
 			int colonPos = line.find(':');
+			line.erase(remove(line.begin(), line.end(), '\t'), line.end());
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 
 			temp[line.substr(0, colonPos)] = line.substr(colonPos + 1, line.size() - colonPos - 2);
@@ -262,11 +266,13 @@ map<string, string> Parser::parseRegister(){
 			if (line.find('#')){
 				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
-				line = line.substr(0, pos );
+				line.erase(remove(line.begin(), line.end(), '\t'), line.end());
+				line = line.substr(0, pos - 1);
 			}
 
 			//separates line by colon and removes all whitespace
 			int colonPos = line.find(':');
+			line.erase(remove(line.begin(), line.end(), '\t'), line.end());
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 			string sub = line.substr(0, colonPos);
 
