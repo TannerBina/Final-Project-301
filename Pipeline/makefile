@@ -1,38 +1,59 @@
 # makefile
 # use to compile and test 
 
-DEBUG_FLAG= -DDEBUG -g -Wall
-CCFLAGS= -std=c++11 -DDEBUG -g -Wall
-
-.SUFFIXES: .cpp .o
-
-.cpp.o:
-	g++ $(CCFLAGS) -c $<
+OBJS = ALU.o ALUControl.o ControlUnit.o DataMemory.o InstructionMemory.o Opcode.o Parser.o RegisterTable.o Utility.o PC.o Multiplexor.o ShiftLeftTwo.o SignExtend.o Processor.cpp
+CC = g++ 
+DEBUG = -g
+CFLAGS = -Wall -std=c++11 -c $(DEBUG)
+LFLAGS = -Wall  -std=c++11 $(DEBUG)
 
 
-Processor: Processor.o Parser.o PC.h InstructionMemory.o RegisterTable.o DataMemory.o Multiplexor.h ControlUnit.o ALUControl.o ALU.o ShiftLeftTwo.o SignExtend.o Utility.h
-	g++ $(CCFLAGS) -o Parser.o PC.h InstructionMemory.o RegisterTable.o DataMemory.o Multiplexor.h ControlUnit.o ALUControl.o ALU.o ShiftLeftTwo.o SignExtend.o Utility.h
+Processor: $(OBJS)
+	$(CC) $(LFLAGS) $(OBJS) -o Processor
 
-ALU.o: ALU.h
+ALU.o: ALU.h ALU.cpp 
+	$(CC) $(CFLAGS) ALU.cpp
 
-ALUControl.o: ALUControl.h Utility.h
+ALUControl.o: ALUControl.h ALUControl.cpp Utility.h Utility.cpp
+	$(CC) $(CFLAGS) ALUControl.cpp
 
-ControlUnit.o: ControlUnit.h Utility.h
+ControlUnit.o: ControlUnit.h ControlUnit.cpp Utility.h Utility.cpp
+	$(CC) $(CFLAGS) ControlUnit.cpp
 
-DataMemory.o: DataMemory.h
+DataMemory.o: DataMemory.h DataMemory.cpp
+	$(CC) $(CFLAGS) DataMemory.cpp
 
-InstructionMemory.o: InstructionMemory.h Utility.h
+InstructionMemory.o: InstructionMemory.h InstructionMemory.cpp Utility.h Utility.cpp
+	$(CC) $(CFLAGS) InstructionMemory.cpp
 
-Opcode.o: Opcode.h
 
-Parser.o: Parser.h Opcode.h Utility.h
+Opcode.o: Opcode.h Opcode.cpp
+	$(CC) $(CFLAGS) Opcode.cpp
 
-RegisterTable.o: RegisterTable.h
+Parser.o: Parser.h Parser.cpp Opcode.h Opcode.cpp Utility.h Utility.cpp
+	$(CC) $(CFLAGS) Parser.cpp
 
-ShiftLeftTwo.o: ShiftLeftTwo.h
+RegisterTable.o: RegisterTable.h RegisterTable.cpp
+	$(CC) $(CFLAGS) RegisterTable.cpp
 
-SignExtend.o: SignExtend.h
+Utility.o: Utility.h Utility.cpp
+	$(CC) $(CFLAGS) Utility.cpp
+
+PC.o: PC.h PC.cpp
+	$(CC) $(CFLAGS) PC.cpp
+
+
+Multiplexor.o: Multiplexor.h Multiplexor.cpp
+	$(CC) $(CFLAGS) Multiplexor.cpp
+
+ShiftLeftTwo.o: ShiftLeftTwo.h ShiftLeftTwo.cpp
+	$(CC) $(CFLAGS) ShiftLeftTwo.cpp
+
+SignExtend.o: SignExtend.h SignExtend.cpp
+	$(CC) $(CFLAGS) SignExtend.cpp
 
 clean:
 	/bin/rm -f Processor *.o core
+
+
 
