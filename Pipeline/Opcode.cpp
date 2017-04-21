@@ -105,7 +105,9 @@ string OpcodeTable::getFunctField(string str)
       return myTable[i].funct_field;
     }
   }
-  return '\0';
+
+  string res = "";
+  return res;
 }
 
 bool OpcodeTable::isIMMLabel(string str)
