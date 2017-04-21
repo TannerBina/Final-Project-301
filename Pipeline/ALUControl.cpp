@@ -25,7 +25,7 @@ string ALUControl::getALUControl(string functionCode, int  ALUOp1, int  ALUOp2){
 	if( ALUOp1 == 0 && ALUOp2 == 0){
 		output = "010";
 	}else 
-	if( ALUOp1 == 0 && ALUOp2 == 1){
+	if( ALUOp1 == 1 && ALUOp2 == 0){
 		output = "110";
 	}else
 	{

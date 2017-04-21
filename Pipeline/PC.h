@@ -16,14 +16,10 @@ public:
 	}
 
 	//setvalue of pc
-	void setValue(int newValue){
-		value = newValue;
-	}
+	void setValue(int newValue);
 
 	//get value of pc
-	 int getValue(){
-		return value;
-	}
+	 int getValue();
 };
 
 #endif

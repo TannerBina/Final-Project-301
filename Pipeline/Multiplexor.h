@@ -21,30 +21,13 @@ class Multiplexor{
 public:
 	Multiplexor(){}
 	//create a multiplexor with the input
-	Multiplexor(MultiplexorInput in){
-		process(in);
-	}
+	Multiplexor(MultiplexorInput in);
 
 	//process an input returning output and storing input and output
-	int process(MultiplexorInput in){
-		input = in;
-		if (in.control == 0){
-			output = in.in0;
-			return in.in0;
-		} else {
-			output = in.in1;
-			return in.in1;
-		}
-	}
+	int process(MultiplexorInput in);
 
 	//print out input and output
-	void print(){
-		cout << "Input" << endl;
-		cout << "In0 : 0x" << hex << input.in0 << endl;
-		cout << "In1 : 0x" << hex << input.in1 << endl;
-		cout << "Control : 0x" << hex << input.control << endl;
-		cout << "Output : 0x" << hex << output << endl;
-	}
+	void print();
 
 	//get the input and output of the multiplexor
 	MultiplexorInput getInput(){return input;}

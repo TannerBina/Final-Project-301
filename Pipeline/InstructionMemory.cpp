@@ -44,7 +44,8 @@ void InstructionMemory::printAll (){
 	map<int , string>::iterator it;
 	cout << "Instruction Memory" << endl;
 	for (it = binInstMemory.begin(); it != binInstMemory.end(); it++){
-		cout << hex << it->first << " : " << hex << stoi(it->second, nullptr, 2) << endl;
+		if (!(it->second).empty())
+			cout << "0x" << hex << it->first << " : 0x" << hex << Utility::bStoi(it->second) << endl;
 	}
 }
 

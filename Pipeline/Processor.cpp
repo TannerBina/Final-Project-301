@@ -89,9 +89,9 @@ Processor::Processor(string initFile){
 		instMem.getBinaryInstruction(pc.getValue());
 
 		//prints out instructions
-		cout << "InstructionMemory Instruction Fetched" << endl;
+		cout << "Instruction Memory Instruction Fetched" << endl;
 		instMem.printInst();
-		cout << "InstructionMemory Instruction" << endl;
+		cout << "Instruction Memory Instruction" << endl;
 		instMem.printBin();
 		cout << endl;
 
@@ -101,7 +101,7 @@ Processor::Processor(string initFile){
 		string i20_16 = instMem.getBinOutput().substr(11, 5);
 		string i15_11 = instMem.getBinOutput().substr(16, 5);
 		string i15_0 = instMem.getBinOutput().substr(16, 16);
-		string i5_0 = instMem.getBinOutput().substr(27, 5);
+		string i5_0 = instMem.getBinOutput().substr(26, 6);
 		string i25_0 = instMem.getBinOutput().substr(6, 26);
 
 		//if debug print out all binary splits of instruction
@@ -209,12 +209,18 @@ Processor::Processor(string initFile){
 		cout << endl;
 
 		//perfor alu on alu multiplexor and read data 1 with control wire from alu control
-		mainALU.performALU(aluControl.getOutput(), aluMult.getOutput(), regFile.getOutput().readData1);
+		mainALU.performALU(aluControl.getOutput(), regFile.getOutput().readData1, aluMult.getOutput());
 		
 		//print out the main alu vlaues
 		cout << "Main ALU" << endl;
 		mainALU.print();
 		cout << endl;
+
+		if (debug_mode){
+			cout << "ALU In 0 : " << regFile.getOutput().readData1 << endl;
+			cout << "ALU In 1 : " << aluMult.getOutput() << endl;
+			cout << "ALU Result : " << mainALU.getOutput().output;
+		}
 
 		//shift the branch value over by two from the isgn extend output
 		branchShift.performShiftLeft(signExtend.getOutput());
@@ -317,6 +323,8 @@ Processor::Processor(string initFile){
 		//set the value of the pc to the final multiplexor output.
 		pc.setValue(jumpMult.getOutput());
 	}
+
+	cout << endl << "Program Finished" << endl;
 
 	fclose(stdout);
 }

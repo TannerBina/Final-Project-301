@@ -55,7 +55,7 @@ LineInfo  ALU::performALU(string control, int src1, int src2){
 //print out all input and oututs
 void ALU::print(){
 	cout << "Input" << endl;
-	cout << "Control : 0x" << hex << input.control << endl;
+	cout << "Control : 0x" << hex << Utility::bStoi(input.control) << endl;
 	cout << "In0 : 0x" << hex << input.in0 << endl;
 	cout << "In1 : 0x" << hex << input.in1 << endl;
 	cout << "Output" << endl;

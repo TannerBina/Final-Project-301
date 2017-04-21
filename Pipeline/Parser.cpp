@@ -654,7 +654,7 @@ string Parser::jInst(string inst){
 
 	//converts hex to integer and then binary
 	int imm = stoi(immed, nullptr, 16);
-	res += toBinary(imm / 4, res, 26);
+	res += toBinary(imm, res, 26);
 
 	return res;
 
