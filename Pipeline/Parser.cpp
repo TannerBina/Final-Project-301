@@ -33,6 +33,14 @@ void Parser::parseConfig(string file) {
 				continue;
 			}
 
+			//checks if line contains a # and cuts off the comment
+			if (line.find('#')){
+				int pos = line.find('#');
+				line.erase(remove(line.begin(), line.end(), ' '), line.end());
+				line = line.substr(0, pos - 1);
+				cout << line << endl;
+			}
+
 			int equalsPos = line.find('=');
 
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
@@ -66,21 +74,38 @@ void Parser::parseProgram(){
 				continue;
 			}
 
+			//checks if the line contains a # and cuts off the comment
+			if (line.find('#')){
+				int pos = line.find('#');
+				line.erase(remove(line.begin(), line.end(), ' '), line.end());
+				line = line.substr(0, pos - 1);
+				cout << line << endl;
+			}
+
 			prog[key] = line;
 			key += 4;
 		}
 	}
+
 	map<int, string>::iterator itr;
+
+	//iterates through the program map to remove unnecessary spaces
 	for (itr = prog.begin(); itr != prog.end(); itr++) {
+
 		string res;
 		string asem = itr->second;
 		stringstream s(asem);
 		vector<string> insts;
+
+		//makes sure the line has not ended and adds the values to a stream
 		while(!s.eof()){
+
 			string tmp;
 			s >> tmp;
 			insts.push_back(tmp);
 		}
+
+		//iterates through the new vector and adds the values back to the map
 		for (vector<string>::iterator iter = insts.begin(); iter != insts.end(); iter++) {
 			string tmp = *iter;
 			res.append(tmp);
@@ -89,7 +114,6 @@ void Parser::parseProgram(){
 
 		prog[itr->first] = res;
 		
-
 	}
 	
 }
@@ -164,6 +188,14 @@ map<string, string> Parser::parseMemory() {
 				continue;
 			}
 
+			//checks if the line contains a # and cuts off the comment
+			if (line.find('#')){
+				int pos = line.find('#');
+				line.erase(remove(line.begin(), line.end(), ' '), line.end());
+				line = line.substr(0, pos - 1);
+				cout << line << endl;
+			}
+
 			int colonPos = line.find(':');
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 
@@ -195,6 +227,14 @@ map<string, string> Parser::parseRegister(){
 			//if the line starts with '#' or is empty, do nothing
 			if (line[0] == '#' || line.empty()) {
 				continue;
+			}
+
+			//checks if the lines contains a # and cuts off the comment
+			if (line.find('#')){
+				int pos = line.find('#');
+				line.erase(remove(line.begin(), line.end(), ' '), line.end());
+				line = line.substr(0, pos - 1);
+				cout << line << endl;
 			}
 
 			int colonPos = line.find(':');
@@ -359,13 +399,21 @@ void Parser::convertProgram(){
 			binStr = jInst(val);
 		}
 
+		//adds the bit strings to the map
 		binProg[itr->first] = binStr;
 		
 	}
 
 }	
 
+/*
+This method takes in an instruction in assembly and separates
+it into its different parts, returning a vector containing
+the different values.
+*/
 vector<string> Parser::tokenize(string inst){
+
+	//sets up tokenizing the stiring instruction
 	vector<string> instruct;
 	char *cstr = new char[inst.length() + 1];
 	strcpy(cstr, inst.c_str());
@@ -373,10 +421,14 @@ vector<string> Parser::tokenize(string inst){
 	tok = strtok(cstr, " ,()");
 	int num = strlen(tok);
 	char* insts[num + 1];
+
+	//adds strings of length 10 to the array
 	for (int i = 0; i < num + 1; i++){
 		insts[i]= new char[10];
 	}
 	int count = 0;
+
+	//adds the tokens from the string to the vector
 	while(tok != NULL){
 		string s(tok);
 		instruct.push_back(s);
@@ -392,6 +444,7 @@ This method takes an RTYPE instruction and converts it into a binary string
 string Parser::rInst(string inst){
 	vector<string> instruct = tokenize(inst);
 
+	//gets the opcode and name of the instruction
 	string res;
 	string str;
 	OpcodeTable opcodetab;
@@ -399,8 +452,10 @@ string Parser::rInst(string inst){
 	string op = opcodetab.getOpcode(name);
 	str+=op;
 
-	//checks if the instruction has an rs register
+	//checks if the instruction has an rs register and gets
+	//the binary encoding if so
 	if(opcodetab.RSposition(name) != -1){
+
 		int rs = opcodetab.RSposition(name);
 		string regS = instruct.at(rs + 1);
 		regS = regS.erase(0,1);
@@ -414,8 +469,10 @@ string Parser::rInst(string inst){
 	    str+=res;
 	}
 
-	//checks if the instruction has an rt position
+	//checks if the instruction has an rt position and gets the binary
+	//encoding if so
 	if(opcodetab.RTposition(name) != -1){
+
 		int rt = opcodetab.RTposition(name);
 		string regT = instruct.at(rt + 1);
 		regT = regT.erase(0,1);
@@ -428,8 +485,10 @@ string Parser::rInst(string inst){
 	    res = toBinary(0, res, 5);
 	    str+=res;
 	}
-	//checks if the instruction has an rd register
+	//checks if the instruction has an rd register gets the binary
+	//encoding if so
 	if(opcodetab.RDposition(name) != -1){
+
 		int rd = opcodetab.RDposition(name);
 		string regD = instruct.at(rd + 1);
 		regD = regD.erase(0,1);
@@ -442,14 +501,22 @@ string Parser::rInst(string inst){
 	    res = toBinary(0, res, 5);
 	    str+=res;
 	}
+
 	int immediate;
-	//checks if the instruction has an immediate
+
+	//checks if the instruction has an immediate gets the binary
+	//encoding if so
 	if (opcodetab.IMMposition(name) != -1){
 		int imm = opcodetab.IMMposition(name);
 		string immed = instruct.at(imm + 1);
+
+		//checks if the hex value is prepended by 0x and
+		//converts to int
 		if (immed[1] == 'x'){
 			immed = immed.erase(0,2);
 			immediate = Utility::hStoi(immed);
+
+		//otherwise converts the decimal string to int	
 		} else {
 			immediate = stoi(immed, nullptr, 10);
 
@@ -476,6 +543,7 @@ This method takes an ITYPE instruction and converts it into a binary string
 string Parser::iInst(string inst){
 	vector<string> instruct = tokenize(inst);
 
+	//gets the name and opcode of the instruction
 	string res;
 	string str;
 	OpcodeTable opcodetab;
@@ -485,13 +553,12 @@ string Parser::iInst(string inst){
 
 	//checks if the instruction has an rs position
 	if(opcodetab.RSposition(name) != -1){
+
 		int rs = opcodetab.RSposition(name);
 		string regS = instruct.at(rs + 1);
 		regS = regS.erase(0,1);
 		int reg = stoi(regS, nullptr, 10);
-		cout << reg << endl;
 		regS = toBinary(reg, regS, 5);
-		cout << regS << endl;
 		str += regS;
 
 	//if none, appends 0s to the binary string
@@ -500,7 +567,8 @@ string Parser::iInst(string inst){
 	    str+=res;
 	}
 
-	//checks if the instruction has an rt position
+	//checks if the instruction has an rt position gets the binary
+	//encoding if so
 	if(opcodetab.RTposition(name) != -1){
 		int rt = opcodetab.RTposition(name);
 		string regT = instruct.at(rt + 1);
@@ -516,15 +584,24 @@ string Parser::iInst(string inst){
 	}
 
 	int immediate;
+
+	//checks if the instruction has an immediate and gets
+	//the binary encoding if yes
 	if (opcodetab.IMMposition(name) != -1){
 		int imm = opcodetab.IMMposition(name);
 		string immed = instruct.at(imm + 1);
+
+		//checks if the immediate is a hex value prepended
+		//by 0x and converts to integer
 		if (immed[1] == 'x'){
 			immed = immed.erase(0,2);
 			immediate = Utility::hStoi(immed);
+
+		//otherwise converts decimal string to integer	
 		} else {
 			immediate = stoi(immed, nullptr, 10);
 		}
+
 		immed = toBinary(immediate, immed, 16);
 		str += immed;
 
@@ -534,10 +611,7 @@ string Parser::iInst(string inst){
     	str+=res;
 	}
 
-
-
 	return str;
-
 }
 
 /*
@@ -546,16 +620,20 @@ This method takes a JTYPE instruction and converts it into a binary string
 string Parser::jInst(string inst){
 	vector<string> instruct = tokenize(inst);
 
+	//gets the name and opcode for the string
 	string res;
 	OpcodeTable opcodetab;
 	string op = opcodetab.getOpcode(instruct.at(0));
 	res += op;
 
 	string immed = instruct.at(1);
+
+	//checks if the immediate is a hex value prepended by 0x
 	if (immed[1] == 'x') {
 		immed = immed.erase(0,2);
 	}
 
+	//converts hex to integer and then binary
 	int imm = stoi(immed, nullptr, 16);
 	res += toBinary(imm / 4, res, 26);
 
