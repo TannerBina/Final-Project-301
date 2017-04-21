@@ -82,12 +82,12 @@ string Utility::htob(char hexChar){
 	/*
 	Converts a binary string to an integer
 	 */
-	int Utility::bStoi(string binaryString){
+	int Utility::bStoi(string binaryString, bool isSigned){
 		int result = 0;
 		//loop through string
 		for (unsigned int i = 0; i < binaryString.length(); i++){
 			//check twos compliment first bit.
-			if (i == 0 && binaryString.length() == 32){
+			if (i == 0 && isSigned){
 				if (binaryString.at(i) == '1'){
 					result -= pow(2, binaryString.length() - 1 - i);
 				}
@@ -114,5 +114,6 @@ string Utility::htob(char hexChar){
 		}
 
 		//convert binary to integer
-		return bStoi(binaryString);
+		//is signed if 32 bit number
+		return bStoi(binaryString, hexString.length() == 8);
 	}

@@ -35,7 +35,7 @@ ControlWires ControlUnit::process(string opcode){
 
 //print input and all outputs
 void ControlUnit::print(){
-	cout << "Input : 0x" << hex << Utility::bStoi(input) << endl;
+	cout << "Input : 0x" << hex << Utility::bStoi(input, false) << endl;
 	cout << "Output" << endl;
 	cout << "RegDst : 0x" << hex << output.regDst << endl;
 	cout << "Jump : 0x" << hex << output.jump << endl;

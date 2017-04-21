@@ -138,8 +138,8 @@ Processor::Processor(string initFile){
 
 		//settup into into reg mutliplexor from binary instruction
 		MultiplexorInput mInReg;
-		mInReg.in0 = Utility::bStoi(i20_16);
-		mInReg.in1 = Utility::bStoi(i15_11);
+		mInReg.in0 = Utility::bStoi(i20_16, false);
+		mInReg.in1 = Utility::bStoi(i15_11, false);
 		//get control wire and process
 		mInReg.control = control.getOutput().regDst;
 		regMult.process(mInReg);
@@ -151,8 +151,8 @@ Processor::Processor(string initFile){
 
 		//get input from binary instruction and multiplexor result.
 		RegInput rIn;
-		rIn.readReg1 = Utility::bStoi(i25_21);
-		rIn.readReg2 = Utility::bStoi(i20_16);
+		rIn.readReg1 = Utility::bStoi(i25_21, false);
+		rIn.readReg2 = Utility::bStoi(i20_16, false);
 		rIn.writeReg = regMult.getOutput();
 		//get regwrite from control wire and process
 		rIn.regWrite = control.getOutput().regWrite;
@@ -164,7 +164,7 @@ Processor::Processor(string initFile){
 		cout << endl;
 
 		//sign extend the immediate to 32 bits
-		signExtend.extendToThirtyTwo(Utility::bStoi(i15_0));
+		signExtend.extendToThirtyTwo(Utility::bStoi(i15_0, true));
 
 		//print out the sign extend
 		cout << "Sign Extend" << endl;
@@ -172,7 +172,7 @@ Processor::Processor(string initFile){
 		cout << endl;
 
 		//shift the jump value from the binary ofver 2
-		jumpShift.performShiftLeft(Utility::bStoi(i25_0));
+		jumpShift.performShiftLeft(Utility::bStoi(i25_0, false));
 
 		//print out jump shift unit
 		cout << "Jump Shift Left" << endl;
@@ -217,9 +217,9 @@ Processor::Processor(string initFile){
 		cout << endl;
 
 		if (debug_mode){
-			cout << "ALU In 0 : " << regFile.getOutput().readData1 << endl;
-			cout << "ALU In 1 : " << aluMult.getOutput() << endl;
-			cout << "ALU Result : " << mainALU.getOutput().output;
+			cout << "ALU In 0 : " << dec << regFile.getOutput().readData1 << endl;
+			cout << "ALU In 1 : " << dec << aluMult.getOutput() << endl;
+			cout << "ALU Result : " << dec << mainALU.getOutput().output << endl << endl;
 		}
 
 		//shift the branch value over by two from the isgn extend output

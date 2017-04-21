@@ -45,14 +45,14 @@ void InstructionMemory::printAll (){
 	cout << "Instruction Memory" << endl;
 	for (it = binInstMemory.begin(); it != binInstMemory.end(); it++){
 		if (!(it->second).empty())
-			cout << "0x" << hex << it->first << " : 0x" << hex << Utility::bStoi(it->second) << endl;
+			cout << "0x" << hex << it->first << " : 0x" << hex << Utility::bStoi(it->second, false) << endl;
 	}
 }
 
 //print in and out of binary
 void InstructionMemory::printBin(){
 	cout << "Input : 0x" << hex << binInput << endl;
-	cout << "Output : 0x" << hex << Utility::bStoi(binOutput) << endl;
+	cout << "Output : 0x" << hex << Utility::bStoi(binOutput, false) << endl;
 }
 
 //print in and out of instruction

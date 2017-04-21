@@ -22,7 +22,7 @@ public:
 	/*
 	Converts a binary string to an integer
 	 */
-	static int bStoi(string binaryString);
+	static int bStoi(string binaryString, bool isSigned);
 
 	/*
 	converts a hex to a signed integer
