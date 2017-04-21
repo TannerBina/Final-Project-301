@@ -183,7 +183,7 @@ string Parser::toBinary(int num, string result, unsigned int bits){
   	//converts string to int, adds 1, then returns string result
   	int val = stoi(cp, nullptr, 2);
   	val = val + 1;
-  	string res = toBinary(val, res, bits);
+  	string res = toBinary(val, "", bits);
   	result = res;
 
   }	
