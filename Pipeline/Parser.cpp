@@ -27,17 +27,20 @@ void Parser::parseConfig(string file) {
 
 		//iterates through the file line by line
 		while(getline(ifs, line)) {
-
+			
 			//does nothing if the lines starts with '#' or is empty
-			if (line[0] == '#' || line.empty()) {
-				continue;
-			}
+			if (line[0] == '#' || line.length() == 0) {
+				getline(ifs, line);
+			} 
 
 			//checks if line contains a # and cuts off the comment
 			if (line.find('#')){
+				
 				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
-				line = line.substr(0, pos);
+				line.erase(remove(line.begin(), line.end(), '\t'), line.end());
+				line = line.substr(0, pos - 1);
+				
 			}
 
 			//separates line by = and deletes whitespace
@@ -70,7 +73,7 @@ void Parser::parseProgram(){
 			
 
 			//checks if the line is empty or a comment
-			if (line[0] == '#' || line.empty()){
+			if (line[0] == '#' || line[0] == '\n' || line.length() <= 1){
 				continue;
 			}
 
@@ -78,7 +81,6 @@ void Parser::parseProgram(){
 			if (line.find('#')){
 
 				int pos = line.find('#');
-				
 				line = line.substr(0, pos);
 			}
 
