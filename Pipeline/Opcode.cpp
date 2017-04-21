@@ -20,8 +20,12 @@ string OpcodeTable::getOpcode(string str)
       return myTable[i].op_field;
     }
   }
-  cerr << "Invalid instruction input" << endl;
-  exit(1);
+  if (str != ""){
+    cerr << "Invalid instruction input. " << str << endl;
+    exit(1);
+  }
+  string res = "";
+  return res;
 }
 
 int OpcodeTable::numOperands(string str)
