@@ -37,9 +37,7 @@ Processor::Processor(string initFile){
 		cout << "Write to File : " << write_to_file << endl;
 		cout << "Print memory contents : " << print_memory_contents << endl;
 		cout << "Output file : " << output_file << endl;
-		cout << "Output Mode : " << output_mode << endl;
 		cout << "Program Input : " << parser.getConfig("program_input") << endl;
-		cout << "Program Length : " << parser.getConfig("program_input") << endl;
 	}
 
 	//set up the register file, inttruction memeor, and data memory
