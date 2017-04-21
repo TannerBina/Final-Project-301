@@ -30,7 +30,6 @@ class ALUControl{
 private:
 	//the function code and operators stored
 	string functcode;
-	int  op1, op2;
 
 	//the output and input stored
 	string output;
