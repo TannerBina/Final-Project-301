@@ -20,7 +20,9 @@ string OpcodeTable::getOpcode(string str)
       return myTable[i].op_field;
     }
   }
-  return '\0';
+
+  string res = "";
+  return res;
 }
 
 int OpcodeTable::numOperands(string str)
