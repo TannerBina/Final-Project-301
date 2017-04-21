@@ -1,8 +1,6 @@
 #ifndef __OPCODE_H__
 #define __OPCODE_H__
 
-using namespace std;
-
 #include <iostream>
 #include <string>
 
