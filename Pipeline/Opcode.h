@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
 
 // Listing of all supported MIPS instructions
 enum Opcode {
