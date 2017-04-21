@@ -3,10 +3,10 @@
 OpcodeTable::OpcodeTable(){
 	myTable[ADD].name = "add"; myTable[ADD].numOps = 3; myTable[ADD].rdPos = 0; myTable[ADD].rsPos = 1; myTable[ADD].rtPos = 2; myTable[ADD].immPos = -1; myTable[ADD].instType = RTYPE; myTable[ADD].op_field = "000000"; myTable[ADD].funct_field = "100000";
 	myTable[SUB].name = "sub"; myTable[SUB].numOps = 3; myTable[SUB].rdPos = 0; myTable[SUB].rsPos = 1; myTable[SUB].rtPos = 2; myTable[SUB].immPos = -1; myTable[SUB].instType = RTYPE; myTable[SUB].op_field = "000000"; myTable[SUB].funct_field = "100010";
-	myTable[ADDI].name = "addi"; myTable[ADDI].numOps = 3; myTable[ADDI].rdPos = 0; myTable[ADDI].rsPos = 1; myTable[ADDI].rtPos = -1; myTable[ADDI].immPos = 2; myTable[ADDI].instType = ITYPE; myTable[ADDI].op_field = "001000"; myTable[ADDI].funct_field = "000000"; 
+	myTable[ADDI].name = "addi"; myTable[ADDI].numOps = 3; myTable[ADDI].rdPos = -1; myTable[ADDI].rsPos = 1; myTable[ADDI].rtPos = 0; myTable[ADDI].immPos = 2; myTable[ADDI].instType = ITYPE; myTable[ADDI].op_field = "001000"; myTable[ADDI].funct_field = "000000"; 
 	myTable[SLT].name = "slt"; myTable[SLT].numOps = 3; myTable[SLT].rdPos = 0; myTable[SLT].rsPos = 1; myTable[SLT].rtPos = 2; myTable[SLT].immPos = -1; myTable[SLT].instType = RTYPE; myTable[SLT].op_field = "000000"; myTable[SLT].funct_field = "101010"; 
 	myTable[LW].name = "lw"; myTable[LW].numOps = 3; myTable[LW].rdPos = -1; myTable[LW].rsPos = 2; myTable[LW].rtPos = 0; myTable[LW].immPos = 1; myTable[LW].instType = ITYPE; myTable[LW].op_field = "100011"; myTable[LW].funct_field = "000000";
-	myTable[SW].name = "sw"; myTable[SW].numOps = 3; myTable[SW].rdPos = -1; myTable[LW].rsPos = 2; myTable[SW].rtPos = 0; myTable[SW].immPos = 1; myTable[SW].instType = ITYPE; myTable[LW].op_field = "101011"; myTable[SW].funct_field = "000000";
+	myTable[SW].name = "sw"; myTable[SW].numOps = 3; myTable[SW].rdPos = -1; myTable[SW].rsPos = 2; myTable[SW].rtPos = 0; myTable[SW].immPos = 1; myTable[SW].instType = ITYPE; myTable[SW].op_field = "101011"; myTable[SW].funct_field = "000000";
 	myTable[BEQ].name = "beq"; myTable[BEQ].numOps = 3; myTable[BEQ].rdPos = -1; myTable[BEQ].rsPos = 0; myTable[BEQ].rtPos = 1; myTable[BEQ].immPos = 2; myTable[BEQ].instType = ITYPE; myTable[BEQ].op_field = "000100"; myTable[BEQ].funct_field = "000000";
 	myTable[J].name = "j"; myTable[J].numOps = 0; myTable[J].rdPos = -1; myTable[J].rsPos = -1; myTable[J].rtPos = -1; myTable[J].immPos = -1; myTable[J].instType = JTYPE; myTable[J].op_field = "000010"; myTable[J].funct_field = "000000"; myTable[J].immLabel = true;
 }
@@ -82,7 +82,7 @@ int OpcodeTable::IMMposition(string str)
   return -1;
 }
 
-InstType OpcodeTable::getInstType(string str)
+int OpcodeTable::getInstType(string str)
 // Given an Opcode, returns instruction type.
 {
   for(int i = 0; i < (int )UNDEFINED; i++){
