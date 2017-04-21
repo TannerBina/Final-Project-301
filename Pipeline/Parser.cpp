@@ -40,6 +40,7 @@ void Parser::parseConfig(string file) {
 				line = line.substr(0, pos);
 			}
 
+			//separates line by = and deletes whitespace
 			int equalsPos = line.find('=');
 
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
@@ -75,6 +76,7 @@ void Parser::parseProgram(){
 
 			//checks if the line contains a # and cuts off the comment
 			if (line.find('#')){
+
 				int pos = line.find('#');
 				line.erase(remove(line.begin(), line.end(), ' '), line.end());
 				line = line.substr(0, pos);
@@ -126,6 +128,7 @@ string Parser::toBinary(int num, string result, unsigned int bits){
   stringstream ss;
   stringstream bit;
   string temp;
+  int copy = num;
 
   //makes sure the nuber is not zero and iterates
   while(num!=0) {
@@ -159,6 +162,32 @@ string Parser::toBinary(int num, string result, unsigned int bits){
   string bitnum = bit.str();
   bitnum += result;
   result = bitnum;
+
+  //converts negative number to 2s complement binary string
+  if (copy < 0){
+  	string cp = result;
+
+  	//inverts all bits of original string
+  	for (unsigned int i = 0; i < cp.size(); i++){
+
+  		//if bit is 0, it becomes 1
+  		if (cp[i] == '0'){
+  			cp[i] = '1';
+
+  		//else it becomes 0
+  		} else {
+  			cp[i] = '0';
+  		}
+  	}
+
+  	//converts string to int, adds 1, then returns string result
+  	int val = stoi(cp, nullptr, 2);
+  	val = val + 1;
+  	string res = toBinary(val, res, bits);
+  	result = res;
+
+  }	
+
   return result;
 }
 
@@ -193,6 +222,7 @@ map<string, string> Parser::parseMemory() {
 				line = line.substr(0, pos);
 			}
 
+			//separates line by colon and removes all whitespace
 			int colonPos = line.find(':');
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 
@@ -233,6 +263,7 @@ map<string, string> Parser::parseRegister(){
 				line = line.substr(0, pos );
 			}
 
+			//separates line by colon and removes all whitespace
 			int colonPos = line.find(':');
 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
 			string sub = line.substr(0, colonPos);
