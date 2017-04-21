@@ -78,7 +78,7 @@ void Parser::parseProgram(){
 			if (line.find('#')){
 
 				int pos = line.find('#');
-				line.erase(remove(line.begin(), line.end(), ' '), line.end());
+				
 				line = line.substr(0, pos);
 			}
 
